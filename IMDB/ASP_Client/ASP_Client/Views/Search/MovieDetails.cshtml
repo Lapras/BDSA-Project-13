@@ -1,0 +1,24 @@
+﻿@model ASP_Client.Models.MovieDetailsViewModel
+
+@{
+    ViewBag.Title = "Movie";
+}
+
+<h2>Movie</h2>
+@Html.ActionLink("Home", "FoundMovies")<br/>
+<a href="javascript:window.history.back();">Back</a><br/>
+
+Title 
+@Model.Title<br/>
+Year 
+@Model.Year<br/>
+Participants 
+@foreach (var participant in Model.Participants)
+{
+    <table>
+        <tr>
+            <td> @participant.Name </td>
+        </tr>
+        
+    </table>
+}
