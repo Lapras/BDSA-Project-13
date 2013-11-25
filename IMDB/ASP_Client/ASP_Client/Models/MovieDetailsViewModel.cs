@@ -8,6 +8,6 @@ namespace ASP_Client.Models
         public string Title { get; set; }
         public int? Year { get; set; }
 
-        public List<People> Participants { get; set; }
+        public List<ActorViewModel> Participants { get; set; }
     }
 }

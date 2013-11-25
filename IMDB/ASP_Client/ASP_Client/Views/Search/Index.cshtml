@@ -8,11 +8,11 @@
  
 <p> 
      @using (Html.BeginForm()){    
-         <p> Title: @Html.TextBox("SearchString") <br />   
+         <p> @Html.TextBox("SearchString") <br />   
          <input type="submit" value="Search" /></p> 
      }
     
-    <table>
+<table>
     <tr><th>Title:</th><th>Year:</th></tr>
     @foreach (var movie in Model.FoundMovies)
     {
