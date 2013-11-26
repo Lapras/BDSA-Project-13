@@ -153,9 +153,11 @@
     <Compile Include="InfoType.cs">
       <DependentUpon>Imdb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ActorViewModel.cs" />
     <Compile Include="Models\MovieDetailsViewModel.cs" />
     <Compile Include="Models\MovieOverviewViewModel.cs" />
     <Compile Include="Models\MovieViewModel.cs" />
+    <Compile Include="Models\PersonDetailsViewModel.cs" />
     <Compile Include="MovieInfo.cs">
       <DependentUpon>Imdb.tt</DependentUpon>
     </Compile>
@@ -280,6 +282,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Search\MovieDetails.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
+    <Content Include="Views\Search\PersonDetails.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
