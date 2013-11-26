@@ -5,12 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ViewModel="clr-namespace:WPF_Client.ViewModel"
         xmlns:View="clr-namespace:WPF_Client.View"
-        Title="IMDB" Height="500" Width="500"
-        d:DesignHeight="500"
-        d:DesignWidth="500"
-        ResizeMode="NoResize"
+        Title="IMDB" Height="500" Width="500" MinHeight="400" MinWidth="400"
+        ResizeMode="CanResize"
         mc:Ignorable="d">
     <Grid>
-        <ContentControl Content="{Binding CurrentViewModel}" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <ContentControl Content="{Binding CurrentViewModel}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
     </Grid>
 </Window>

@@ -23,7 +23,7 @@ namespace WPF_Client.ViewModel
         /// </summary>
         public MainWindowViewModel()
         {
-            CurrentViewModel = new SearchViewModel();
+            CurrentViewModel = new SearchViewModel(); //We set the startup ViewModel to the SearchViewModel.
         }  
 
         /// <summary>

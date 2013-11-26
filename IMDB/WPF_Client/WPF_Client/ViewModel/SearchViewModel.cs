@@ -12,61 +12,15 @@ using System.Windows.Input;
 namespace WPF_Client.ViewModel
 {
     public class SearchViewModel : INotifyPropertyChanged, IViewModel
-    {
+    {        
+
+        private string _textBox; //The text input from the user from the textbox.
+        private int _comboBoxSelectedIndex; //The selected index from the combobox.
+        public ICommand SearchCommand { get; set; } //The command attached to the Search button.
+
         /// <summary>
-        /// The current view.
+        /// The TextBox property. Which is the text input from the user from the textbox.
         /// </summary>
-        //private IViewModel _currentViewModel;
-
-
-        private string _textBox;
-        private int _comboBoxSelectedIndex;
-
-
-        public int ComboBoxSelectedIndex
-        {
-            get
-            {
-                return _comboBoxSelectedIndex;
-            }
-            set
-            {
-                if (_comboBoxSelectedIndex == value)
-                    return;
-                _comboBoxSelectedIndex = value;
-                OnPropertyChanged("ComboBoxSelectedIndex");
-            }
-        }
-
-
-        public ICommand SearchCommand { get; set; }
-
-
-        /*
-        /// <summary>
-        /// The CurrentView property. When the View is changed,
-        /// we need to raise a property changed event.
-        /// </summary>
-        public IViewModel CurrentViewModel
-        {
-            get
-            {
-                return _currentViewModel;
-            }
-            set
-            {
-                if (_currentViewModel == value)
-                    return;
-                _currentViewModel = value;
-
-                Console.WriteLine(value);
-
-                OnPropertyChanged("CurrentViewModel");
-            }
-        }
-        */
-
-        
         public string TextBox
         {
             get { return _textBox; }
@@ -83,13 +37,29 @@ namespace WPF_Client.ViewModel
         }
 
         /// <summary>
-        /// Default constructor.  We set the initial view-model to 'FirstViewModel'.
-        /// We also associate the commands with their execution actions.
+        /// The ComboBoxSelectedIndex property. Which is the selected index from the combobox.
+        /// </summary>
+        public int ComboBoxSelectedIndex
+        {
+            get
+            {
+                return _comboBoxSelectedIndex;
+            }
+            set
+            {
+                if (_comboBoxSelectedIndex == value)
+                    return;
+                _comboBoxSelectedIndex = value;
+                OnPropertyChanged("ComboBoxSelectedIndex");
+            }
+        }
+
+
+        /// <summary>
+        /// Default constructor.
         /// </summary>
         public SearchViewModel()
         {
-            //CurrentViewModel = this;
-
             SearchCommand = new SearchCommand(this);
             ComboBoxSelectedIndex = 0; // This does that "Movies" is the selected from the start.
         }   
@@ -108,6 +78,10 @@ namespace WPF_Client.ViewModel
 
 
     //COMMANDS:
+
+    /// <summary>
+    /// Command attached to the Search Button
+    /// </summary>
     class SearchCommand : ICommand
     {
         private SearchViewModel _vm;
@@ -126,17 +100,14 @@ namespace WPF_Client.ViewModel
         public void Execute(object parameter)
         {
 
-            switch (_vm.ComboBoxSelectedIndex) //we check the dropdown box's selected item. (make field)
+            switch (_vm.ComboBoxSelectedIndex) //We check the combobox's selected item.
             {
                 case 0: // Movies
                     Console.WriteLine("We search for movies");
-
-                    //Test.main.CurrentViewModel = new SearchResultViewModel();
-
-                    ViewModelLocator.Main.CurrentViewModel = new SearchResultViewModel();
                     //Storage.SearchMovie(_vm.TextBox);
 
-                    //_vm.CurrentViewModel = new MainViewModel();
+                    ViewModelLocator.Main.CurrentViewModel = new SearchResultViewModel();
+
 
                     break;
                 case 1: // Actors
@@ -151,9 +122,7 @@ namespace WPF_Client.ViewModel
                     break;
             }
             
-
-
-            //MessageBox.Show("muh");
+            MessageBox.Show("No results found :(");
         }
 
         public event EventHandler CanExecuteChanged
@@ -163,11 +132,6 @@ namespace WPF_Client.ViewModel
 
         }
     }
-
-
-
-
-
 
 
 

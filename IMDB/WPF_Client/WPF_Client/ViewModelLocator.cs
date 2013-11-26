@@ -10,7 +10,7 @@ namespace WPF_Client
 {
 
     /// <summary>
-    /// Class which maintains a public reference to the MainWindowViewModel, so that when the application changes view the MainWindowViewModel's CurrentViewModel should be changed to another ViewModel.
+    /// Class which maintains a public reference to the MainWindowViewModel, so whenever the application should change view the MainWindowViewModel's CurrentViewModel should be changed to another ViewModel.
     /// </summary>
     public static class ViewModelLocator
     {
