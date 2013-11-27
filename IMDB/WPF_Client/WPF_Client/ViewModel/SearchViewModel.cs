@@ -1,19 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
+using WPF_Client.Dtos;
 
 namespace WPF_Client.ViewModel
 {
     public class SearchViewModel : INotifyPropertyChanged, IViewModel
-    {        
+    {
 
+        internal Model.Model _model;
         private string _textBox; //The text input from the user from the textbox.
         private int _comboBoxSelectedIndex; //The selected index from the combobox.
         public ICommand SearchCommand { get; set; } //The command attached to the Search button.
@@ -60,6 +65,7 @@ namespace WPF_Client.ViewModel
         /// </summary>
         public SearchViewModel()
         {
+            _model = new Model.Model();
             SearchCommand = new SearchCommand(this);
             ComboBoxSelectedIndex = 0; // This does that "Movies" is the selected from the start.
         }   
@@ -106,7 +112,31 @@ namespace WPF_Client.ViewModel
                     Console.WriteLine("We search for movies");
                     //Storage.SearchMovie(_vm.TextBox);
 
-                    ViewModelLocator.Main.CurrentViewModel = new SearchResultViewModel();
+                    SearchResultViewModel searchResultViewModel = new SearchResultViewModel();
+
+
+                    var result = _vm._model.MovieSearchDtos("fe");
+
+
+                    searchResultViewModel._movieSearchDtos = result;
+
+
+
+                    ViewModelLocator.Main.CurrentViewModel = searchResultViewModel;
+
+                    //searchResultViewModel._searchString = "hey";
+
+                    /*
+                    if (searchResultViewModel.MovieSearchDtos.Count() == 0)
+                    {
+                        MessageBox.Show("muh");
+                    }
+                    else
+                    {
+                        ViewModelLocator.Main.CurrentViewModel = searchResultViewModel;
+
+                    }
+                    */
 
 
                     break;
@@ -122,7 +152,7 @@ namespace WPF_Client.ViewModel
                     break;
             }
             
-            MessageBox.Show("No results found :(");
+            
         }
 
         public event EventHandler CanExecuteChanged

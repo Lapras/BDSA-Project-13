@@ -57,6 +57,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Dtos\MovieSearchDto.cs" />
+    <Compile Include="Model\Model.cs" />
+    <Compile Include="Storage\IStorageStrategy.cs" />
+    <Compile Include="Storage\RESTStrategy.cs" />
+    <Compile Include="Storage\Storage.cs" />
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="ViewModel\IViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
@@ -116,9 +121,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
