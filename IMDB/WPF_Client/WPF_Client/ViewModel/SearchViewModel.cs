@@ -98,7 +98,7 @@ namespace WPF_Client.ViewModel
         public void Execute(object parameter)
         {
             
-            switch (_vm.ComboBoxSelectedIndex) //We check the combobox's selected item.
+            switch (_vm.ComboBoxSelectedIndex) // We check the combobox's selected item.
             {
                 case 0: // Movies
                     Console.WriteLine("We search for movies");
@@ -106,7 +106,7 @@ namespace WPF_Client.ViewModel
                     Mediator.SearchString = _vm.TextBox;
                     Mediator.SearchType = _vm.ComboBoxSelectedIndex;
                     var searchResultViewModel = new SearchResultViewModel();                    
-                    ViewModelLocator.Main.CurrentViewModel = searchResultViewModel;
+                    ViewModelManager.Main.CurrentViewModel = searchResultViewModel;
 
 
                     break;

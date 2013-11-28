@@ -9,7 +9,7 @@ using WPF_Client.Storage;
 
 namespace WPF_Client.Model
 {
-    class Model
+    public class Model : IModel
     {
         private Storage.Storage _storage;
 
@@ -17,7 +17,7 @@ namespace WPF_Client.Model
         {
             _storage = new Storage.Storage(new RESTStrategy());
         }
-
+        
 
         public ObservableCollection<MovieSearchDto> MovieSearchDtos(string searchString)
         {

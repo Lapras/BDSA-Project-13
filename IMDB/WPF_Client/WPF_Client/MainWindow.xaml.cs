@@ -25,8 +25,8 @@ namespace WPF_Client
         {
             InitializeComponent();
 
-            ViewModelLocator.Main = new MainWindowViewModel();
-            DataContext = ViewModelLocator.Main;
+            ViewModelManager.Main = new MainWindowViewModel();
+            DataContext = ViewModelManager.Main;
 
         }
     }

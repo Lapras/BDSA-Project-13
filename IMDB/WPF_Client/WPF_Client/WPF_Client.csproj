@@ -61,11 +61,12 @@
     <Compile Include="Dtos\MovieDto.cs" />
     <Compile Include="Dtos\MovieSearchDto.cs" />
     <Compile Include="Mediator.cs" />
+    <Compile Include="Model\IModel.cs" />
     <Compile Include="Model\Model.cs" />
     <Compile Include="Storage\IStorageStrategy.cs" />
     <Compile Include="Storage\RESTStrategy.cs" />
     <Compile Include="Storage\Storage.cs" />
-    <Compile Include="ViewModelLocator.cs" />
+    <Compile Include="ViewModelManager.cs" />
     <Compile Include="ViewModel\IViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\MovieProfileViewModel.cs" />

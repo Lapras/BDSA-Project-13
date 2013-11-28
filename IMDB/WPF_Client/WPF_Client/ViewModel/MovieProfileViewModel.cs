@@ -9,13 +9,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WPF_Client.Dtos;
+using WPF_Client.Model;
 
 
 namespace WPF_Client.ViewModel
 {
     class MovieProfileViewModel : IViewModel
     {
-        private Model.Model _model;
+        private IModel _model;
         
 
         private MovieDto _movieDto;
@@ -46,7 +47,7 @@ namespace WPF_Client.ViewModel
         {
             Console.WriteLine("MovieProfileViewModel created");
             _model = new Model.Model();
-            _movieDto = _model.MovieDto(Mediator._movieId);
+            _movieDto = _model.MovieDto(Mediator.MovieId);
         }
     }
 }

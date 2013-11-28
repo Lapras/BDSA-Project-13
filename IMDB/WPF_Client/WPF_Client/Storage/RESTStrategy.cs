@@ -15,10 +15,20 @@ namespace WPF_Client.Storage
             //GET rest etc. etc.
             //return ...
 
-            return new ObservableCollection<MovieSearchDto>() { 
-                new MovieSearchDto() {Id = 0, Title = searchString, Year = 2013},
-                new MovieSearchDto() {Id = 1, Title = "Gravity", Year = 2013} 
+            
+
+
+            //example for now...
+            var collection = new ObservableCollection<MovieSearchDto>() { 
+                new MovieSearchDto() {Id = 0, Title = "predator", Year = 1987},
+                new MovieSearchDto() {Id = 1, Title = "man of steel", Year = 2013},
+                new MovieSearchDto() {Id = 2, Title = "spiderman", Year = 2002},
+                new MovieSearchDto() {Id = 3, Title = searchString, Year = 2013} 
             };
+
+
+            var result = new ObservableCollection<MovieSearchDto>(collection.Where(m => m.Title == searchString.ToLower()).ToList());
+            return result;
 
         }
 
@@ -36,15 +46,23 @@ namespace WPF_Client.Storage
             switch (movieId)
             {
                 case 0:
-                    result = new MovieDto {Title = Mediator.SearchString, Year = 2013, Kind = "Sci-fi"};
+                    result = new MovieDto { Title = "Predator", Year = 1987, Kind = "Sci-fi" };
                     return result;
 
                 case 1:
-                    result = new MovieDto { Title = "Gravity", Year = 2013, Kind = "Sci-fi" };
+                    result = new MovieDto { Title = "Man of Steel", Year = 2013, Kind = "Action" };
+                    return result;
+
+                case 2:
+                    result = new MovieDto { Title = "Spiderman", Year = 2002, Kind = "Action" };
+                    return result;
+
+                case 3:
+                    result = new MovieDto { Title = Mediator.SearchString, Year = 2013, Kind = "Sci-fi" };
                     return result;
 
                 default:
-                    result = new MovieDto { Title = "Should not see this title", Year = 2013, Kind = "Sci-fi" };
+                    result = new MovieDto { Title = "error", Year = 2013, Kind = "Sci-fi" };
                     return result;
 
 
