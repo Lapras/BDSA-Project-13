@@ -22,17 +22,13 @@ namespace WPF_Client.Model
         public ObservableCollection<MovieSearchDto> MovieSearchDtos(string searchString)
         {
             return _storage.MovieSearchDtos(searchString);
-
         }
-
-
-        /*
-        public MovieDto MovieDtos(int id)
+                
+        public MovieDto MovieDto(int movieId)
         {
-            //storage.getfes(id)
-
+            return _storage.MovieDto(movieId);
         }
-        */
+        
 
     }
 }

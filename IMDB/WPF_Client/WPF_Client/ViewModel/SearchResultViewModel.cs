@@ -7,18 +7,27 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using WPF_Client.Dtos;
 
 namespace WPF_Client.ViewModel
 {
-    class SearchResultViewModel : INotifyPropertyChanged, IViewModel
+
+    /// <summary>
+    /// ViewModel for the SearchResultView.
+    /// </summary>
+    class SearchResultViewModel : IViewModel
     {
-        internal Model.Model _model;
-        public ObservableCollection<MovieSearchDto> _movieSearchDtos;
-        public string _searchtest;
+        private Model.Model _model;
+        private ObservableCollection<MovieSearchDto> _movieSearchDtos;
+        public string SearchString { get; set; } //The string that will be searched with.
+        public int SearchType { get; set; } //The type of search that should be conducted.
 
+        public ICommand SelectMovieCommand { get; set; } //The command attached to clicking on a movie.
 
-
+        /// <summary>
+        /// The collection of movie results that is displayed in the view.
+        /// </summary>
         public ObservableCollection<MovieSearchDto> MovieSearchDtos
         {
             get
@@ -29,16 +38,10 @@ namespace WPF_Client.ViewModel
             {
                 if (_movieSearchDtos == value)
                     return;
-                _movieSearchDtos = value;
-
-                //Console.WriteLine(value[0].Year + " " + value[0].Title);
-                
+                _movieSearchDtos = value;                
                 OnPropertyChanged("MovieSearchDtos");
-                _movieSearchDtos.CollectionChanged += (sender, args) => OnPropertyChanged("MovieSearchDtos");
             }
         }
-
-
 
 
         /// <summary>
@@ -46,25 +49,75 @@ namespace WPF_Client.ViewModel
         /// </summary>
         public SearchResultViewModel()
         {
- 
+            _model = new Model.Model();
+            _movieSearchDtos = new ObservableCollection<MovieSearchDto>();
 
-            MovieSearchDtos = _movieSearchDtos;
-            //_model = new Model.Model();
-            //MovieSearchDtos = _model.MovieSearchDtos(_searchtest);
+            SelectMovieCommand = new SelectMovieCommand(this);
 
+            switch (Mediator.SearchType) //We check the search that should be conducted.
+            {
+                case 0: // Movies
+
+                    Console.WriteLine(Mediator.SearchString);
+                    MovieSearchDtos = _model.MovieSearchDtos(Mediator.SearchString);
+
+                    //Console.WriteLine(MovieSearchDtos.Count());
+
+                    break;
+
+                case 1: // Actors
+
+                    break;
+                default:
+                    Console.WriteLine("Default case");
+                    break;
+            }
+            
         }
-
-    
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        //[NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-
 
     }
+
+
+    //COMMANDS:
+
+    /// <summary>
+    /// Command bound to selecting a movie.
+    /// </summary>
+    class SelectMovieCommand : ICommand
+    {
+        private SearchResultViewModel _vm;
+
+
+        public SelectMovieCommand(SearchResultViewModel vm)
+        {
+            _vm = vm;
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            //return !string.IsNullOrEmpty(_vm.TextBox);
+            return true;
+        }
+
+        public void Execute(object parameter)
+        {
+            
+            MovieSearchDto dto;
+            dto = (MovieSearchDto)parameter;
+
+            Mediator._movieId = dto.Id;
+            var movieProfileViewModel = new MovieProfileViewModel();
+
+            ViewModelLocator.Main.CurrentViewModel = movieProfileViewModel;
+
+        }
+
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+
+        }
+    }
+
 }

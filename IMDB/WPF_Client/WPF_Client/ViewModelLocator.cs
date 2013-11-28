@@ -24,7 +24,7 @@ namespace WPF_Client
             }
             set
             {
-                _main = value;
+                _main = value;                
             }
         }
     }

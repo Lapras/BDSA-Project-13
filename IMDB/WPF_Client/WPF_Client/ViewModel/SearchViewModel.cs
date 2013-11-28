@@ -15,10 +15,12 @@ using WPF_Client.Dtos;
 
 namespace WPF_Client.ViewModel
 {
-    public class SearchViewModel : INotifyPropertyChanged, IViewModel
-    {
 
-        internal Model.Model _model;
+    /// <summary>
+    /// ViewModel for the SearchView.
+    /// </summary>
+    public class SearchViewModel : IViewModel
+    {
         private string _textBox; //The text input from the user from the textbox.
         private int _comboBoxSelectedIndex; //The selected index from the combobox.
         public ICommand SearchCommand { get; set; } //The command attached to the Search button.
@@ -65,20 +67,10 @@ namespace WPF_Client.ViewModel
         /// </summary>
         public SearchViewModel()
         {
-            _model = new Model.Model();
             SearchCommand = new SearchCommand(this);
             ComboBoxSelectedIndex = 0; // This does that "Movies" is the selected from the start.
         }   
 
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        //[NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
-        }
 
     }
 
@@ -86,7 +78,7 @@ namespace WPF_Client.ViewModel
     //COMMANDS:
 
     /// <summary>
-    /// Command attached to the Search Button
+    /// Command bound to the Search Button
     /// </summary>
     class SearchCommand : ICommand
     {
@@ -105,45 +97,21 @@ namespace WPF_Client.ViewModel
 
         public void Execute(object parameter)
         {
-
+            
             switch (_vm.ComboBoxSelectedIndex) //We check the combobox's selected item.
             {
                 case 0: // Movies
                     Console.WriteLine("We search for movies");
-                    //Storage.SearchMovie(_vm.TextBox);
 
-                    SearchResultViewModel searchResultViewModel = new SearchResultViewModel();
-
-
-                    var result = _vm._model.MovieSearchDtos("fe");
-
-
-                    searchResultViewModel._movieSearchDtos = result;
-
-
-
+                    Mediator.SearchString = _vm.TextBox;
+                    Mediator.SearchType = _vm.ComboBoxSelectedIndex;
+                    var searchResultViewModel = new SearchResultViewModel();                    
                     ViewModelLocator.Main.CurrentViewModel = searchResultViewModel;
-
-                    //searchResultViewModel._searchString = "hey";
-
-                    /*
-                    if (searchResultViewModel.MovieSearchDtos.Count() == 0)
-                    {
-                        MessageBox.Show("muh");
-                    }
-                    else
-                    {
-                        ViewModelLocator.Main.CurrentViewModel = searchResultViewModel;
-
-                    }
-                    */
 
 
                     break;
                 case 1: // Actors
                     Console.WriteLine("We search for actors");
-
-                    //Storage.SearchActor(_vm.TextBox);
 
 
                     break;

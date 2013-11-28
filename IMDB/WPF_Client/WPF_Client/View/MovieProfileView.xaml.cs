@@ -10,20 +10,21 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WPF_Client.ViewModel;
 
 namespace WPF_Client.View
 {
     /// <summary>
-    /// Interaction logic for SearchView.xaml. There should be no code in here other than the basic initialization!
+    /// Interaction logic for MovieProfileView.xaml. There should be no code in here other than the basic initialization!
     /// </summary>
-    public partial class SearchView : UserControl
+    public partial class MovieProfileView : UserControl
     {
-        public SearchView()
+        public MovieProfileView()
         {
             InitializeComponent();
-            DataContext = new SearchViewModel();
+            DataContext = new MovieProfileViewModel();
         }
     }
 }

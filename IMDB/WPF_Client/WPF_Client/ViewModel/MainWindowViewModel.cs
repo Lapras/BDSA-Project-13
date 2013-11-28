@@ -10,7 +10,7 @@ using System.Globalization;
 
 namespace WPF_Client.ViewModel
 {
-    public class MainWindowViewModel : INotifyPropertyChanged, IViewModel
+    public class MainWindowViewModel : IViewModel
     {
         /// <summary>
         /// The current view.
@@ -48,14 +48,7 @@ namespace WPF_Client.ViewModel
 
 
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        //[NotifyPropertyChangedInvocator]
-        public virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
-        }
+        
 
 
 

@@ -17,7 +17,7 @@ using WPF_Client.ViewModel;
 namespace WPF_Client.View
 {
     /// <summary>
-    /// Interaction logic for SearchResultView.xaml
+    /// Interaction logic for SearchResultView.xaml. There should be no code in here other than the basic initialization!
     /// </summary>
     public partial class SearchResultView : UserControl
     {
@@ -25,6 +25,7 @@ namespace WPF_Client.View
         {
             InitializeComponent();
             DataContext = new SearchResultViewModel();
+            
         }
     }
 }

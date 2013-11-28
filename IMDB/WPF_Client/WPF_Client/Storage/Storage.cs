@@ -15,13 +15,17 @@ namespace WPF_Client.Storage
         public Storage(IStorageStrategy strategy)
         {
             _strategy = strategy;
+            
         }
 
         public ObservableCollection<MovieSearchDto> MovieSearchDtos(string searchString)
         {
-            //_strategy.getfes(searchString)
-            return new ObservableCollection<MovieSearchDto>() { new MovieSearchDto() { Title = "hej", Year = 1999 } };
+            return _strategy.MovieSearchDtos(searchString);
+        }
 
+        public MovieDto MovieDto(int movieId)
+        {
+            return _strategy.MovieDto(movieId);
         }
 
     }

@@ -14,5 +14,8 @@
         <DataTemplate DataType="{x:Type vm:SearchResultViewModel}">
             <view:SearchResultView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:MovieProfileViewModel}">
+            <view:MovieProfileView />
+        </DataTemplate>
     </Application.Resources>
 </Application>

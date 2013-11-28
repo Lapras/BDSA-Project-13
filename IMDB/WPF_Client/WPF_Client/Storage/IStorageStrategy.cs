@@ -12,5 +12,6 @@ namespace WPF_Client.Storage
     public interface IStorageStrategy
     {
         ObservableCollection<MovieSearchDto> MovieSearchDtos(string searchString);
+        MovieDto MovieDto(int movieId);
     }
 }

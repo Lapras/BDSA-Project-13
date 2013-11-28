@@ -42,6 +42,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -57,7 +58,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Dtos\MovieDto.cs" />
     <Compile Include="Dtos\MovieSearchDto.cs" />
+    <Compile Include="Mediator.cs" />
     <Compile Include="Model\Model.cs" />
     <Compile Include="Storage\IStorageStrategy.cs" />
     <Compile Include="Storage\RESTStrategy.cs" />
@@ -65,8 +68,12 @@
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="ViewModel\IViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="ViewModel\MovieProfileViewModel.cs" />
     <Compile Include="ViewModel\SearchResultViewModel.cs" />
     <Compile Include="ViewModel\SearchViewModel.cs" />
+    <Compile Include="View\MovieProfileView.xaml.cs">
+      <DependentUpon>MovieProfileView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\SearchResultView.xaml.cs">
       <DependentUpon>SearchResultView.xaml</DependentUpon>
     </Compile>
@@ -85,6 +92,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\MovieProfileView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\SearchResultView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

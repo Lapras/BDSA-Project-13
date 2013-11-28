@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="400">
-    
-    
+
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition MinHeight="50"  MaxHeight="100"/>
@@ -19,6 +19,7 @@
             <ColumnDefinition MinWidth="25"/>
         </Grid.ColumnDefinitions>
 
+        
 
         <TextBlock Grid.Row="0" Grid.Column="1" FontFamily="Resources/#Charlemagne Std" FontSize="45" FontWeight="Bold" Text="IMDB" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
 

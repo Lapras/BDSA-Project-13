@@ -12,7 +12,48 @@ namespace WPF_Client.Storage
     {
         public ObservableCollection<MovieSearchDto> MovieSearchDtos(string searchString)
         {
-            throw new NotImplementedException();
+            //GET rest etc. etc.
+            //return ...
+
+            return new ObservableCollection<MovieSearchDto>() { 
+                new MovieSearchDto() {Id = 0, Title = searchString, Year = 2013},
+                new MovieSearchDto() {Id = 1, Title = "Gravity", Year = 2013} 
+            };
+
         }
+
+
+        public MovieDto MovieDto(int movieId)
+        {
+            //GET rest etc. etc.
+            //return...
+
+
+
+            MovieDto result;
+
+            //just example for now....
+            switch (movieId)
+            {
+                case 0:
+                    result = new MovieDto {Title = Mediator.SearchString, Year = 2013, Kind = "Sci-fi"};
+                    return result;
+
+                case 1:
+                    result = new MovieDto { Title = "Gravity", Year = 2013, Kind = "Sci-fi" };
+                    return result;
+
+                default:
+                    result = new MovieDto { Title = "Should not see this title", Year = 2013, Kind = "Sci-fi" };
+                    return result;
+
+
+                
+
+            }
+
+
+        }
+
     }
 }
