@@ -12,6 +12,8 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using WPF_Client.Dtos;
+using WPF_Client.Model;
+using WPF_Client.Controller;
 
 namespace WPF_Client.ViewModel
 {
@@ -36,9 +38,10 @@ namespace WPF_Client.ViewModel
                 if (_textBox == value)
                     return;
                 _textBox = value;
-                Console.WriteLine(value);
 
-                Console.WriteLine(ComboBoxSelectedIndex);
+                //Console.WriteLine(value);
+                //Console.WriteLine(ComboBoxSelectedIndex);
+
                 OnPropertyChanged("TextBox");
             }
         }
@@ -97,17 +100,38 @@ namespace WPF_Client.ViewModel
 
         public void Execute(object parameter)
         {
-            
+            if (!SearchController.Search(_vm.TextBox, _vm.ComboBoxSelectedIndex))
+            {
+                MessageBox.Show("No results found for: " + _vm.TextBox, "No results");
+            }
+            else
+            {
+                ViewModelManager.Main.CurrentViewModel = new SearchResultViewModel();
+            }
+
+
+
+            /* old code
             switch (_vm.ComboBoxSelectedIndex) // We check the combobox's selected item.
             {
                 case 0: // Movies
                     Console.WriteLine("We search for movies");
 
-                    Mediator.SearchString = _vm.TextBox;
-                    Mediator.SearchType = _vm.ComboBoxSelectedIndex;
-                    var searchResultViewModel = new SearchResultViewModel();                    
-                    ViewModelManager.Main.CurrentViewModel = searchResultViewModel;
+                    //Mediator.SearchString = _vm.TextBox;
+                    //Mediator.SearchType = _vm.ComboBoxSelectedIndex;
+                                       
+                    
 
+
+                    IModel _model = new Model.Model();
+                    Mediator.SearchString = _vm.TextBox;
+                    Mediator.test = _model.MovieSearchDtos(Mediator.SearchString);
+                    Console.WriteLine(Mediator.SearchString);
+                    var searchResultViewModel = new SearchResultViewModel(); 
+
+
+                    //Console.WriteLine(Mediator.test[0].Title);
+                    ViewModelManager.Main.CurrentViewModel = searchResultViewModel;
 
                     break;
                 case 1: // Actors
@@ -119,7 +143,7 @@ namespace WPF_Client.ViewModel
                     Console.WriteLine("Default case");
                     break;
             }
-            
+            */
             
         }
 

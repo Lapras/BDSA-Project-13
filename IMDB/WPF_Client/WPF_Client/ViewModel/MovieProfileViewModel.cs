@@ -10,14 +10,13 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using WPF_Client.Dtos;
 using WPF_Client.Model;
+using WPF_Client.Controller;
 
 
 namespace WPF_Client.ViewModel
 {
     class MovieProfileViewModel : IViewModel
     {
-        private IModel _model;
-        
 
         private MovieDto _movieDto;
 
@@ -36,8 +35,6 @@ namespace WPF_Client.ViewModel
                     return;
                 _movieDto = value;
 
-                //Console.WriteLine(value.Title + " " + value.Year);
-
                 OnPropertyChanged("MovieDto");
             }
         }
@@ -45,9 +42,7 @@ namespace WPF_Client.ViewModel
 
         public MovieProfileViewModel()
         {
-            Console.WriteLine("MovieProfileViewModel created");
-            _model = new Model.Model();
-            _movieDto = _model.MovieDto(Mediator.MovieId);
+            MovieDto = HollywoodController.MovieDto;
         }
     }
 }

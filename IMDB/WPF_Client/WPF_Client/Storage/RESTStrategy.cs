@@ -23,7 +23,6 @@ namespace WPF_Client.Storage
                 new MovieSearchDto() {Id = 0, Title = "predator", Year = 1987},
                 new MovieSearchDto() {Id = 1, Title = "man of steel", Year = 2013},
                 new MovieSearchDto() {Id = 2, Title = "spiderman", Year = 2002},
-                new MovieSearchDto() {Id = 3, Title = searchString, Year = 2013} 
             };
 
 
@@ -55,10 +54,6 @@ namespace WPF_Client.Storage
 
                 case 2:
                     result = new MovieDto { Title = "Spiderman", Year = 2002, Kind = "Action" };
-                    return result;
-
-                case 3:
-                    result = new MovieDto { Title = Mediator.SearchString, Year = 2013, Kind = "Sci-fi" };
                     return result;
 
                 default:

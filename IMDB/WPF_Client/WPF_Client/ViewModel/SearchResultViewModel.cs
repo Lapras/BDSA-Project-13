@@ -8,8 +8,12 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using WPF_Client.Dtos;
 using WPF_Client.Model;
+using WPF_Client.Controller;
 
 namespace WPF_Client.ViewModel
 {
@@ -19,12 +23,9 @@ namespace WPF_Client.ViewModel
     /// </summary>
     public class SearchResultViewModel : IViewModel
     {
-        private IModel _model;
         private ObservableCollection<MovieSearchDto> _movieSearchDtos;
         private int _moviesFound;
-        public string SearchString { get; set; } //The string that will be searched with.
-        public int SearchType { get; set; } //The type of search that should be conducted.
-
+        
         public ICommand SelectMovieCommand { get; set; } //The command attached to clicking on a movie.
 
         /// <summary>
@@ -69,13 +70,15 @@ namespace WPF_Client.ViewModel
         /// </summary>
         public SearchResultViewModel()
         {
-            _model = new Model.Model();
             SelectMovieCommand = new SelectMovieCommand(this);
 
-            Search();
-            
+            MovieSearchDtos = SearchController.MovieSearchDtos;
+            MoviesFound = SearchController.MoviesFound;
+
         }
 
+
+        /*
         /// <summary>
         /// Constructor which takes in an IModel
         /// </summary>
@@ -84,31 +87,9 @@ namespace WPF_Client.ViewModel
             _model = model;
             SelectMovieCommand = new SelectMovieCommand(this);
 
-            Search();
-
         }
+        */
 
-
-
-        public void Search()
-        {
-            switch (Mediator.SearchType) // We check the search that should be conducted.
-            {
-                case 0: // Movies
-                    MovieSearchDtos = _model.MovieSearchDtos(Mediator.SearchString);
-                    MoviesFound = MovieSearchDtos.Count();
-                    //Console.WriteLine(MovieSearchDtos.Count());
-
-                    break;
-
-                case 1: // Actors
-
-                    break;
-                default:
-                    Console.WriteLine("Default case");
-                    break;
-            }
-        }
 
     }
 
@@ -140,10 +121,19 @@ namespace WPF_Client.ViewModel
             MovieSearchDto dto;
             dto = (MovieSearchDto)parameter;
 
-            Mediator.MovieId = dto.Id;
-            var movieProfileViewModel = new MovieProfileViewModel();
+            //Mediator.MovieId = dto.Id;
+            //HollywoodController.MovieId = dto.Id;
 
-            ViewModelManager.Main.CurrentViewModel = movieProfileViewModel;
+            if (!HollywoodController.GetMovie(dto.Id))
+            {
+                MessageBox.Show("Could not find movie");
+            }
+            else
+            {
+                ViewModelManager.Main.CurrentViewModel = new MovieProfileViewModel();
+            }
+
+            
 
         }
 

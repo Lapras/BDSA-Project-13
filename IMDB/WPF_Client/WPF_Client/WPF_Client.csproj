@@ -58,6 +58,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controller\HollywoodController.cs" />
+    <Compile Include="Controller\SearchController.cs" />
     <Compile Include="Dtos\MovieDto.cs" />
     <Compile Include="Dtos\MovieSearchDto.cs" />
     <Compile Include="Mediator.cs" />
