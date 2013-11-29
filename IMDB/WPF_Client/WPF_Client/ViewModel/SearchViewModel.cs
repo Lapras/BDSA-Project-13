@@ -104,10 +104,6 @@ namespace WPF_Client.ViewModel
             {
                 MessageBox.Show("No results found for: " + _vm.TextBox, "No results");
             }
-            else
-            {
-                ViewModelManager.Main.CurrentViewModel = new SearchResultViewModel();
-            }
 
 
 

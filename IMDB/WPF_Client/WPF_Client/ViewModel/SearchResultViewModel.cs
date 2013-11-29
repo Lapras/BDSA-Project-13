@@ -128,10 +128,6 @@ namespace WPF_Client.ViewModel
             {
                 MessageBox.Show("Could not find movie");
             }
-            else
-            {
-                ViewModelManager.Main.CurrentViewModel = new MovieProfileViewModel();
-            }
 
             
 

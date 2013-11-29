@@ -26,6 +26,8 @@ namespace WPF_Client.Controller
                 return false;
             }
 
+            ViewModelManager.Main.CurrentViewModel = new MovieProfileViewModel();
+
             return true;
 
         }

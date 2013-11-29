@@ -30,6 +30,7 @@ namespace WPF_Client.Controller
                         return false;
                     }
 
+                    ViewModelManager.Main.CurrentViewModel = new SearchResultViewModel();
 
                     break;
 

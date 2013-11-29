@@ -2,9 +2,16 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
+
 using WPF_Client.Dtos;
+
+
 
 namespace WPF_Client.Storage
 {
@@ -16,18 +23,21 @@ namespace WPF_Client.Storage
             //return ...
 
             
-
-
             //example for now...
+
+            
             var collection = new ObservableCollection<MovieSearchDto>() { 
                 new MovieSearchDto() {Id = 0, Title = "predator", Year = 1987},
                 new MovieSearchDto() {Id = 1, Title = "man of steel", Year = 2013},
                 new MovieSearchDto() {Id = 2, Title = "spiderman", Year = 2002},
             };
-
+            
 
             var result = new ObservableCollection<MovieSearchDto>(collection.Where(m => m.Title == searchString.ToLower()).ToList());
+
+
             return result;
+
 
         }
 
@@ -61,12 +71,38 @@ namespace WPF_Client.Storage
                     return result;
 
 
-                
-
             }
 
 
         }
+
+
+
+
+
+
+        /*
+        public async Task<List<MovieSearchDto>> GetMovies(string searchString)
+        {
+            var foundMovies = await GetMoviesAsync(searchString);
+            return foundMovies;
+        }
+
+        private async Task<List<MovieSearchDto>> GetMoviesAsync(string searchString)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                return JsonConvert.DeserializeObject<List<MovieDto>>(
+                    await httpClient.GetStringAsync("http://localhost:54321/movies/?title=" + searchString)
+                );
+            }
+        }
+        */
+
+
+
+
+
 
     }
 }
