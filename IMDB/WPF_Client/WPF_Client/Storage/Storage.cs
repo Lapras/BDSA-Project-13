@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WPF_Client.Dtos;
+using DtoSubsystem;
 
 namespace WPF_Client.Storage
 {
@@ -18,14 +19,14 @@ namespace WPF_Client.Storage
             
         }
 
-        public ObservableCollection<MovieSearchDto> MovieSearchDtos(string searchString)
+        public ObservableCollection<MovieDto> MovieDtos(string searchString)
         {
-            return _strategy.MovieSearchDtos(searchString);
+            return _strategy.MovieDtos(searchString);
         }
 
-        public MovieDto MovieDto(int movieId)
+        public MovieProfileDto MovieDto(int movieId)
         {
-            return _strategy.MovieDto(movieId);
+            return _strategy.MovieProfileDto(movieId);
         }
 
     }

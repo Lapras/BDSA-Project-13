@@ -57,6 +57,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\DtoSubsystem\DtoSubsystem.csproj">
+      <Project>{a8e297be-081e-4b61-85e8-7dbcc98caf0b}</Project>
+      <Name>DtoSubsystem</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WPF_Client\WPF_Client.csproj">
       <Project>{5767092c-3689-4a81-b18d-2ab5b3ac088f}</Project>
       <Name>WPF_Client</Name>

@@ -18,12 +18,14 @@ namespace WPF_Client.ViewModel
     class MovieProfileViewModel : IViewModel
     {
 
-        private MovieDto _movieDto;
+        private MovieProfileDto _movieDto;
+
+        public ICommand BackToSearchResultCommand { get; set; }
 
         /// <summary>
         /// The collection of movie results that is displayed in the view.
         /// </summary>
-        public MovieDto MovieDto
+        public MovieProfileDto MovieDto
         {
             get
             {
@@ -35,7 +37,7 @@ namespace WPF_Client.ViewModel
                     return;
                 _movieDto = value;
 
-                OnPropertyChanged("MovieDto");
+                OnPropertyChanged("MovieProfileDto");
             }
         }
 
@@ -43,6 +45,44 @@ namespace WPF_Client.ViewModel
         public MovieProfileViewModel()
         {
             MovieDto = HollywoodController.MovieDto;
+            BackToSearchResultCommand = new BackToSearchResultCommand(this);
+        }
+    }
+
+
+
+
+
+    // COMMANDS:
+
+    /// <summary>
+    /// Command bound to the Search Button
+    /// </summary>
+    class BackToSearchResultCommand : ICommand
+    {
+        private MovieProfileViewModel _vm;
+
+
+        public BackToSearchResultCommand(MovieProfileViewModel vm)
+        {
+            _vm = vm;
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        public void Execute(object parameter)
+        {
+            ViewModelManager.Main.CurrentViewModel = new SearchResultViewModel();
+        }
+
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+
         }
     }
 }

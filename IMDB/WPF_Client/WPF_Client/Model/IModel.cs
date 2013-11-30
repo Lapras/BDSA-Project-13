@@ -5,12 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WPF_Client.Dtos;
+using DtoSubsystem;
 
 namespace WPF_Client.Model
 {
     public interface IModel
     {
-        ObservableCollection<MovieSearchDto> MovieSearchDtos(string searchString);
-        MovieDto MovieDto(int movieId);
+        ObservableCollection<MovieDto> MovieDtos(string searchString);
+        //void MovieSearchDtos(string searchString);
+        MovieProfileDto MovieProfileDto(int movieId);
     }
 }

@@ -37,6 +37,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -62,14 +65,14 @@
     </ApplicationDefinition>
     <Compile Include="Controller\HollywoodController.cs" />
     <Compile Include="Controller\SearchController.cs" />
+    <Compile Include="Dtos\MovieProfileDto.cs" />
     <Compile Include="Dtos\MovieDto.cs" />
-    <Compile Include="Dtos\MovieSearchDto.cs" />
-    <Compile Include="Mediator.cs" />
     <Compile Include="Model\IModel.cs" />
     <Compile Include="Model\Model.cs" />
     <Compile Include="Storage\IStorageStrategy.cs" />
     <Compile Include="Storage\RESTStrategy.cs" />
     <Compile Include="Storage\Storage.cs" />
+    <Compile Include="UnitTestDetector.cs" />
     <Compile Include="ViewModelManager.cs" />
     <Compile Include="ViewModel\IViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
@@ -128,6 +131,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -137,7 +141,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\DtoSubsystem\DtoSubsystem.csproj">
+      <Project>{a8e297be-081e-4b61-85e8-7dbcc98caf0b}</Project>
+      <Name>DtoSubsystem</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>

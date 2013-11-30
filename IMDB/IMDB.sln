@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DtoSubsystem", "DtoSubsyste
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImdbRestService", "ImdbRestService\ImdbRestService.csproj", "{D038B1DB-A875-46C5-AE46-0849CD2C9158}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF_Client", "WPF_Client\WPF_Client\WPF_Client.csproj", "{5767092C-3689-4A81-B18D-2AB5B3AC088F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF_ClientUnitTest", "WPF_Client\WPF_ClientUnitTest\WPF_ClientUnitTest.csproj", "{BFE5C370-A402-44B8-89CE-0637461CA8EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +35,14 @@ Global
 		{D038B1DB-A875-46C5-AE46-0849CD2C9158}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D038B1DB-A875-46C5-AE46-0849CD2C9158}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D038B1DB-A875-46C5-AE46-0849CD2C9158}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5767092C-3689-4A81-B18D-2AB5B3AC088F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5767092C-3689-4A81-B18D-2AB5B3AC088F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5767092C-3689-4A81-B18D-2AB5B3AC088F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5767092C-3689-4A81-B18D-2AB5B3AC088F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFE5C370-A402-44B8-89CE-0637461CA8EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFE5C370-A402-44B8-89CE-0637461CA8EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFE5C370-A402-44B8-89CE-0637461CA8EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFE5C370-A402-44B8-89CE-0637461CA8EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

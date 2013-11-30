@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ViewModel="clr-namespace:WPF_Client.ViewModel"
         xmlns:View="clr-namespace:WPF_Client.View"
-        Title="IMDB" Height="500" Width="500" MinHeight="400" MinWidth="400"
+        Title="IMDB" Height="500" Width="550" MinHeight="450" MinWidth="400"
         ResizeMode="CanResize"
         mc:Ignorable="d">
     <Grid>

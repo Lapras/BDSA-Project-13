@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using System.Runtime.Serialization;
 
 namespace WPF_Client.Dtos
 {
@@ -13,13 +10,13 @@ namespace WPF_Client.Dtos
     //should not be used should use shared dtosubsystem
 
     /// <summary>
-    /// Dto used when receiving movie search results.
+    /// Dto used when receiving movie information on a single movie.
     /// </summary>
-    [Serializable]
-    public class MovieDto2
+    public class MovieProfileDto
     {
-        public int Id { get; set; }
+        //for now...
         public string Title { get; set; }
-        public int? Year { get; set; }
+        public string Kind { get; set; }
+        public Nullable<int> Year { get; set; }
     }
 }

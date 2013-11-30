@@ -15,11 +15,11 @@ namespace WPF_Client.Controller
         public static IModel _model = new Model.Model();
 
 
-        public static MovieDto MovieDto { get; set; } // The MovieDto that the SearchResultViewModel loads for the MovieDto for.
+        public static MovieProfileDto MovieDto { get; set; } // The MovieDto that the SearchResultViewModel loads for the MovieDto for.
 
         public static bool GetMovie(int movieId)
         {
-            MovieDto = _model.MovieDto(movieId);
+            MovieDto = _model.MovieProfileDto(movieId);
 
             if (MovieDto == null)
             {

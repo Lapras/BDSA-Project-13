@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using WPF_Client.Dtos;
+using DtoSubsystem;
 using WPF_Client.Model;
 using WPF_Client.ViewModel;
 using WPF_Client.Controller;
@@ -27,44 +27,40 @@ namespace WPF_ClientUnitTest
         ///  Tests whether the correct movies are found.
         /// </summary>
         [TestMethod]
-        public void MovieSearch_CorrectMoviesFound()
+        public void MovieSearch_CorrectMoviesDisplayed()
         {
-            var twillight1 = new MovieSearchDto
+            var twillight1 = new MovieDto
             {
                 Title = "Twillight 1"
             };
 
-            var twillight2 = new MovieSearchDto
+            var twillight2 = new MovieDto
             {
                 Title = "Twillight 2"
             };
 
-            var twillight3 = new MovieSearchDto
+            var twillight3 = new MovieDto
             {
                 Title = "Twillight 3"
             };
 
-            //Mediator.SearchString = "Twillight"; // We simulate that the user searches for "Twillight".
-            //Mediator.SearchType = 0; // We simulate that the user selected the search type: movies.
-
             
-            
-
             // We simluate that the model returns the correct result twillight 1, twillight 2 and twillight 3.
-            var movieCollection = new ObservableCollection<MovieSearchDto>() { twillight1, twillight2, twillight3 };
+            var movieCollection = new ObservableCollection<MovieDto>() { twillight1, twillight2, twillight3 };
             var modelMock = new Mock<IModel>();
-            modelMock.Setup(m => m.MovieSearchDtos("Twillight")).Returns(movieCollection);
+            modelMock.Setup(m => m.MovieDtos("Twillight")).Returns(movieCollection);
 
-            SearchController._model = modelMock.Object;
-            //var searchResultViewModel = new SearchResultViewModel(model); // We inject the searchResultViewModel with our model mock.
-            SearchController.Search("Twillight", 0);
-
-            var searchResultViewModel = new SearchResultViewModel();
+            SearchController._model = modelMock.Object; // inject the controller responsible for searching with the mock model.
+            SearchController.Search("Twillight", 0); // The search controller searches.
+            
+            var searchResultViewModel = new SearchResultViewModel(); // we create the view model (its constructor takes the search results from the controller)
 
             // We test if the SearchResultView really shows the correct movies.
             Assert.AreEqual(movieCollection, searchResultViewModel.MovieSearchDtos);
+            Assert.AreEqual(movieCollection.Count, searchResultViewModel.MovieSearchDtos.Count);
 
 
+            
         }
     }
 }

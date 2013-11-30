@@ -105,41 +105,6 @@ namespace WPF_Client.ViewModel
                 MessageBox.Show("No results found for: " + _vm.TextBox, "No results");
             }
 
-
-
-            /* old code
-            switch (_vm.ComboBoxSelectedIndex) // We check the combobox's selected item.
-            {
-                case 0: // Movies
-                    Console.WriteLine("We search for movies");
-
-                    //Mediator.SearchString = _vm.TextBox;
-                    //Mediator.SearchType = _vm.ComboBoxSelectedIndex;
-                                       
-                    
-
-
-                    IModel _model = new Model.Model();
-                    Mediator.SearchString = _vm.TextBox;
-                    Mediator.test = _model.MovieSearchDtos(Mediator.SearchString);
-                    Console.WriteLine(Mediator.SearchString);
-                    var searchResultViewModel = new SearchResultViewModel(); 
-
-
-                    //Console.WriteLine(Mediator.test[0].Title);
-                    ViewModelManager.Main.CurrentViewModel = searchResultViewModel;
-
-                    break;
-                case 1: // Actors
-                    Console.WriteLine("We search for actors");
-
-
-                    break;
-                default:
-                    Console.WriteLine("Default case");
-                    break;
-            }
-            */
             
         }
 

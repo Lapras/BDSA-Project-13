@@ -15,6 +15,8 @@ using WPF_Client.Dtos;
 using WPF_Client.Model;
 using WPF_Client.Controller;
 
+using DtoSubsystem;
+
 namespace WPF_Client.ViewModel
 {
 
@@ -23,15 +25,15 @@ namespace WPF_Client.ViewModel
     /// </summary>
     public class SearchResultViewModel : IViewModel
     {
-        private ObservableCollection<MovieSearchDto> _movieSearchDtos;
+        private ObservableCollection<MovieDto> _movieSearchDtos;
         private int _moviesFound;
         
         public ICommand SelectMovieCommand { get; set; } //The command attached to clicking on a movie.
-
+        public ICommand BackToSearchCommand { get; set; }
         /// <summary>
         /// The collection of movie results that is displayed in the view.
         /// </summary>
-        public ObservableCollection<MovieSearchDto> MovieSearchDtos
+        public ObservableCollection<MovieDto> MovieSearchDtos
         {
             get
             {
@@ -71,25 +73,12 @@ namespace WPF_Client.ViewModel
         public SearchResultViewModel()
         {
             SelectMovieCommand = new SelectMovieCommand(this);
+            BackToSearchCommand = new BackToSearchCommand(this);
 
-            MovieSearchDtos = SearchController.MovieSearchDtos;
+            MovieSearchDtos = SearchController.MovieDtos;
             MoviesFound = SearchController.MoviesFound;
 
         }
-
-
-        /*
-        /// <summary>
-        /// Constructor which takes in an IModel
-        /// </summary>
-        public SearchResultViewModel(IModel model)
-        {
-            _model = model;
-            SelectMovieCommand = new SelectMovieCommand(this);
-
-        }
-        */
-
 
     }
 
@@ -118,8 +107,8 @@ namespace WPF_Client.ViewModel
         public void Execute(object parameter)
         {
             
-            MovieSearchDto dto;
-            dto = (MovieSearchDto)parameter;
+            MovieDto dto;
+            dto = (MovieDto)parameter;
 
             //Mediator.MovieId = dto.Id;
             //HollywoodController.MovieId = dto.Id;
@@ -130,6 +119,40 @@ namespace WPF_Client.ViewModel
             }
 
             
+
+        }
+
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+
+        }
+    }
+
+
+    /// <summary>
+    /// Command bound to the Search Button
+    /// </summary>
+    class BackToSearchCommand : ICommand
+    {
+        private SearchResultViewModel _vm;
+
+
+        public BackToSearchCommand(SearchResultViewModel vm)
+        {
+            _vm = vm;
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        public void Execute(object parameter)
+        {
+            ViewModelManager.Main.CurrentViewModel = new SearchViewModel();
+
 
         }
 

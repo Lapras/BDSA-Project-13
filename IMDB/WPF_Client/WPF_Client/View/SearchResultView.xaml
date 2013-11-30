@@ -11,7 +11,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition MinHeight="50"  MaxHeight="100"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" MaxHeight="350"/>
             <RowDefinition MinHeight="10"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -23,7 +23,7 @@
 
         <TextBlock Grid.Row="0" Grid.Column="1" FontFamily="Resources/#Charlemagne Std" FontSize="45" FontWeight="Bold" Text="Results" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
 
-        <ListBox Name="ListBox1" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding MovieSearchDtos, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedItem}" Width="300" MinHeight="250">
+        <ListBox Name="ListBox1" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding MovieSearchDtos, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedItem}" ScrollViewer.VerticalScrollBarVisibility="Visible" MinWidth="350" MaxWidth="500" MinHeight="250" MaxHeight="350">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDoubleClick">
                     <i:InvokeCommandAction Command="{Binding SelectMovieCommand}" CommandParameter="{Binding SelectedItem, ElementName=ListBox1}"/>
@@ -34,14 +34,12 @@
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="210" />
-                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="400" />
+                            <ColumnDefinition MinWidth="25" />
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0" Text="{Binding Title}" FontFamily="Resources/#Charlemagne Std" FontSize="20" FontWeight="Bold"/>
                         <TextBlock Grid.Column="1" Text="{Binding Year, StringFormat='({0})'}" FontFamily="Resources/#Charlemagne Std" FontSize="20" FontWeight="Bold"/>
-
-                        
 
                     </Grid>
                 </DataTemplate>
@@ -52,6 +50,7 @@
 
 
         <TextBlock Grid.Row="2" Grid.Column="1" FontFamily="Resources/#Charlemagne Std" FontSize="18" FontWeight="Bold" Text="{Binding MoviesFound, StringFormat='Found: {0}', Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top"></TextBlock>
+        <Button Grid.Row="2" Grid.Column="1" Width="75" Height="25" Margin="10" HorizontalAlignment="Left" Command="{Binding BackToSearchCommand}" Content="Back"/>
 
 
     </Grid>
