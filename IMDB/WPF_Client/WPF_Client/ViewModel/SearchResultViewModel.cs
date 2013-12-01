@@ -21,11 +21,11 @@ namespace WPF_Client.ViewModel
 {
 
     /// <summary>
-    /// ViewModel for the SearchResultView.
+    /// ViewModel for the MovieSearchResultView.
     /// </summary>
-    public class SearchResultViewModel : IViewModel
+    public class MovieSearchResultViewModel : IViewModel
     {
-        private ObservableCollection<MovieDto> _movieSearchDtos;
+        private ObservableCollection<MovieDto> _movieDtos;
         private int _moviesFound;
         
         public ICommand SelectMovieCommand { get; set; } //The command attached to clicking on a movie.
@@ -33,18 +33,18 @@ namespace WPF_Client.ViewModel
         /// <summary>
         /// The collection of movie results that is displayed in the view.
         /// </summary>
-        public ObservableCollection<MovieDto> MovieSearchDtos
+        public ObservableCollection<MovieDto> MovieDtos
         {
             get
             {
-                return _movieSearchDtos;
+                return _movieDtos;
             }
             set
             {
-                if (_movieSearchDtos == value)
+                if (_movieDtos == value)
                     return;
-                _movieSearchDtos = value;                
-                OnPropertyChanged("MovieSearchDtos");
+                _movieDtos = value;                
+                OnPropertyChanged("MovieDtos");
             }
         }
 
@@ -70,12 +70,12 @@ namespace WPF_Client.ViewModel
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public SearchResultViewModel()
+        public MovieSearchResultViewModel()
         {
             SelectMovieCommand = new SelectMovieCommand(this);
             BackToSearchCommand = new BackToSearchCommand(this);
 
-            MovieSearchDtos = SearchController.MovieDtos;
+            MovieDtos = SearchController.MovieDtos;
             MoviesFound = SearchController.MoviesFound;
 
         }
@@ -90,10 +90,10 @@ namespace WPF_Client.ViewModel
     /// </summary>
     class SelectMovieCommand : ICommand
     {
-        private SearchResultViewModel _vm;
+        private MovieSearchResultViewModel _vm;
 
 
-        public SelectMovieCommand(SearchResultViewModel vm)
+        public SelectMovieCommand(MovieSearchResultViewModel vm)
         {
             _vm = vm;
         }
@@ -136,10 +136,10 @@ namespace WPF_Client.ViewModel
     /// </summary>
     class BackToSearchCommand : ICommand
     {
-        private SearchResultViewModel _vm;
+        private MovieSearchResultViewModel _vm;
 
 
-        public BackToSearchCommand(SearchResultViewModel vm)
+        public BackToSearchCommand(MovieSearchResultViewModel vm)
         {
             _vm = vm;
         }

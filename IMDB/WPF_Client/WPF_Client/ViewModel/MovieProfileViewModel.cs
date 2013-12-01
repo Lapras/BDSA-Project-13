@@ -75,7 +75,7 @@ namespace WPF_Client.ViewModel
 
         public void Execute(object parameter)
         {
-            ViewModelManager.Main.CurrentViewModel = new SearchResultViewModel();
+            ViewModelManager.Main.CurrentViewModel = new MovieSearchResultViewModel();
         }
 
         public event EventHandler CanExecuteChanged

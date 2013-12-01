@@ -15,7 +15,6 @@ namespace WPF_Client.Controller
     public static class SearchController
     {
         public static IModel _model = new Model.Model();
-
         public static ObservableCollection<MovieDto> MovieDtos { get; set; }
         public static int MoviesFound { get; set; }
 
@@ -40,7 +39,7 @@ namespace WPF_Client.Controller
                     if (!UnitTestDetector.IsInUnitTest)
                     {
                         
-                        ViewModelManager.Main.CurrentViewModel = new SearchResultViewModel();
+                        ViewModelManager.Main.CurrentViewModel = new MovieSearchResultViewModel();
                     }
                     
 
