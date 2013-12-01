@@ -77,7 +77,7 @@
     <Compile Include="ViewModel\IViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\MovieProfileViewModel.cs" />
-    <Compile Include="ViewModel\SearchResultViewModel.cs" />
+    <Compile Include="ViewModel\MovieResultViewModel.cs" />
     <Compile Include="ViewModel\SearchViewModel.cs" />
     <Compile Include="View\MovieProfileView.xaml.cs">
       <DependentUpon>MovieProfileView.xaml</DependentUpon>
