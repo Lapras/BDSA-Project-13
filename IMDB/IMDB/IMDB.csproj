@@ -47,8 +47,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    <Reference Include="RestSharp">
+      <HintPath>..\packages\RestSharp.104.4.0\lib\net4\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -63,74 +63,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="C__MigrationHistory.cs">
-      <DependentUpon>Imdb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Imdb.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Imdb.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Imdb.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Imdb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Imdb.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Imdb.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="InfoType.cs">
-      <DependentUpon>Imdb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="MovieInfo.cs">
-      <DependentUpon>Imdb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Movies.cs">
-      <DependentUpon>Imdb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Participate.cs">
-      <DependentUpon>Imdb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="People.cs">
-      <DependentUpon>Imdb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PersonInfo.cs">
-      <DependentUpon>Imdb.tt</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <EntityDeploy Include="Imdb.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Imdb.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="Imdb.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Imdb.edmx</DependentUpon>
-      <LastGenOutput>Imdb.Context.cs</LastGenOutput>
-    </None>
-    <None Include="Imdb.edmx.diagram">
-      <DependentUpon>Imdb.edmx</DependentUpon>
-    </None>
-    <None Include="Imdb.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Imdb.edmx</DependentUpon>
-      <LastGenOutput>Imdb.cs</LastGenOutput>
-    </None>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Imdb.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Imdb_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>Imdb.mdf</DependentUpon>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

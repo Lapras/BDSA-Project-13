@@ -40,6 +40,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="RestSharp">
+      <HintPath>..\..\packages\RestSharp.104.4.0\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -129,57 +132,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\SearchController.cs" />
-    <Compile Include="C__MigrationHistory.cs">
-      <DependentUpon>Imdb.tt</DependentUpon>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Imdb.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Imdb.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Imdb.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Imdb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Imdb.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Imdb.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="InfoType.cs">
-      <DependentUpon>Imdb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ActorViewModel.cs" />
     <Compile Include="Models\MovieDetailsViewModel.cs" />
     <Compile Include="Models\MovieOverviewViewModel.cs" />
-    <Compile Include="Models\MovieViewModel.cs" />
     <Compile Include="Models\PersonDetailsViewModel.cs" />
-    <Compile Include="MovieInfo.cs">
-      <DependentUpon>Imdb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Movies.cs">
-      <DependentUpon>Imdb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Participate.cs">
-      <DependentUpon>Imdb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="People.cs">
-      <DependentUpon>Imdb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PersonInfo.cs">
-      <DependentUpon>Imdb.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\Imdb.mdf" />
-    <Content Include="App_Data\Imdb_log.ldf">
-      <DependentUpon>Imdb.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -236,23 +198,6 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <EntityDeploy Include="Imdb.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Imdb.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Imdb.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Imdb.edmx</DependentUpon>
-      <LastGenOutput>Imdb.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Imdb.edmx.diagram">
-      <DependentUpon>Imdb.edmx</DependentUpon>
-    </Content>
-    <Content Include="Imdb.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Imdb.edmx</DependentUpon>
-      <LastGenOutput>Imdb.cs</LastGenOutput>
-    </Content>
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
@@ -269,7 +214,9 @@
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -284,12 +231,20 @@
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Search\PersonDetails.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\DtoSubsystem\DtoSubsystem.csproj">
+      <Project>{a8e297be-081e-4b61-85e8-7dbcc98caf0b}</Project>
+      <Name>DtoSubsystem</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -305,15 +260,15 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>2550</DevelopmentServerPort>
+          <DevelopmentServerPort>6179</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:2046/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost:54321</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

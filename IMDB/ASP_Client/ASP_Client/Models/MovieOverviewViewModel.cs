@@ -1,14 +1,16 @@
 ﻿using System.Collections.Generic;
+using DtoSubsystem;
+
 
 namespace ASP_Client.Models
 {
     public class MovieOverviewViewModel
     {
-        public List<MovieViewModel> FoundMovies;
+        public List<MovieDto> FoundMovies;
 
         public MovieOverviewViewModel()
         {
-            FoundMovies = new List<MovieViewModel>();
+            FoundMovies = new List<MovieDto>();
         }
     }
 }

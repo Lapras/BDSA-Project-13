@@ -1,0 +1,57 @@
+﻿<UserControl x:Class="WPF_Client.View.MovieSearchResultView"
+             xmlns:vm="clr-namespace:WPF_Client.ViewModel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="400">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition MinHeight="50"  MaxHeight="100"/>
+            <RowDefinition Height="Auto" MaxHeight="350"/>
+            <RowDefinition MinHeight="10"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="10"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition MinWidth="10"/>
+        </Grid.ColumnDefinitions>
+
+
+        <TextBlock Grid.Row="0" Grid.Column="1" FontFamily="Resources/#Charlemagne Std" FontSize="45" FontWeight="Bold" Text="Results" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+
+        <ListBox Name="ListBox1" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding MovieDtos, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedItem}" ScrollViewer.VerticalScrollBarVisibility="Visible" MinWidth="350" MaxWidth="500" MinHeight="250" MaxHeight="350">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding SelectMovieCommand}" CommandParameter="{Binding SelectedItem, ElementName=ListBox1}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+
+            <ListBox.ItemTemplate>                
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="400" />
+                            <ColumnDefinition MinWidth="25" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="{Binding Title}" FontFamily="Resources/#Charlemagne Std" FontSize="20" FontWeight="Bold"/>
+                        <TextBlock Grid.Column="1" Text="{Binding Year, StringFormat='({0})'}" FontFamily="Resources/#Charlemagne Std" FontSize="20" FontWeight="Bold"/>
+
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+
+            
+        </ListBox>
+
+
+        <TextBlock Grid.Row="2" Grid.Column="1" FontFamily="Resources/#Charlemagne Std" FontSize="18" FontWeight="Bold" Text="{Binding MoviesFound, StringFormat='Found: {0}', Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top"></TextBlock>
+        <Button Grid.Row="2" Grid.Column="1" Width="75" Height="25" Margin="10" HorizontalAlignment="Left" Command="{Binding BackToSearchCommand}" Content="Back"/>
+
+
+    </Grid>
+</UserControl>

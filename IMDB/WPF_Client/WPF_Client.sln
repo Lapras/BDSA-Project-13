@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF_Client", "WPF_Client\WPF_Client.csproj", "{5767092C-3689-4A81-B18D-2AB5B3AC088F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF_ClientUnitTest", "WPF_ClientUnitTest\WPF_ClientUnitTest.csproj", "{BFE5C370-A402-44B8-89CE-0637461CA8EF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5767092C-3689-4A81-B18D-2AB5B3AC088F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5767092C-3689-4A81-B18D-2AB5B3AC088F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5767092C-3689-4A81-B18D-2AB5B3AC088F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5767092C-3689-4A81-B18D-2AB5B3AC088F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFE5C370-A402-44B8-89CE-0637461CA8EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFE5C370-A402-44B8-89CE-0637461CA8EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFE5C370-A402-44B8-89CE-0637461CA8EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFE5C370-A402-44B8-89CE-0637461CA8EF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
