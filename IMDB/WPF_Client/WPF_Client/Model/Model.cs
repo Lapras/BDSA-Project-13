@@ -29,7 +29,12 @@ namespace WPF_Client.Model
         {
             return _storage.MovieDto(movieId);
         }
-        
+
+        public bool CreateProfile(string name, string password)
+        {
+            return _storage.CreateProfile(name, password);
+
+        }
 
     }
 }

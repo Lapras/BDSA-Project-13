@@ -20,6 +20,7 @@ namespace WPF_Client.Controller
 
         public static bool Search(string searchString, int searchType)
         {
+            
             switch (searchType) // We check the search that should be conducted.
             {
                 case 0: // Movies
@@ -38,8 +39,9 @@ namespace WPF_Client.Controller
                     //unit test doesnt like creating a new viewmodel and assigning it.
                     if (!UnitTestDetector.IsInUnitTest)
                     {
-                        
                         ViewModelManager.Main.CurrentViewModel = new MovieSearchResultViewModel();
+
+                        
                     }
                     
 
@@ -55,10 +57,7 @@ namespace WPF_Client.Controller
                     break;
             }
 
-
             return true;
-            
-
         }
 
     }

@@ -29,5 +29,10 @@ namespace WPF_Client.Storage
             return _strategy.MovieProfileDto(movieId);
         }
 
+        public bool CreateProfile(string name, string password)
+        {
+            return _strategy.CreateProfile(name, password);
+
+        }
     }
 }

@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using WPF_Client.Commands;
 using WPF_Client.Dtos;
 using WPF_Client.Model;
 using WPF_Client.Controller;
@@ -20,7 +21,8 @@ namespace WPF_Client.ViewModel
 
         private MovieProfileDto _movieDto;
 
-        public ICommand BackToSearchResultCommand { get; set; }
+        //public ICommand BackToSearchResultCommand { get; set; }
+        public ICommand BackCommand { get; set; }
 
         /// <summary>
         /// The collection of movie results that is displayed in the view.
@@ -45,7 +47,8 @@ namespace WPF_Client.ViewModel
         public MovieProfileViewModel()
         {
             MovieDto = HollywoodController.MovieDto;
-            BackToSearchResultCommand = new BackToSearchResultCommand(this);
+            //BackToSearchResultCommand = new BackToSearchResultCommand(this);
+            BackCommand = new BackCommand();
         }
     }
 

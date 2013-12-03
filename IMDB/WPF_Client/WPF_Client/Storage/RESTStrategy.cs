@@ -85,46 +85,21 @@ namespace WPF_Client.Storage
 
         }
 
-
-        
-
-
-
-        /*
-        public async Task<List<MovieDto>> GetMovies(string searchString)
+        public bool CreateProfile(string name, string password)
         {
-            //var foundMovies = await GetMoviesAsync(searchString);
-            return Task.Run(() => GetMoviesAsync(searchString)).Result;;
+            //example for now:
+
+
+            // POST /createprofile/
+            //etc. etc.
+
+            return true;
+
         }
-
-        private async Task<List<MovieDto>> GetMoviesAsync(string searchString)
-        {
-            using (var httpClient = new HttpClient())
-            {
-                return JsonConvert.DeserializeObject<List<MovieDto>>(
-                    await httpClient.GetStringAsync("http://localhost:54321/movies/?title=" + searchString)
-                );
-            }
-        }
-
-
-
-
-
-        public async void test(string searchString)
-        {
-            var result = await GetMoviesAsync(searchString);
-            Console.WriteLine("eeeeeeeee");
-
-
-            SearchController.MovieSearchDtos = new ObservableCollection<MovieDto>(result);
-        }
-        */
-
+      
 
 
         }
-
 
 
     

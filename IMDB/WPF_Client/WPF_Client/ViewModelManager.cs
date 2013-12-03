@@ -16,6 +16,17 @@ namespace WPF_Client
     {
         private static MainWindowViewModel _main;
 
+        private static Stack<IViewModel> _previousViewModelsStack = new Stack<IViewModel>();
+
+        public static Stack<IViewModel> PreviousViewModelsStack
+        {
+            get
+            {
+                return _previousViewModelsStack;
+            }
+        }
+
+
         public static MainWindowViewModel Main
         {
             get

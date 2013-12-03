@@ -17,5 +17,11 @@
         <DataTemplate DataType="{x:Type vm:MovieProfileViewModel}">
             <view:MovieProfileView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:CreateProfileViewModel}">
+            <view:CreateProfileView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:LoginViewModel}">
+            <view:LoginView />
+        </DataTemplate>
     </Application.Resources>
 </Application>

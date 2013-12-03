@@ -42,7 +42,7 @@
 
         </Grid>
 
-        <Button Grid.Row="2" Grid.Column="1" Width="75" Height="25" Margin="10" HorizontalAlignment="Left" Command="{Binding BackToSearchResultCommand}" Content="Back"/>
+        <Button Grid.Row="2" Grid.Column="1" Width="75" Height="25" Margin="10" HorizontalAlignment="Left" Command="{Binding BackCommand}" Content="Back"/>
 
     </Grid>
 </UserControl>

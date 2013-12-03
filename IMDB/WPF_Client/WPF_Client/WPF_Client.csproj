@@ -63,8 +63,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Command\BackCommand.cs" />
     <Compile Include="Controller\HollywoodController.cs" />
     <Compile Include="Controller\SearchController.cs" />
+    <Compile Include="Controller\UserProfileController.cs" />
     <Compile Include="Dtos\MovieProfileDto.cs" />
     <Compile Include="Dtos\MovieDto.cs" />
     <Compile Include="Model\IModel.cs" />
@@ -74,11 +76,19 @@
     <Compile Include="Storage\Storage.cs" />
     <Compile Include="UnitTestDetector.cs" />
     <Compile Include="ViewModelManager.cs" />
+    <Compile Include="ViewModel\CreateProfileViewModel.cs" />
     <Compile Include="ViewModel\IViewModel.cs" />
+    <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\MovieProfileViewModel.cs" />
-    <Compile Include="ViewModel\MovieResultViewModel.cs" />
+    <Compile Include="ViewModel\MovieSearchResultViewModel.cs" />
     <Compile Include="ViewModel\SearchViewModel.cs" />
+    <Compile Include="View\CreateProfileView.xaml.cs">
+      <DependentUpon>CreateProfileView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MovieProfileView.xaml.cs">
       <DependentUpon>MovieProfileView.xaml</DependentUpon>
     </Compile>
@@ -100,6 +110,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\CreateProfileView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MovieProfileView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
