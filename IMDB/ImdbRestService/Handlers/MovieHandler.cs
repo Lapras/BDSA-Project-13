@@ -71,6 +71,14 @@ namespace ImdbRestService.Handlers
                         var msg = new JavaScriptSerializer().Serialize(movies);
                         return new ResponseData(msg, HttpStatusCode.OK);
                     }
+					
+					if (key == "movieId")
+                    {
+                        var movie = GetMovieById(Convert.ToInt16(value));
+
+                        var msg = new JavaScriptSerializer().Serialize(movie);
+                        return new ResponseData(msg, HttpStatusCode.OK);
+                    }
                 }
             }
 
@@ -117,6 +125,59 @@ namespace ImdbRestService.Handlers
                 );
             }
         }
+		
+		 /// <summary>
+        /// Method recieving a movie by id from the local database
+        /// </summary>
+        /// <param name="id"> id of the movie we search for </param>
+        /// <returns> movie we requested </returns>
+        public List<MovieDetailsDto> GetMovieById(int id)
+        {
+            using (var entities = new ImdbEntities())
+            {
+                var participants = (from peo in entities.People
+                                    join par in entities.Participates on peo.Id equals par.Person_Id
+                                    join m in entities.Movies on par.Movie_Id equals m.Id
+                                    where m.Id == id
+                                    group peo by new
+                                    {
+                                        peo.Id,
+                                        peo.Name,
+                                        par.CharName
+                                    }
+                                    into grouping
+                                    select new PersonDto()
+                                    {
+                                        Id = grouping.Key.Id,
+                                        Name = grouping.Key.Name,
+                                        CharacterName = grouping.Key.CharName
+                                    }).ToList();
+
+                var movie = (from m in entities.Movies
+                        where m.Id == id
+                        select new MovieDetailsDto()
+                        {
+                            Id = m.Id,
+                            Title = m.Title,
+                            Year = m.Year,
+                            Kind = m.Kind,
+                            EpisodeNumber = m.EpisodeNumber,
+                            EpisodeOf_Id = m.EpisodeOf_Id,
+                            SeasonNumber = m.SeasonNumber,
+                            SeriesYear = m.SeriesYear
+                        }).ToList();
+
+                    movie[0].Participants = new List<PersonDto>();
+
+                    foreach (var participant in participants)
+                    {
+                        movie[0].Participants.Add(participant);
+                    }
+                
+
+                return movie;
+            }
+        } 
 
     }
 }

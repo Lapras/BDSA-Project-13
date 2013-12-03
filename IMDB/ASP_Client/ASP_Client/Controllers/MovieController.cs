@@ -47,52 +47,43 @@ namespace ASP_Client.Controllers
             }
         }
 
-        //
-        // GET: /Search/MovieDetails/5
+         // GET: /Search/MovieDetails/5
 
-        //public ActionResult MovieDetails(int id)
-        //{
-        //    using (var entities = new ImdbEntities())
-        //    {
-        //        var movie = entities.Movies.Find(id);
+        public async Task<ActionResult> MovieDetails(int id)
+        {
 
-        //        var participants = (from participant in entities.Participate
-        //            where participant.Movie_Id == id
-        //            join person in entities.People on participant.Person_Id equals person.Id
-        //            select new ActorViewModel()
-        //            {
-        //                Id = person.Id,
-        //                Name = person.Name,
-        //                CharacterName = participant.CharName
-        //            }).ToList();
+            var movieDetails = await GetMovieDetailsLocallyAsync(id);
 
-        //        var movieDetailsView = new MovieDetailsViewModel()
-        //        {
-        //            Id = movie.Id,
-        //            Title = movie.Title,
-        //            Year = movie.Year,
-        //            Participants = participants
-        //        };
+            var movieDetailsViewModel = new MovieDetailsViewModel();
 
-        //        return View(movieDetailsView);
-        //    }
-        //}
+            if (movieDetails != null)
+            {
+                movieDetailsViewModel.Id = movieDetails[0].Id;
+                movieDetailsViewModel.Title = movieDetails[0].Title;
+                movieDetailsViewModel.Year = movieDetails[0].Year;
 
-        //public ActionResult PersonDetails(int id)
-        //{
-        //    using (var entities = new ImdbEntities())
-        //    {
-        //        var person = entities.People.Find(id);
+               var temp = movieDetails[0].Participants.Select(participant => new ActorViewModel()
+               {
+                   Id = participant.Id, 
+                   Name = participant.Name, 
+                   CharacterName = participant.CharacterName
+               }).ToList();
 
-        //        var personDetails = new PersonDetailsViewModel()
-        //        {
-        //            Id = id,
-        //            Name = person.Name,
-        //            Gender = person.Gender
-        //        };
+                movieDetailsViewModel.Participants = temp;
+            }
 
-        //        return View(personDetails);
-        //    }
-        //}
+            return View(movieDetailsViewModel);
+
+        }
+
+        private async Task<List<MovieDetailsDto>> GetMovieDetailsLocallyAsync(int movieId)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                return JsonConvert.DeserializeObject<List<MovieDetailsDto>>(
+                    await httpClient.GetStringAsync("http://localhost:54321/movies/?movieId=" + movieId)
+                );
+            }
+        }
     }
 }
