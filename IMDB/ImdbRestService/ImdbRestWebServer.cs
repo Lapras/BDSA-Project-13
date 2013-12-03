@@ -62,7 +62,7 @@ namespace ImdbRestService
         // process a request
         private async void ProcessRequest(HttpListenerContext context)
         {
-            var handlers = new List<IHandler>( new IHandler[] { new MovieHandler() });
+            var handlers = new List<IHandler>(new IHandler[] { new MovieHandler() });
 
             // you properly need to split this into a number of methods to make a readable
             // solution :-)
@@ -84,7 +84,7 @@ namespace ImdbRestService
                         if (handler != null)
                         {
                             //updates the responseData
-                            responseData = handler.Handle(path.Skip(1).ToList(), responseData);
+                            responseData = await handler.Handle(path.Skip(1).ToList(), responseData);
                         }
                     }
                 }
@@ -126,7 +126,7 @@ namespace ImdbRestService
                             if (handler != null)
                             {
                                 // updates the responseData
-                                responseData = handler.Handle(path.Skip(1).ToList(), responseData);
+                                responseData = await handler.Handle(path.Skip(1).ToList(), responseData);
                             }
                         }
                     }
@@ -154,7 +154,7 @@ namespace ImdbRestService
             }
         }
 
-        
+
 
         // helper method
         private static List<string> SplitUrl(HttpListenerContext context)

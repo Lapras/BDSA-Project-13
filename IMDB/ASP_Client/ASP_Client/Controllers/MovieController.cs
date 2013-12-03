@@ -24,7 +24,7 @@ namespace ASP_Client.Controllers
         /// <returns> A Task containing an ActionResult to be handled </returns>
         public async Task<ActionResult> Index(string searchString)
         {
-            var foundMovies = await GetMoviesLocallyAsync(searchString);
+            var foundMovies = await GetMoviesAsync(searchString);
 
             var movieOverviewViewModel = new MovieOverviewViewModel();
 
@@ -32,45 +32,18 @@ namespace ASP_Client.Controllers
             {
                 movieOverviewViewModel.FoundMovies = foundMovies;
             }
-            //else
-            //{
-            //    foundMovies = await GetMoviesFromIMDbAsync(searchString);
 
-            //    movieOverviewViewModel.FoundMovies = foundMovies;
-            //    //if (movieOverviewViewModel.FoundMovies.Count != 0)
-            //    //{
-            //    //    PostMoviesToLocalDbAsync(movieOverviewViewModel.FoundMovies);
-            //    //}
-            //}
 
             return View(movieOverviewViewModel);
         }
 
-        private async Task<List<MovieDto>> GetMoviesLocallyAsync(string searchString)
+        private async Task<List<MovieDto>> GetMoviesAsync(string searchString)
         {
             using (var httpClient = new HttpClient())
             {
                 return JsonConvert.DeserializeObject<List<MovieDto>>(
                     await httpClient.GetStringAsync("http://localhost:54321/movies/?title=" + searchString)
                 );
-            }
-        }
-
-        private async Task<List<MovieDto>> GetMoviesFromIMDbAsync(string searchString)
-        {
-            using (var httpClient = new HttpClient())
-            {
-                return JsonConvert.DeserializeObject<List<MovieDto>>(
-                    await httpClient.GetStringAsync("http://mymovieapi.com/?title=" + searchString + "&limit=20")
-                );
-            }
-        }
-
-        private async void PostMoviesToLocalDbAsync(List<MovieDto> movies)
-        {
-            using (var httpClient = new HttpClient())
-            {
-                await httpClient.PostAsJsonAsync("http://localhost:54321/movies/", movies);
             }
         }
 

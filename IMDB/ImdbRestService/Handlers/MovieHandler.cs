@@ -2,8 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using DtoSubsystem;
+using Newtonsoft.Json;
 
 namespace ImdbRestService.Handlers
 {
@@ -24,7 +27,7 @@ namespace ImdbRestService.Handlers
         {
             return pathSegment.Equals(PathSegment, StringComparison.CurrentCultureIgnoreCase);
         }
-        
+
         /// <summary>
         /// Method handling the response data by checking the path, get the movies,
         /// serialize them and returning them in the message in a new ResponseData objec
@@ -32,19 +35,38 @@ namespace ImdbRestService.Handlers
         /// <param name="path"> the path used to see how to operate the data </param>
         /// <param name="responseData"> the response data to be returned if no operations are available to the path </param>
         /// <returns></returns>
-        public ResponseData Handle(List<string> path, ResponseData responseData)
+        public async Task<ResponseData> Handle(List<string> path, ResponseData responseData)
         {
             if (path != null && path.Count == 1)
             {
                 var firstSegment = path.First();
                 if (firstSegment.StartsWith("?"))
                 {
-                    var key = firstSegment.Substring(1).Split(new[] {'='})[0];
-                    var value = firstSegment.Split(new[] {'='})[1];
+                    var key = firstSegment.Substring(1).Split(new[] { '=' })[0];
+                    var value = firstSegment.Split(new[] { '=' })[1];
 
                     if (key == "title")
                     {
                         var movies = GetMoviesByTitle(value);
+
+                        if (movies.Count == 0)
+                        {
+                            movies = await GetMoviesFromIMDbAsync(value);
+                            // Adding found movies to app server database
+                            //if (movies.Count != 0)
+                            //{
+                            //    using (var entities = new ImdbEntities())
+                            //    {
+                            //        foreach (var movieDto in movies)
+                            //        {
+                            //            entities.Movies.Add(new Movie()
+                            //            {
+                            //                Id = movieDto.Id
+                            //            })
+                            //        }
+                            //    }
+                            //}
+                        }
 
                         var msg = new JavaScriptSerializer().Serialize(movies);
                         return new ResponseData(msg, HttpStatusCode.OK);
@@ -74,16 +96,27 @@ namespace ImdbRestService.Handlers
                                 Year = m.Year
                             }).Take(20).ToList();
                 }
-                
+
                 return (from m in entities.Movies
-                    where m.Title.Contains(title)
-                    select new MovieDto()
-                    {
-                        Id = m.Id,
-                        Title = m.Title,
-                        Year = m.Year
-                    }).ToList();
+                        where m.Title.Contains(title)
+                        select new MovieDto()
+                        {
+                            Id = m.Id,
+                            Title = m.Title,
+                            Year = m.Year
+                        }).ToList();
             }
-        } 
+        }
+
+        private async Task<List<MovieDto>> GetMoviesFromIMDbAsync(string searchString)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                return JsonConvert.DeserializeObject<List<MovieDto>>(
+                    await httpClient.GetStringAsync("http://mymovieapi.com/?title=" + searchString + "&limit=20")
+                );
+            }
+        }
+
     }
 }
