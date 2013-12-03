@@ -11,8 +11,8 @@
         <DataTemplate DataType="{x:Type vm:SearchViewModel}">
             <view:SearchView />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:SearchResultViewModel}">
-            <view:SearchResultView />
+        <DataTemplate DataType="{x:Type vm:MovieSearchResultViewModel}">
+            <view:MovieSearchResultView />
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:MovieProfileViewModel}">
             <view:MovieProfileView />

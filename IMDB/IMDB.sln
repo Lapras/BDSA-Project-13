@@ -5,6 +5,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IMDB", "IMDB\IMDB.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASP_Client", "ASP_Client\ASP_Client\ASP_Client.csproj", "{60F2C8FD-9257-45BB-B479-2C59BC08859A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebServer", "WebServer\WebServer.csproj", "{EDD9F6B0-4877-4607-B87F-8C22B99A21CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleHost", "..\..\..\..\ITU\3. Semester\Analysis, Design & Softwarearchitecture\ServiceStation0412\SimpleHostListener\SimpleHost.csproj", "{CE795003-D548-4C64-B943-FBCC85A75A82}"
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DtoSubsystem", "DtoSubsystem\DtoSubsystem.csproj", "{A8E297BE-081E-4B61-85E8-7DBCC98CAF0B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImdbRestService", "ImdbRestService\ImdbRestService.csproj", "{D038B1DB-A875-46C5-AE46-0849CD2C9158}"
@@ -27,6 +30,14 @@ Global
 		{60F2C8FD-9257-45BB-B479-2C59BC08859A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60F2C8FD-9257-45BB-B479-2C59BC08859A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60F2C8FD-9257-45BB-B479-2C59BC08859A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDD9F6B0-4877-4607-B87F-8C22B99A21CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDD9F6B0-4877-4607-B87F-8C22B99A21CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDD9F6B0-4877-4607-B87F-8C22B99A21CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDD9F6B0-4877-4607-B87F-8C22B99A21CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE795003-D548-4C64-B943-FBCC85A75A82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE795003-D548-4C64-B943-FBCC85A75A82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE795003-D548-4C64-B943-FBCC85A75A82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE795003-D548-4C64-B943-FBCC85A75A82}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A8E297BE-081E-4B61-85E8-7DBCC98CAF0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A8E297BE-081E-4B61-85E8-7DBCC98CAF0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8E297BE-081E-4B61-85E8-7DBCC98CAF0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
