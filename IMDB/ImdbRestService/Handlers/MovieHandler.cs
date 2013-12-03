@@ -7,15 +7,31 @@ using DtoSubsystem;
 
 namespace ImdbRestService.Handlers
 {
+    /// <summary>
+    /// Class in charge of handling movie requests
+    /// </summary>
     public class MovieHandler : IHandler
     {
         private const string PathSegment = "movies";
 
+        /// <summary>
+        /// Method checking if the given path segment matches the one that
+        /// this handler can handle
+        /// </summary>
+        /// <param name="pathSegment"> the input path segment string </param>
+        /// <returns> wether or not the class is able to handle the request </returns>
         public bool CanHandle(string pathSegment)
         {
             return pathSegment.Equals(PathSegment, StringComparison.CurrentCultureIgnoreCase);
         }
         
+        /// <summary>
+        /// Method handling the response data by checking the path, get the movies,
+        /// serialize them and returning them in the message in a new ResponseData objec
+        /// </summary>
+        /// <param name="path"> the path used to see how to operate the data </param>
+        /// <param name="responseData"> the response data to be returned if no operations are available to the path </param>
+        /// <returns></returns>
         public ResponseData Handle(List<string> path, ResponseData responseData)
         {
             if (path != null && path.Count == 1)
@@ -39,6 +55,11 @@ namespace ImdbRestService.Handlers
             return responseData;
         }
 
+        /// <summary>
+        /// Method recieving movies by title from the local database
+        /// </summary>
+        /// <param name="title"> the title to search for </param>
+        /// <returns> a list of MovieDto's containing information on the movies found </returns>
         public List<MovieDto> GetMoviesByTitle(string title)
         {
             using (var entities = new ImdbEntities())

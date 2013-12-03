@@ -1,0 +1,12 @@
+﻿@model ASP_Client.Models.PersonDetailsViewModel
+
+@{
+    ViewBag.Title = "Person";
+}
+
+<h2>Person</h2>
+@Html.ActionLink("Home", "Index")<br/>
+<a href="javascript:window.history.back();">Back</a><br/>
+
+Name: @Model.Name <br/>
+Gender: @Model.Gender
