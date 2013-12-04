@@ -12,6 +12,7 @@ using WPF_Client.Commands;
 using WPF_Client.Dtos;
 using WPF_Client.Model;
 using WPF_Client.Controller;
+using DtoSubsystem;
 
 
 namespace WPF_Client.ViewModel
@@ -19,7 +20,7 @@ namespace WPF_Client.ViewModel
     class MovieProfileViewModel : IViewModel
     {
 
-        private MovieProfileDto _movieDto;
+        private MovieDetailsDto _movieDetailsDto;
 
         //public ICommand BackToSearchResultCommand { get; set; }
         public ICommand BackCommand { get; set; }
@@ -27,26 +28,28 @@ namespace WPF_Client.ViewModel
         /// <summary>
         /// The collection of movie results that is displayed in the view.
         /// </summary>
-        public MovieProfileDto MovieDto
+        public MovieDetailsDto MovieDetailsDto
         {
             get
             {
-                return _movieDto;
+                return _movieDetailsDto;
             }
             set
             {
-                if (_movieDto == value)
+                if (_movieDetailsDto == value)
                     return;
-                _movieDto = value;
+                _movieDetailsDto = value;
 
-                OnPropertyChanged("MovieProfileDto");
+                OnPropertyChanged("MovieDetailsDto");
             }
         }
 
 
         public MovieProfileViewModel()
         {
-            MovieDto = HollywoodController.MovieDto;
+            MovieDetailsDto = HollywoodController.MovieDetailsDto;
+
+            Console.WriteLine(MovieDetailsDto.Kind + " " + MovieDetailsDto.Title);
             //BackToSearchResultCommand = new BackToSearchResultCommand(this);
             BackCommand = new BackCommand();
         }

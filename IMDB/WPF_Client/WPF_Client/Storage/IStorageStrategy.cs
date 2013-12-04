@@ -14,7 +14,7 @@ namespace WPF_Client.Storage
     {
         ObservableCollection<MovieDto> MovieDtos(string searchString);
         //void MovieSearchDtos(string searchString);
-        MovieProfileDto MovieProfileDto(int movieId);
+        MovieDetailsDto MovieDetailsDto(int movieId);
         bool CreateProfile(string name, string password);
     }
 }

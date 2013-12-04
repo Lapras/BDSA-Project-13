@@ -52,15 +52,19 @@ namespace WPF_Client.Storage
         }
 
 
-        public MovieProfileDto MovieProfileDto(int movieId)
+        public MovieDetailsDto MovieDetailsDto(int movieId)
         {
             //GET rest etc. etc.
             //return...
 
 
-            MovieProfileDto result;
+            
 
-            //just example for now....
+            //example data don't delete:
+
+
+            /*
+            MovieProfileDto result;
             switch (movieId)
             {
                 case 0:
@@ -81,6 +85,25 @@ namespace WPF_Client.Storage
 
 
             }
+            */
+
+            using (var httpClient = new HttpClient())
+            {
+                Console.WriteLine("Getting reponse from REST server");
+                var response = httpClient.GetStringAsync("http://localhost:54321/movies/?movieId=" + movieId);
+
+
+                Console.WriteLine("JSON string received:" + response.Result);
+                Console.WriteLine("Starting deserializing");
+                var result = JsonConvert.DeserializeObject<List<MovieDetailsDto>>(response.Result);
+                Console.WriteLine("deserializing done");
+
+
+
+                return result[0];
+            }
+
+
 
 
         }
