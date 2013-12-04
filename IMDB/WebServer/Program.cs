@@ -22,12 +22,9 @@ namespace WebServer
 		static void Main(string[] args) 
 		{
 			MyRestWeb msh = (MyRestWeb)ApplicationHost.CreateApplicationHost(
-			   typeof(MyRestWeb), "/", Directory.GetCurrentDirectory());
-
-			var str = Directory.GetCurrentDirectory();
+			   typeof(MyRestWeb), "/", Directory.GetCurrentDirectory() +@"\htdocs");
 			msh.Start();
-			//Task.Factory.StartNew(() => msh.Start());
-			Console.WriteLine("Listening for requests on http://localhost:54321/");
+			Debug.WriteLine("Listening for requests on http://localhost:51234/");
 			Console.ReadKey();
 		}
 	}
@@ -42,14 +39,13 @@ namespace WebServer
 		public void Start()
 		{
 			_listener = new HttpListener();
-			_listener.Prefixes.Add("http://localhost:54321/");
+			_listener.Prefixes.Add("http://localhost:51234/");
 			_listener.Start();
-			Console.WriteLine("Listening for requests on http://localhost:54321/");
+			
 			while (true)
 			{
 				ProcessRequest();
 			} 
-			
 		}
 
 		/// <summary>
@@ -58,7 +54,6 @@ namespace WebServer
 		public void ProcessRequest()
 		{
 			HttpListenerContext ctx = _listener.GetContext();
-			var s = ctx.Request.Url.LocalPath;
 			string page = ctx.Request.Url.LocalPath.Replace("/", "");
 			string query = ctx.Request.Url.Query.Replace("?", "");
 			Debug.WriteLine("Received request for {0}?{1}", page, query);
