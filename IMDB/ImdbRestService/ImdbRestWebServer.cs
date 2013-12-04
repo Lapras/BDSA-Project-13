@@ -108,12 +108,6 @@ namespace ImdbRestService
                     int.TryParse(namedValues["id"], out id);
                     if (id != 0)
                     {
-                        // create the new object
-                        var movie = new Movie
-                        {
-                            Id = id,
-                            Title = namedValues["title"]
-                        };
                         if (path.Count > 0)
                         {
                             // checks for a handler able to handle that specific path

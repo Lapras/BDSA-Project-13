@@ -40,13 +40,41 @@ namespace ImdbRestService.Handlers
             if (path != null && path.Count == 1)
             {
                 var firstSegment = path.First();
-            }
 
+                var key = firstSegment.Substring(1).Split(new[] {'='})[0];
+                var value = firstSegment.Split(new[] {'='})[1];
+
+                if (key == "createProfile")
+                {
+                    string name = "test";
+
+                    if (ProfileAlreadyExist(name))
+                    {
+                    }
+                    
+
+
+                }
+            }
             return responseData;
         }
 
-/*
 
+        public bool ProfileAlreadyExist(string profileName)
+        {
+            using (var entities = new ImdbEntities())
+            {
+             /*   var matchingProfiles = (from p in entities.Profile
+                             where p.Name == profileName
+                             select p.Name).ToList();
+*/
+
+            }
+
+            return false;
+        } 
+
+/*
         /// <summary>
         /// Method recieving a movie by id from the local database
         /// </summary>

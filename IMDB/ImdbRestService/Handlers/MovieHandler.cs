@@ -74,7 +74,7 @@ namespace ImdbRestService.Handlers
 					
 					if (key == "movieId")
                     {
-                        var movie = GetMovieById(Convert.ToInt16(value));
+                        var movie = GetMovieById(Convert.ToInt32(value));
 
                         var msg = new JavaScriptSerializer().Serialize(movie);
                         return new ResponseData(msg, HttpStatusCode.OK);
