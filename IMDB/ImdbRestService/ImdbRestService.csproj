@@ -72,6 +72,7 @@
     <Compile Include="C__MigrationHistory.cs">
       <DependentUpon>Imdb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Handlers\ProfileHandler.cs" />
     <Compile Include="ResponseData.cs" />
     <Compile Include="Handlers\IHandler.cs" />
     <Compile Include="Handlers\MovieHandler.cs" />

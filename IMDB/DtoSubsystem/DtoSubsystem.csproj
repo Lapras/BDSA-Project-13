@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="MovieDetailsDto.cs" />
     <Compile Include="MovieDto.cs" />
+    <Compile Include="PersonDetailsDto.cs" />
     <Compile Include="PersonDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
