@@ -53,11 +53,11 @@ namespace WPF_ClientUnitTest
             SearchController._model = modelMock.Object; // inject the controller responsible for searching with the mock model.
             SearchController.Search("Twillight", 0); // The search controller searches.
             
-            var movieSearchResultViewModel = new MovieSearchResultViewModel(); // we create the view model (its constructor takes the search results from the controller)
+            var searchResultViewModel = new SearchResultViewModel(); // we create the view model (its constructor takes the search results from the controller)
 
             // We test if the SearchResultView really shows the correct movies.
-            Assert.AreEqual(movieCollection, movieSearchResultViewModel.MovieDtos);
-            Assert.AreEqual(movieCollection.Count, movieSearchResultViewModel.MovieDtos.Count);
+            Assert.AreEqual(movieCollection, searchResultViewModel.MovieSearchDtos);
+            Assert.AreEqual(movieCollection.Count, searchResultViewModel.MovieSearchDtos.Count);
 
 
             

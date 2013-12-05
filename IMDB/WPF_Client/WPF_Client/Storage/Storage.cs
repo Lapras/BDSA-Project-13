@@ -24,21 +24,10 @@ namespace WPF_Client.Storage
             return _strategy.MovieDtos(searchString);
         }
 
-        public MovieDetailsDto MovieDetailsDto(int movieId)
+        public MovieProfileDto MovieDto(int movieId)
         {
-            return _strategy.MovieDetailsDto(movieId);
+            return _strategy.MovieProfileDto(movieId);
         }
 
-        public bool CreateProfile(string name, string password)
-        {
-            return _strategy.CreateProfile(name, password);
-
-        }
-
-        public bool LoginInfo(string name, string password)
-        {
-            return _strategy.LoginInfo(name, password);
-
-        }
     }
 }

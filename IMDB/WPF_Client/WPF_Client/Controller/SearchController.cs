@@ -15,12 +15,12 @@ namespace WPF_Client.Controller
     public static class SearchController
     {
         public static IModel _model = new Model.Model();
+
         public static ObservableCollection<MovieDto> MovieDtos { get; set; }
         public static int MoviesFound { get; set; }
 
         public static bool Search(string searchString, int searchType)
         {
-            
             switch (searchType) // We check the search that should be conducted.
             {
                 case 0: // Movies
@@ -39,9 +39,8 @@ namespace WPF_Client.Controller
                     //unit test doesnt like creating a new viewmodel and assigning it.
                     if (!UnitTestDetector.IsInUnitTest)
                     {
-                        ViewModelManager.Main.CurrentViewModel = new MovieSearchResultViewModel();
-
                         
+                        ViewModelManager.Main.CurrentViewModel = new SearchResultViewModel();
                     }
                     
 
@@ -57,7 +56,10 @@ namespace WPF_Client.Controller
                     break;
             }
 
+
             return true;
+            
+
         }
 
     }

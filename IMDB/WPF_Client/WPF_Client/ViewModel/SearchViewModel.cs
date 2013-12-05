@@ -105,6 +105,7 @@ namespace WPF_Client.ViewModel
                 MessageBox.Show("No results found for: " + _vm.TextBox, "No results");
             }
 
+            
         }
 
         public event EventHandler CanExecuteChanged

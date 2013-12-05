@@ -8,11 +8,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using WPF_Client.Commands;
 using WPF_Client.Dtos;
 using WPF_Client.Model;
 using WPF_Client.Controller;
-using DtoSubsystem;
 
 
 namespace WPF_Client.ViewModel
@@ -20,38 +18,34 @@ namespace WPF_Client.ViewModel
     class MovieProfileViewModel : IViewModel
     {
 
-        private MovieDetailsDto _movieDetailsDto;
+        private MovieProfileDto _movieDto;
 
-        //public ICommand BackToSearchResultCommand { get; set; }
-        public ICommand BackCommand { get; set; }
+        public ICommand BackToSearchResultCommand { get; set; }
 
         /// <summary>
         /// The collection of movie results that is displayed in the view.
         /// </summary>
-        public MovieDetailsDto MovieDetailsDto
+        public MovieProfileDto MovieDto
         {
             get
             {
-                return _movieDetailsDto;
+                return _movieDto;
             }
             set
             {
-                if (_movieDetailsDto == value)
+                if (_movieDto == value)
                     return;
-                _movieDetailsDto = value;
+                _movieDto = value;
 
-                OnPropertyChanged("MovieDetailsDto");
+                OnPropertyChanged("MovieProfileDto");
             }
         }
 
 
         public MovieProfileViewModel()
         {
-            MovieDetailsDto = HollywoodController.MovieDetailsDto;
-
-            Console.WriteLine(MovieDetailsDto.Kind + " " + MovieDetailsDto.Title);
-            //BackToSearchResultCommand = new BackToSearchResultCommand(this);
-            BackCommand = new BackCommand();
+            MovieDto = HollywoodController.MovieDto;
+            BackToSearchResultCommand = new BackToSearchResultCommand(this);
         }
     }
 
@@ -81,7 +75,7 @@ namespace WPF_Client.ViewModel
 
         public void Execute(object parameter)
         {
-            ViewModelManager.Main.CurrentViewModel = new MovieSearchResultViewModel();
+            ViewModelManager.Main.CurrentViewModel = new SearchResultViewModel();
         }
 
         public event EventHandler CanExecuteChanged
