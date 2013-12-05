@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using WPF_Client.Commands;
 using WPF_Client.Dtos;
 using WPF_Client.Model;
 using WPF_Client.Controller;
@@ -29,7 +30,9 @@ namespace WPF_Client.ViewModel
         private int _moviesFound;
         
         public ICommand SelectMovieCommand { get; set; } //The command attached to clicking on a movie.
-        public ICommand BackToSearchCommand { get; set; }
+        //public ICommand BackToSearchCommand { get; set; }
+        public ICommand BackCommand { get; set; }
+
         /// <summary>
         /// The collection of movie results that is displayed in the view.
         /// </summary>
@@ -73,7 +76,7 @@ namespace WPF_Client.ViewModel
         public MovieSearchResultViewModel()
         {
             SelectMovieCommand = new SelectMovieCommand(this);
-            BackToSearchCommand = new BackToSearchCommand(this);
+            BackCommand = new BackCommand();
 
             MovieDtos = SearchController.MovieDtos;
             MoviesFound = SearchController.MoviesFound;

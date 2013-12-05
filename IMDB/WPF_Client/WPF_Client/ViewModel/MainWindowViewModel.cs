@@ -16,15 +16,16 @@ namespace WPF_Client.ViewModel
         /// The current view.
         /// </summary>
         private IViewModel _currentViewModel;
-
+        private IViewModel _topViewModel;
 
         /// <summary>
         /// The default constructor. We set the initial viewmodel to the SearchViewModel.
         /// </summary>
         public MainWindowViewModel()
         {
+            TopViewModel = new LoginViewModel();
             CurrentViewModel = new SearchViewModel(); //We set the startup ViewModel to the SearchViewModel.
-        }  
+        }
 
         /// <summary>
         /// The CurrentView property. When the View is changed,
@@ -40,15 +41,32 @@ namespace WPF_Client.ViewModel
             {
                 if (_currentViewModel == value)
                     return;
+                ViewModelManager.PreviousViewModelsStack.Push(_currentViewModel);
                 _currentViewModel = value;
                 OnPropertyChanged("CurrentViewModel");
             }
         }
 
+        public IViewModel TopViewModel
+        {
+            get
+            {
+                return _topViewModel;
+            }
+            set
+            {
+                if (_topViewModel == value)
+                    return;
+                _topViewModel = value;
+                OnPropertyChanged("TopViewModel");
+            }
+
+        }
 
 
 
-        
+
+
 
 
 

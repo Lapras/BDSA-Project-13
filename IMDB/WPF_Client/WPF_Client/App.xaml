@@ -11,11 +11,20 @@
         <DataTemplate DataType="{x:Type vm:SearchViewModel}">
             <view:SearchView />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:SearchResultViewModel}">
-            <view:SearchResultView />
+        <DataTemplate DataType="{x:Type vm:MovieSearchResultViewModel}">
+            <view:MovieSearchResultView />
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:MovieProfileViewModel}">
             <view:MovieProfileView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:CreateProfileViewModel}">
+            <view:CreateProfileView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:LoginViewModel}">
+            <view:LoginView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:TopviewSearchViewModel}">
+            <view:TopviewSearchView />
         </DataTemplate>
     </Application.Resources>
 </Application>

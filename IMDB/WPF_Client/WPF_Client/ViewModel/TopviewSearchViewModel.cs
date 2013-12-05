@@ -1,31 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
-using WPF_Client.Dtos;
-using WPF_Client.Model;
 using WPF_Client.Controller;
 
 namespace WPF_Client.ViewModel
 {
-
-    /// <summary>
-    /// ViewModel for the SearchView.
-    /// </summary>
-    public class SearchViewModel : IViewModel
+    internal class TopviewSearchViewModel : IViewModel
     {
         private string _textBox; //The text input from the user from the textbox.
         private int _comboBoxSelectedIndex; //The selected index from the combobox.
-        public ICommand SearchCommand { get; set; } //The command attached to the Search button.
+        public ICommand TopSearchCommand { get; set; } //The command attached to the Search button.
+
 
         /// <summary>
         /// The TextBox property. Which is the text input from the user from the textbox.
@@ -68,27 +57,25 @@ namespace WPF_Client.ViewModel
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public SearchViewModel()
+        public TopviewSearchViewModel()
         {
-            SearchCommand = new SearchCommand(this);
+            TopSearchCommand = new TopSearchCommand(this);
             ComboBoxSelectedIndex = 0; // This does that "Movies" is the selected from the start.
-        }   
-
+        }
 
     }
-
 
     //COMMANDS:
 
     /// <summary>
     /// Command bound to the Search Button
     /// </summary>
-    class SearchCommand : ICommand
+    class TopSearchCommand : ICommand
     {
-        private SearchViewModel _vm;
+        private TopviewSearchViewModel _vm;
 
 
-        public SearchCommand(SearchViewModel vm)
+        public TopSearchCommand(TopviewSearchViewModel vm)
         {
             _vm = vm;
         }
@@ -115,6 +102,5 @@ namespace WPF_Client.ViewModel
         }
     }
 
-
-
+    
 }

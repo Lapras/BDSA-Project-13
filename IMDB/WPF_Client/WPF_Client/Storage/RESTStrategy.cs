@@ -5,11 +5,12 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using DtoSubsystem;
 using WPF_Client.Dtos;
 using WPF_Client.Controller;
 using Newtonsoft.Json;
-
+using WPF_Client.PwBoxAssistant;
 
 
 namespace WPF_Client.Storage
@@ -52,15 +53,19 @@ namespace WPF_Client.Storage
         }
 
 
-        public MovieProfileDto MovieProfileDto(int movieId)
+        public MovieDetailsDto MovieDetailsDto(int movieId)
         {
             //GET rest etc. etc.
             //return...
 
 
-            MovieProfileDto result;
+            
 
-            //just example for now....
+            //example data don't delete:
+
+
+            /*
+            MovieProfileDto result;
             switch (movieId)
             {
                 case 0:
@@ -81,50 +86,67 @@ namespace WPF_Client.Storage
 
 
             }
+            */
 
-
-        }
-
-
-        
-
-
-
-        /*
-        public async Task<List<MovieDto>> GetMovies(string searchString)
-        {
-            //var foundMovies = await GetMoviesAsync(searchString);
-            return Task.Run(() => GetMoviesAsync(searchString)).Result;;
-        }
-
-        private async Task<List<MovieDto>> GetMoviesAsync(string searchString)
-        {
             using (var httpClient = new HttpClient())
             {
-                return JsonConvert.DeserializeObject<List<MovieDto>>(
-                    await httpClient.GetStringAsync("http://localhost:54321/movies/?title=" + searchString)
-                );
+                Console.WriteLine("Getting reponse from REST server");
+                var response = httpClient.GetStringAsync("http://localhost:54321/movies/?movieId=" + movieId);
+
+
+                Console.WriteLine("JSON string received:" + response.Result);
+                Console.WriteLine("Starting deserializing");
+                var result = JsonConvert.DeserializeObject<List<MovieDetailsDto>>(response.Result);
+                Console.WriteLine("deserializing done");
+
+
+
+                return result[0];
             }
+
+
+
+
         }
 
-
-
-
-
-        public async void test(string searchString)
+        public bool CreateProfile(string name, string password)
         {
-            var result = await GetMoviesAsync(searchString);
-            Console.WriteLine("eeeeeeeee");
+            //example for now:
+            //return true;
+
+            using (var httpClient = new HttpClient())
+            {
+                Console.WriteLine("Getting reponse from REST server");
+                var response = httpClient.GetStringAsync("http://localhost:54321/createProfile/?username=" + name + "?password=" + password);
 
 
-            SearchController.MovieSearchDtos = new ObservableCollection<MovieDto>(result);
+                Console.WriteLine("JSON string received:" + response.Result);
+                Console.WriteLine("Starting deserializing");
+                var result = JsonConvert.DeserializeObject<bool>(response.Result);
+                Console.WriteLine("deserializing done");
+
+
+
+                return result;
+            }
+
         }
-        */
 
+        public bool LoginInfo(string name, string password)
+        {
+          /*  string dd = "asd";
+            string _pw = PasswordHash.CreateHash(password);
+            password += dd;
+            if (PasswordHash.ValidatePassword(password, _pw))
+            {
 
-
+                Console.WriteLine("nay!");
+                return false;
+            }
+            Console.WriteLine("yay!"); */
+            return true; // example just returns true for now.
         }
-
+    }
 
 
     
