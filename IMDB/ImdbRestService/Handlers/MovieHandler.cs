@@ -52,20 +52,7 @@ namespace ImdbRestService.Handlers
                         if (movies.Count == 0)
                         {
                             movies = await GetMoviesFromIMDbAsync(value);
-                            // Adding found movies to app server database
-                            //if (movies.Count != 0)
-                            //{
-                            //    using (var entities = new ImdbEntities())
-                            //    {
-                            //        foreach (var movieDto in movies)
-                            //        {
-                            //            entities.Movies.Add(new Movie()
-                            //            {
-                            //                Id = movieDto.Id
-                            //            })
-                            //        }
-                            //    }
-                            //}
+							AddMoviesToDb(movies);
                         }
 
                         var msg = new JavaScriptSerializer().Serialize(movies);
@@ -97,7 +84,7 @@ namespace ImdbRestService.Handlers
                 if (String.IsNullOrEmpty(title))
                 {
                     return (from m in entities.Movies
-                            select new MovieDto()
+                            select new MovieDto
                             {
                                 Id = m.Id,
                                 Title = m.Title,
@@ -107,7 +94,7 @@ namespace ImdbRestService.Handlers
 
                 return (from m in entities.Movies
                         where m.Title.Contains(title)
-                        select new MovieDto()
+                        select new MovieDto
                         {
                             Id = m.Id,
                             Title = m.Title,
@@ -121,7 +108,7 @@ namespace ImdbRestService.Handlers
             using (var httpClient = new HttpClient())
             {
                 return JsonConvert.DeserializeObject<List<MovieDto>>(
-                    await httpClient.GetStringAsync("http://mymovieapi.com/?title=" + searchString + "&limit=20")
+                    await httpClient.GetStringAsync("http://mymovieapi.com/?title=" + searchString)
                 );
             }
         }
@@ -146,7 +133,7 @@ namespace ImdbRestService.Handlers
                                         par.CharName
                                     }
                                     into grouping
-                                    select new PersonDto()
+                                    select new PersonDto
                                     {
                                         Id = grouping.Key.Id,
                                         Name = grouping.Key.Name,
@@ -155,7 +142,7 @@ namespace ImdbRestService.Handlers
 
                 var movie = (from m in entities.Movies
                         where m.Id == id
-                        select new MovieDetailsDto()
+                        select new MovieDetailsDto
                         {
                             Id = m.Id,
                             Title = m.Title,
@@ -177,7 +164,31 @@ namespace ImdbRestService.Handlers
 
                 return movie;
             }
-        } 
+        }
 
+		private void AddMoviesToDb(IEnumerable<MovieDto> movies)
+		{
+			//Adding found movies to app server database
+			
+			using (var context = new ImdbEntities())
+			{
+				foreach (var movie in movies)
+				{
+					context.Movies.Add(new Movie
+					{
+						Id = movie.Id,
+						EpisodeNumber = movie.EpisodeNumber,
+						EpisodeOf_Id = movie.EpisodeOf_Id,
+						Kind = movie.Kind,
+						SeasonNumber = movie.SeasonNumber,
+						SeriesYear= movie.SeriesYear,
+						Title = movie.Title,
+						Year = movie.Year
+					});
+				}
+				context.SaveChanges();
+			}
+			
+		}
     }
 }
