@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web.Caching;
+using System.Web.Configuration;
 using System.Web.Mvc;
 using ASP_Client.Models;
 using DtoSubsystem;
@@ -15,6 +17,17 @@ namespace ASP_Client.Controllers
     /// </summary>
     public class MovieController : Controller
     {
+        //private readonly IMoviesRepository _repository;
+
+        //public MovieController() : this(new MoviesRepository())
+        //{            
+        //}
+
+        //public MovieController(IMoviesRepository repository)
+        //{
+        //    _repository = repository;
+        //}
+
         /// <summary>
         /// Method creating a list of movies based on a search string and puts them in a MovieOverviewViewModel which
         /// is given to the IndexView.
@@ -22,11 +35,16 @@ namespace ASP_Client.Controllers
         /// movies are found there they are added to the local database.
         /// </summary>
         /// <param name="searchString"> search criteria for movies </param>
-        /// <returns> A Task containing an ActionResult to be handled </returns>
+        /// <returns> A Task containing an ActionResult to be handled </returns>        
         public async Task<ActionResult> Index(string searchString)
         {
-            var foundMovies = await GetMoviesAsync(searchString);
+            //if (Session["User"] == null)
+            //{
+            //    return RedirectToAction("Login", "User");
+            //}
 
+            var foundMovies = await GetMoviesAsync(searchString);
+            
             var movieOverviewViewModel = new MovieOverviewViewModel();
 
             if (foundMovies.Count != 0)

@@ -73,6 +73,7 @@
       <DependentUpon>Imdb.tt</DependentUpon>
     </Compile>
     <Compile Include="Handlers\ProfileHandler.cs" />
+    <Compile Include="ImdbEntities.cs" />
     <Compile Include="ResponseData.cs" />
     <Compile Include="Handlers\IHandler.cs" />
     <Compile Include="Handlers\MovieHandler.cs" />

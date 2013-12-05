@@ -15,7 +15,13 @@ namespace ImdbRestService.Handlers
     /// </summary>
     public class MovieHandler : IHandler
     {
+        private readonly IImdbEntities _imdbEntities;
         private const string PathSegment = "movies";
+
+        public MovieHandler(IImdbEntities imdbEntities = null)
+        {
+            _imdbEntities = imdbEntities;
+        }
 
         /// <summary>
         /// Method checking if the given path segment matches the one that
@@ -52,7 +58,7 @@ namespace ImdbRestService.Handlers
                         if (movies.Count == 0)
                         {
                             movies = await GetMoviesFromIMDbAsync(value);
-							AddMoviesToDb(movies);
+							//AddMoviesToDb(movies);
                         }
 
                         var msg = new JavaScriptSerializer().Serialize(movies);
@@ -79,7 +85,7 @@ namespace ImdbRestService.Handlers
         /// <returns> a list of MovieDto's containing information on the movies found </returns>
         public List<MovieDto> GetMoviesByTitle(string title)
         {
-            using (var entities = new ImdbEntities())
+            using (var entities = _imdbEntities ?? new ImdbEntities())
             {
                 if (String.IsNullOrEmpty(title))
                 {
@@ -107,9 +113,20 @@ namespace ImdbRestService.Handlers
         {
             using (var httpClient = new HttpClient())
             {
-                return JsonConvert.DeserializeObject<List<MovieDto>>(
-                    await httpClient.GetStringAsync("http://mymovieapi.com/?title=" + searchString)
-                );
+                var response = await httpClient.GetAsync("http://mymovieapi.com/?title=" + searchString);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadAsStringAsync();
+
+                    return JsonConvert.DeserializeObject<List<MovieDto>>(result);
+                }
+
+                return new List<MovieDto>();
+
+                //return JsonConvert.DeserializeObject<List<MovieDto>>(
+                //    await httpClient.GetStringAsync("http://mymovieapi.com/?title=" + searchString)
+                //);
             }
         }
 		
