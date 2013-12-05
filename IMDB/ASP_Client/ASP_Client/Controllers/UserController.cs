@@ -10,13 +10,7 @@ namespace ASP_Client.Controllers
 {
     public class UserController : BaseController
     {
-        private IUserSession _userSession;
         private readonly IUserRepository _userRepository;
-
-        private IUserSession UserSession 
-        {
-            get { return _userSession ?? (_userSession = new UserSession(Session)); }
-        }
 
         public UserController() : this(null, new UserRepository())
         {
@@ -24,8 +18,6 @@ namespace ASP_Client.Controllers
 
         public UserController(IUserSession userSession, IUserRepository userRepository) : base(userSession)
         {
-            _userSession = userSession;
-
             _userRepository = userRepository;
         }
 
