@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WPF_Client.Dtos;
 using WPF_Client.Model;
 using WPF_Client.ViewModel;
+using DtoSubsystem;
 
 namespace WPF_Client.Controller
 {
@@ -15,13 +16,14 @@ namespace WPF_Client.Controller
         public static IModel _model = new Model.Model();
 
 
-        public static MovieProfileDto MovieDto { get; set; } // The MovieDto that the SearchResultViewModel loads for the MovieDto for.
+        public static MovieDetailsDto MovieDetailsDto { get; set; } // The MovieDto that the SearchResultViewModel loads for the MovieDto for.
 
         public static bool GetMovie(int movieId)
         {
-            MovieDto = _model.MovieProfileDto(movieId);
+            MovieDetailsDto = _model.MovieDetailsDto(movieId);
 
-            if (MovieDto == null)
+
+            if (MovieDetailsDto == null)
             {
                 return false;
             }

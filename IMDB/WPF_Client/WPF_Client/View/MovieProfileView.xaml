@@ -12,12 +12,13 @@
         <Grid.RowDefinitions>
             <RowDefinition MinHeight="50"  MaxHeight="100"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition MinHeight="10"/>
+            <RowDefinition MinHeight="150" MaxHeight="400"/>
+            <RowDefinition MinHeight="10" MaxHeight="50"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition MinWidth="10"/>
+            <ColumnDefinition MinWidth="25"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition MinWidth="10"/>
+            <ColumnDefinition MinWidth="25"/>
         </Grid.ColumnDefinitions>
         
         <TextBlock Grid.Row="0" Grid.Column="1" FontFamily="Resources/#Charlemagne Std" FontSize="45" FontWeight="Bold" Text="Movie:" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
@@ -26,23 +27,62 @@
             <Grid.RowDefinitions>
                 <RowDefinition MinHeight="10"  MaxHeight="100"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition MinWidth="10"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Row="0" Grid.Column="0" FontFamily="Resources/#Charlemagne Std" FontSize="15" Text="Title:"></TextBlock>
-            <TextBlock Grid.Row="1" Grid.Column="0" FontFamily="Resources/#Charlemagne Std" FontSize="15" Text="Kind:"></TextBlock>
-            
-            
-            <TextBlock Grid.Row="0" Grid.Column="1" FontFamily="Resources/#Charlemagne Std" FontSize="15" FontWeight="Bold" Text="{Binding MovieDto.Title, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-            <TextBlock Grid.Row="1" Grid.Column="1" FontFamily="Resources/#Charlemagne Std" FontSize="15" FontWeight="Bold" Text="{Binding MovieDto.Kind, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Grid.Row="0" Grid.Column="0" FontFamily="Resources/#Charlemagne Std" FontSize="18" Text="Title:"></TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="0" FontFamily="Resources/#Charlemagne Std" FontSize="18" Text="Kind:"></TextBlock>
+            <TextBlock Grid.Row="2" Grid.Column="0" FontFamily="Resources/#Charlemagne Std" FontSize="18" Text="Year:"></TextBlock>
+
+            <TextBlock Grid.Row="3" Grid.Column="0" FontFamily="Resources/#Charlemagne Std" FontSize="18" Margin="0,10,0,0" FontWeight="Bold" Text="Participants:"></TextBlock>
+
+            <TextBlock Grid.Row="0" Grid.Column="1" FontFamily="Resources/#Charlemagne Std" FontSize="18" FontWeight="Bold" Text="{Binding MovieDetailsDto.Title, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="1" FontFamily="Resources/#Charlemagne Std" FontSize="18" FontWeight="Bold" Text="{Binding MovieDetailsDto.Kind, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Grid.Row="2" Grid.Column="1" FontFamily="Resources/#Charlemagne Std" FontSize="18" FontWeight="Bold" Text="{Binding MovieDetailsDto.Year, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
 
 
         </Grid>
 
-        <Button Grid.Row="2" Grid.Column="1" Width="75" Height="25" Margin="10" HorizontalAlignment="Left" Command="{Binding BackToSearchResultCommand}" Content="Back"/>
+        <Button Grid.Row="3" Grid.Column="1" Width="75" Height="25" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding BackCommand}" Content="Back"/>
+
+
+
+        <DataGrid Name="DataGrid1" Grid.Row="2" Grid.Column="1"
+                  ItemsSource="{Binding MovieDetailsDto.Participants, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedItem="{Binding SelectedItem}"
+                  ScrollViewer.VerticalScrollBarVisibility="Visible"
+                  MinWidth="300" MaxWidth="400" MinHeight="150" MaxHeight="400"  
+                  VerticalAlignment="Top"
+                  AlternatingRowBackground="WhiteSmoke"
+                  IsReadOnly="True"
+                  AutoGenerateColumns="False">
+                  
+            
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding SelectActorCommand}" CommandParameter="{Binding SelectedItem, ElementName=DataGrid1}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+
+            <DataGrid.Columns>
+
+                <DataGridTextColumn x:Name="CharacterName" Width="1*" Binding="{Binding CharacterName}" Header="Role"/>
+                <DataGridTextColumn x:Name="Name" Width="1*" Binding="{Binding Name}" Header="Name"/>
+
+            </DataGrid.Columns>
+
+        </DataGrid>
+
+
+
+
+
 
     </Grid>
 </UserControl>

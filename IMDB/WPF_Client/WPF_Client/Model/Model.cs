@@ -25,11 +25,16 @@ namespace WPF_Client.Model
             return _storage.MovieDtos(searchString);
         }
 
-        public MovieProfileDto MovieProfileDto(int movieId)
+        public MovieDetailsDto MovieDetailsDto(int movieId)
         {
-            return _storage.MovieDto(movieId);
+            return _storage.MovieDetailsDto(movieId);
         }
-        
+
+        public bool CreateProfile(string name, string password)
+        {
+            return _storage.CreateProfile(name, password);
+
+        }
 
     }
 }
