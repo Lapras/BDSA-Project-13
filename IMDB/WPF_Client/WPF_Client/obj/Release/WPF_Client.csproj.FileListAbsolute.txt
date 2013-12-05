@@ -1,0 +1,16 @@
+C:\Users\Biks\Desktop\BDSA-project\IMDB\WPF_Client\WPF_Client\bin\Release\WPF_Client.exe.config
+C:\Users\Biks\Desktop\BDSA-project\IMDB\WPF_Client\WPF_Client\obj\Release\WPF_Client.csprojResolveAssemblyReference.cache
+C:\Users\Biks\Desktop\BDSA-project\IMDB\WPF_Client\WPF_Client\obj\Release\View\LoginView.baml
+C:\Users\Biks\Desktop\BDSA-project\IMDB\WPF_Client\WPF_Client\obj\Release\View\SearchView.baml
+C:\Users\Biks\Desktop\BDSA-project\IMDB\WPF_Client\WPF_Client\obj\Release\MainWindow.g.cs
+C:\Users\Biks\Desktop\BDSA-project\IMDB\WPF_Client\WPF_Client\obj\Release\View\LoginView.g.cs
+C:\Users\Biks\Desktop\BDSA-project\IMDB\WPF_Client\WPF_Client\obj\Release\View\MovieProfileView.g.cs
+C:\Users\Biks\Desktop\BDSA-project\IMDB\WPF_Client\WPF_Client\obj\Release\View\SearchResultView.g.cs
+C:\Users\Biks\Desktop\BDSA-project\IMDB\WPF_Client\WPF_Client\obj\Release\View\SearchView.g.cs
+C:\Users\Biks\Desktop\BDSA-project\IMDB\WPF_Client\WPF_Client\obj\Release\App.g.cs
+C:\Users\Biks\Desktop\BDSA-project\IMDB\WPF_Client\WPF_Client\obj\Release\GeneratedInternalTypeHelper.g.cs
+C:\Users\Biks\Desktop\BDSA-project\IMDB\WPF_Client\WPF_Client\obj\Release\WPF_Client_MarkupCompile.cache
+C:\Users\Biks\Desktop\BDSA-project\IMDB\WPF_Client\WPF_Client\obj\Release\WPF_Client_MarkupCompile.lref
+C:\Users\Biks\Desktop\BDSA-project\IMDB\WPF_Client\WPF_Client\obj\Release\WPF_Client.csprojFakesResolveAssemblyReference.cache
+C:\Users\Biks\Desktop\BDSA-project\IMDB\WPF_Client\WPF_Client\obj\Release\Fakes\fakes.args
+C:\Users\Biks\Desktop\BDSA backup\BDSA-project\IMDB\WPF_Client\WPF_Client\bin\Release\WPF_Client.exe.config

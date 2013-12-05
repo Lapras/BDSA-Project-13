@@ -33,8 +33,11 @@ namespace WPF_Client.Model
         public bool CreateProfile(string name, string password)
         {
             return _storage.CreateProfile(name, password);
-
         }
 
+        public bool LoginInfo(string name, string password)
+        {
+            return _storage.LoginInfo(name, password);
+        }
     }
 }

@@ -26,5 +26,6 @@ namespace WPF_Client.View
             InitializeComponent();
             DataContext = new LoginViewModel();
         }
+
     }
 }

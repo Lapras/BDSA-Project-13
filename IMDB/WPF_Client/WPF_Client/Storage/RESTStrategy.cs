@@ -5,11 +5,12 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using DtoSubsystem;
 using WPF_Client.Dtos;
 using WPF_Client.Controller;
 using Newtonsoft.Json;
-
+using WPF_Client.PwBoxAssistant;
 
 
 namespace WPF_Client.Storage
@@ -130,10 +131,22 @@ namespace WPF_Client.Storage
             }
 
         }
-      
 
+        public bool LoginInfo(string name, string password)
+        {
+          /*  string dd = "asd";
+            string _pw = PasswordHash.CreateHash(password);
+            password += dd;
+            if (PasswordHash.ValidatePassword(password, _pw))
+            {
 
+                Console.WriteLine("nay!");
+                return false;
+            }
+            Console.WriteLine("yay!"); */
+            return true; // example just returns true for now.
         }
+    }
 
 
     

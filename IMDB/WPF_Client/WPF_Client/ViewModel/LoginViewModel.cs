@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using WPF_Client.Commands;
+using WPF_Client.Controller;
 
 namespace WPF_Client.ViewModel
 {
     class LoginViewModel : IViewModel
     {
         private string _usernameTextBox; //The username inputtet by the user
-        //private string _passwordTextBox; //The selected index from the combobox.
+        private string _passwordBox; //The password from the user.
         public ICommand LoginCommand { get; set; } //The command attached to the Search button.
         public ICommand RegisterCommand { get; set; } //The command attached to the Search button.
         public ICommand BackCommand { get; set; }
@@ -27,29 +28,21 @@ namespace WPF_Client.ViewModel
                 if (_usernameTextBox == value)
                     return;
                 _usernameTextBox = value;
-
-                //Console.WriteLine(value);
-                //Console.WriteLine(ComboBoxSelectedIndex);
-
                 OnPropertyChanged("UsernameTextBox");
             }
         }
 
-        /* public string PasswordTextBox
+         public string PasswordBox
          {
-             get { return _passwordTextBox; }
+             get { return _passwordBox; }
              set
              {
-                 if (_passwordTextBox == value)
+                 if (_passwordBox == value)
                      return;
-                 _passwordTextBox = value;
-
-                 //Console.WriteLine(value);
-                 //Console.WriteLine(ComboBoxSelectedIndex);
-
+                 _passwordBox = value;
                  OnPropertyChanged("PasswordTextBox");
              }
-         }*/
+         }
 
         public LoginViewModel()
         {
@@ -73,17 +66,21 @@ namespace WPF_Client.ViewModel
 
         public bool CanExecute(object parameter)
         {
-            return !string.IsNullOrEmpty(_vm.UsernameTextBox);
+            return !string.IsNullOrEmpty(_vm.UsernameTextBox) && !string.IsNullOrEmpty(_vm.PasswordBox);
         }
 
         public void Execute(object parameter)
         {
-            if (_vm.UsernameTextBox == "Simon")
+            if (SessionController.LoginInfo(_vm.UsernameTextBox, _vm.PasswordBox))
             {
-                MessageBox.Show("Wrong Username or Password");
+                MessageBox.Show("Login succes: You are now logged in to the system");
+                ViewModelManager.Main.TopViewModel = new TopviewSearchViewModel();
             }
-
-
+            else
+            {
+                MessageBox.Show("Login failed: You entered the worng username or password");
+            }
+            
         }
 
         public event EventHandler CanExecuteChanged

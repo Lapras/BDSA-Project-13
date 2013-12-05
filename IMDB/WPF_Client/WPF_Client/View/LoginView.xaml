@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:ff="clr-namespace:WPF_Client.PwBoxAssistant"
       mc:Ignorable="d" 
       d:DesignHeight="400" d:DesignWidth="600">
 
@@ -29,7 +30,7 @@
                 <TextBox Name="UsernameTextBox" Margin="5,0,0,5" Grid.Row="0" Grid.Column="0" Height="20" Width="100" VerticalAlignment="Bottom" HorizontalAlignment="Left" Text="{Binding UsernameTextBox, UpdateSourceTrigger=PropertyChanged}" ></TextBox>
 
                 <TextBlock Margin="0,5,0,0" Grid.Row="0" Grid.Column="2" FontFamily="Resources/#Charlemagne Std" FontSize="12" Text="Password: " HorizontalAlignment="Left" VerticalAlignment="Top"></TextBlock>
-                <PasswordBox Name="PasswordTextBox" Margin="0,0,0,5" Grid.Row="0" Grid.Column="2" Height="20" Width="100" VerticalAlignment="Bottom" HorizontalAlignment="Left"></PasswordBox>
+                <PasswordBox Name="PasswordBox" Margin="0,0,0,5" Grid.Row="0" Grid.Column="2" Height="20" Width="100" VerticalAlignment="Bottom" HorizontalAlignment="Left" ff:PasswordBoxAssistant.BindPassword="true"  ff:PasswordBoxAssistant.BoundPassword="{Binding Path=PasswordBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></PasswordBox>
                 <Grid Column="4" Row="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition MinWidth="65" MaxWidth="65"/>

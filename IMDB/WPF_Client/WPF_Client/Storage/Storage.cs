@@ -34,5 +34,11 @@ namespace WPF_Client.Storage
             return _strategy.CreateProfile(name, password);
 
         }
+
+        public bool LoginInfo(string name, string password)
+        {
+            return _strategy.LoginInfo(name, password);
+
+        }
     }
 }
