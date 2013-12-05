@@ -50,10 +50,17 @@ namespace ImdbRestService.Handlers
 
                     if (ProfileAlreadyExist(name))
                     {
+                        // acutally push to database
+                        throw new NotImplementedException();
+
+                        var msg = new JavaScriptSerializer().Serialize(true);
+                        return new ResponseData(msg, HttpStatusCode.OK);
                     }
-                    
-
-
+                    else
+                    {
+                        var msg = new JavaScriptSerializer().Serialize(false);
+                        return new ResponseData(msg, HttpStatusCode.OK);
+                    }
                 }
             }
             return responseData;
@@ -63,10 +70,18 @@ namespace ImdbRestService.Handlers
         public bool ProfileAlreadyExist(string profileName)
         {
             using (var entities = new ImdbEntities())
-            {
-             /*   var matchingProfiles = (from p in entities.Profile
+            {  
+ 
+                /*
+                var matchingProfiles = (from p in entities.Profile
                              where p.Name == profileName
                              select p.Name).ToList();
+              if(!matchingProfiles.contain(profileName) {
+                  return true;
+              }
+                    return false;
+               
+
 */
 
             }
