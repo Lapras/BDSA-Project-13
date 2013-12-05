@@ -111,12 +111,23 @@ namespace WPF_Client.Storage
         public bool CreateProfile(string name, string password)
         {
             //example for now:
+            //return true;
+
+            using (var httpClient = new HttpClient())
+            {
+                Console.WriteLine("Getting reponse from REST server");
+                var response = httpClient.GetStringAsync("http://localhost:54321/createProfile/?username=" + name + "?password=" + password);
 
 
-            // POST /createprofile/
-            //etc. etc.
+                Console.WriteLine("JSON string received:" + response.Result);
+                Console.WriteLine("Starting deserializing");
+                var result = JsonConvert.DeserializeObject<bool>(response.Result);
+                Console.WriteLine("deserializing done");
 
-            return true;
+
+
+                return result;
+            }
 
         }
       
