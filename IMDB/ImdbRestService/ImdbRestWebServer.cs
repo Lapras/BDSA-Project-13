@@ -4,11 +4,15 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Script.Serialization;
+using DtoSubsystem;
 using ImdbRestService.Handlers;
+using Newtonsoft.Json;
 
 namespace ImdbRestService
 {
@@ -58,7 +62,7 @@ namespace ImdbRestService
         // process a request
         private async void ProcessRequest(HttpListenerContext context)
         {
-            var handlers = new List<IHandler>(new IHandler[] { new MovieHandler() });
+            var handlers = new List<IHandler>(new IHandler[] { new MovieHandler(), new ProfileHandler() });
 
             // you properly need to split this into a number of methods to make a readable
             // solution :-)
@@ -79,6 +83,7 @@ namespace ImdbRestService
 
                         if (handler != null)
                         {
+                            var test = path.Skip(1).ToList();
                             //updates the responseData
                             responseData = await handler.Handle(path.Skip(1).ToList(), responseData);
                         }
@@ -87,39 +92,32 @@ namespace ImdbRestService
                 // check for POST method
                 else if (context.Request.HttpMethod == "POST")
                 {
+
                     // split the request URL by '/'
                     var path = SplitUrl(context);
                     // in a post (and put) method we need to fetch the body of the HTTP request
                     // read the input stream from the request
                     var inputStream = new StreamReader(context.Request.InputStream);
                     var rawBody = inputStream.ReadToEnd();
-                    // decode the text
-                    var bodyDecoded = HttpUtility.UrlDecode(rawBody, Encoding.GetEncoding("iso-8859-1"));
-                    // we assume somethind like "id=1&name=John&description=blabla", but it could also be JSON or XML
-                    // of cause we should then do another parsing...
+                 
                     // now we can use the ParseQueryString in the HttpUtility
-                    NameValueCollection namedValues = HttpUtility.ParseQueryString(bodyDecoded ?? "");
+                    //NameValueCollection namedValues = HttpUtility.ParseQueryString(bodyDecoded ?? "");
                     // that will create a map of name and values
-                    int id = 0;
-                    int.TryParse(namedValues["id"], out id);
-                    if (id != 0)
+                    if (path.Count > 0)
                     {
-                        if (path.Count > 0)
-                        {
-                            // checks for a handler able to handle that specific path
-                            var handler = handlers.FirstOrDefault(x => x.CanHandle(path[0]));
-                            // save it in the database .... obviously this could lead to persistence errors
-                            // one thing, you would properly not want to get the id a parameter, but compute it yourself 
-                            // (or let the database take care of that)
-                            // we'll just return (as debugging info the object we would add to the system)
+                        // checks for a handler able to handle that specific path
+                        var handler = handlers.FirstOrDefault(x => x.CanHandle(path[1]));
 
-                            if (handler != null)
-                            {
-                                // updates the responseData
-                                responseData = await handler.Handle(path.Skip(1).ToList(), responseData);
-                            }
+                        var url = path.Skip(1).ToList();
+                        url.Add(rawBody);
+
+                        if (handler != null)
+                        {
+                            // handle the request and update the response data
+                            responseData = await handler.Handle(url, responseData);
                         }
                     }
+
                     else
                     {
                         responseData = new ResponseData("Error creating Category: no id", HttpStatusCode.BadRequest);

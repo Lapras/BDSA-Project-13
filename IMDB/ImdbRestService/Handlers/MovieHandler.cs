@@ -58,7 +58,7 @@ namespace ImdbRestService.Handlers
                         if (movies.Count == 0)
                         {
                             movies = await GetMoviesFromIMDbAsync(value);
-							//AddMoviesToDb(movies);
+							AddMoviesToDb(movies);
                         }
 
                         var msg = new JavaScriptSerializer().Serialize(movies);
@@ -118,7 +118,7 @@ namespace ImdbRestService.Handlers
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsStringAsync();
-
+                    
                     return JsonConvert.DeserializeObject<List<MovieDto>>(result);
                 }
 

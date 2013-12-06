@@ -15,7 +15,7 @@ namespace ImdbRestService.Handlers
     /// </summary>
     public class ProfileHandler : IHandler
     {
-        private const string PathSegment = "createProfile";
+        private const string PathSegment = "Registration";
 
         /// <summary>
         /// Method checking if the given path segment matches the one that
@@ -37,21 +37,23 @@ namespace ImdbRestService.Handlers
         /// <returns></returns>
         public async Task<ResponseData> Handle(List<string> path, ResponseData responseData)
         {
-            if (path != null && path.Count == 1)
+            if (path != null && path.Count == 2)
             {
-                var firstSegment = path.First();
+                var key = path.First();
 
-                var key = firstSegment.Substring(1).Split(new[] {'='})[0];
-                var value = firstSegment.Split(new[] {'='})[1];
-
-                if (key == "createProfile")
+                if (key == "Registration")
                 {
-                    string name = "test";
+                    path[1] = path[1].Replace("k__BackingField", "");
+                    path[1] = path[1].Replace("<", "");
+                    path[1] = path[1].Replace(">", "");
 
-                    if (ProfileAlreadyExist(name))
+                    // Parse Json object back to data
+                    var data = JsonConvert.DeserializeObject<UserModelDto>(path[1]);
+
+                    if (ProfileAlreadyExist(data.Email))
                     {
                         // acutally push to database
-                        throw new NotImplementedException();
+                        AddProfileToDb(data);
 
                         var msg = new JavaScriptSerializer().Serialize(true);
                         return new ResponseData(msg, HttpStatusCode.OK);
@@ -70,8 +72,8 @@ namespace ImdbRestService.Handlers
         public bool ProfileAlreadyExist(string profileName)
         {
             using (var entities = new ImdbEntities())
-            {  
- 
+            {
+
                 /*
                 var matchingProfiles = (from p in entities.Profile
                              where p.Name == profileName
@@ -80,69 +82,29 @@ namespace ImdbRestService.Handlers
                   return true;
               }
                     return false;
-               
-
-*/
-
+               */
             }
 
             return false;
-        } 
+        }
 
-/*
-        /// <summary>
-        /// Method recieving a movie by id from the local database
-        /// </summary>
-        /// <param name="id"> id of the movie we search for </param>
-        /// <returns> movie we requested </returns>
-        public List<MovieDetailsDto> GetMovieById(int id)
+
+        private void AddProfileToDb(UserModelDto profileData)
         {
-            using (var entities = new ImdbEntities())
+            // Adding profiles to app server database 
+
+            using (var context = new ImdbEntities())
             {
-                var participants = (from peo in entities.People
-                                    join par in entities.Participates on peo.Id equals par.Person_Id
-                                    join m in entities.Movies on par.Movie_Id equals m.Id
-                                    where m.Id == id
-                                    group peo by new
-                                    {
-                                        peo.Id,
-                                        peo.Name,
-                                        par.CharName
-                                    }
-                                        into grouping
-                                        select new PersonDto()
-                                        {
-                                            Id = grouping.Key.Id,
-                                            Name = grouping.Key.Name,
-                                            CharacterName = grouping.Key.CharName
-                                        }).ToList();
-
-                var movie = (from m in entities.Movies
-                             where m.Id == id
-                             select new MovieDetailsDto()
-                             {
-                                 Id = m.Id,
-                                 Title = m.Title,
-                                 Year = m.Year,
-                                 Kind = m.Kind,
-                                 EpisodeNumber = m.EpisodeNumber,
-                                 EpisodeOf_Id = m.EpisodeOf_Id,
-                                 SeasonNumber = m.SeasonNumber,
-                                 SeriesYear = m.SeriesYear
-                             }).ToList();
-
-                movie[0].Participants = new List<PersonDto>();
-
-                foreach (var participant in participants)
+                /*
+                context.Profiles.Add(new Profile
                 {
-                    movie[0].Participants.Add(participant);
-                }
+                    Id = movie.Id,
+                    email = profileData.Email,
+                    password = profileData.Password
+                */
 
-
-                return movie;
+                 context.SaveChanges();
             }
         }
-*/
-
     }
 }
