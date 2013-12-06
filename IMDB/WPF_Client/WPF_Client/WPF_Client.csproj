@@ -75,13 +75,14 @@
     <Compile Include="Model\Model.cs" />
     <Compile Include="PwBoxAssistant\PasswordBoxAssistant.cs" />
     <Compile Include="PwBoxAssistant\PasswordHash.cs" />
+    <Compile Include="Storage\Cache.cs" />
     <Compile Include="Storage\IStorageStrategy.cs" />
     <Compile Include="Storage\RESTStrategy.cs" />
     <Compile Include="Storage\Storage.cs" />
     <Compile Include="UnitTestDetector.cs" />
     <Compile Include="ViewModelManager.cs" />
     <Compile Include="ViewModel\CreateProfileViewModel.cs" />
-    <Compile Include="ViewModel\IViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\MovieProfileViewModel.cs" />

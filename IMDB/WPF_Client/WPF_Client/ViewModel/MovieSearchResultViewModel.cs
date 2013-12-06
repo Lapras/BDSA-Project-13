@@ -24,7 +24,7 @@ namespace WPF_Client.ViewModel
     /// <summary>
     /// ViewModel for the MovieSearchResultView.
     /// </summary>
-    public class MovieSearchResultViewModel : IViewModel
+    public class MovieSearchResultViewModel : ViewModelBase
     {
         private ObservableCollection<MovieDto> _movieDtos;
         private int _moviesFound;

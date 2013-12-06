@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WPF_Client.Dtos;
 using DtoSubsystem;
 
 namespace WPF_Client.Storage
@@ -13,16 +12,23 @@ namespace WPF_Client.Storage
     {
         private IStorageStrategy _strategy;
 
+        private Cache _cache;
+
+
         public Storage(IStorageStrategy strategy)
         {
             _strategy = strategy;
+            _cache = new Cache();
             
         }
 
         public ObservableCollection<MovieDto> MovieDtos(string searchString)
         {
+
+
             return _strategy.MovieDtos(searchString);
         }
+
 
         public MovieDetailsDto MovieDetailsDto(int movieId)
         {

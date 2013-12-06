@@ -21,7 +21,7 @@ namespace WPF_Client.ViewModel
     /// <summary>
     /// ViewModel for the SearchView.
     /// </summary>
-    public class SearchViewModel : IViewModel
+    public class SearchViewModel : ViewModelBase
     {
         private string _textBox; //The text input from the user from the textbox.
         private int _comboBoxSelectedIndex; //The selected index from the combobox.

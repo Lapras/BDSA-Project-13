@@ -10,7 +10,7 @@ using WPF_Client.Controller;
 
 namespace WPF_Client.ViewModel
 {
-    class LoginViewModel : IViewModel
+    class LoginViewModel : ViewModelBase
     {
         private string _usernameTextBox; //The username inputtet by the user
         private string _passwordBox; //The password from the user.

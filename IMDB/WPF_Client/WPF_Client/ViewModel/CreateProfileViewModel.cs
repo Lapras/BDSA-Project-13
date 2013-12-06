@@ -14,7 +14,7 @@ namespace WPF_Client.ViewModel
     /// <summary>
     /// ViewModel for the CreateProfileView.
     /// </summary>
-    class CreateProfileViewModel : IViewModel
+    class CreateProfileViewModel : ViewModelBase
     {
         private string _usernameTextBox; //The text input from the user from the username-textbox.
         private string _passwordTextBox; //The text input from the user from the password-textbox.

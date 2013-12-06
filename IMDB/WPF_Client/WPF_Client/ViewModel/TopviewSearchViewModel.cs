@@ -9,7 +9,7 @@ using WPF_Client.Controller;
 
 namespace WPF_Client.ViewModel
 {
-    internal class TopviewSearchViewModel : IViewModel
+    internal class TopviewSearchViewModel : ViewModelBase
     {
         private string _textBox; //The text input from the user from the textbox.
         private int _comboBoxSelectedIndex; //The selected index from the combobox.
