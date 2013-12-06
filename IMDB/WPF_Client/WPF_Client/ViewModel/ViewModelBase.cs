@@ -11,11 +11,14 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using WPF_Client.Dtos;
 
 
 namespace WPF_Client.ViewModel
 {
+
+    /// <summary>
+    /// Abstract class which all ViewModels extend inorder to avoid code duplication.
+    /// </summary>
     public abstract class ViewModelBase : INotifyPropertyChanged
     {
 

@@ -11,7 +11,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using WPF_Client.Dtos;
 using WPF_Client.Model;
 using WPF_Client.Controller;
 

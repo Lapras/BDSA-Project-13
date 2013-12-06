@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DtoSubsystem;
-using WPF_Client.Dtos;
 using WPF_Client.Model;
 using WPF_Client.ViewModel;
 using WPF_Client.Storage;

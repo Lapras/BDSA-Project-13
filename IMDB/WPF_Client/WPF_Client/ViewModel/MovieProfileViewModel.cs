@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WPF_Client.Commands;
-using WPF_Client.Dtos;
 using WPF_Client.Model;
 using WPF_Client.Controller;
 using DtoSubsystem;
@@ -44,7 +43,9 @@ namespace WPF_Client.ViewModel
             }
         }
 
-
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
         public MovieProfileViewModel()
         {
             MovieDetailsDto = HollywoodController.MovieDetailsDto;

@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using DtoSubsystem;
-using WPF_Client.Dtos;
 using WPF_Client.Controller;
 using Newtonsoft.Json;
 using WPF_Client.PwBoxAssistant;
@@ -15,6 +14,9 @@ using WPF_Client.PwBoxAssistant;
 
 namespace WPF_Client.Storage
 {
+    /// <summary>
+    /// A storage strategy which relies on using RESTful methods on an external server.
+    /// </summary>
     public class RESTStrategy : IStorageStrategy
     {
         public ObservableCollection<MovieDto> MovieDtos(string searchString)

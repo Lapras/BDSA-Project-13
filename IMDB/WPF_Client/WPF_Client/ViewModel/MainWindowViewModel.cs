@@ -16,6 +16,11 @@ namespace WPF_Client.ViewModel
         /// The current view.
         /// </summary>
         private ViewModelBase _currentViewModel;
+
+
+        /// <summary>
+        /// The toolbar.
+        /// </summary>
         private ViewModelBase _topViewModel;
 
         /// <summary>

@@ -5,11 +5,13 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
-using WPF_Client.Dtos;
 using DtoSubsystem;
 
 namespace WPF_Client.Storage
 {
+    /// <summary>
+    /// Interface that the strategies of the storage must implement.
+    /// </summary>
     public interface IStorageStrategy
     {
         ObservableCollection<MovieDto> MovieDtos(string searchString);

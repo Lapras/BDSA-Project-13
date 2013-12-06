@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WPF_Client.Dtos;
 using DtoSubsystem;
 
 namespace WPF_Client.Model
