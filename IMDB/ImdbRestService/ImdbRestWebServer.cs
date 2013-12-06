@@ -17,13 +17,9 @@ namespace ImdbRestService
         // the listener for http requests
         private readonly HttpListener _listener;
 
-        private ImdbEntities _imdbEntities;
-
         // give the base address as argument
         public ImdbRestWebServer(string uri)
         {
-            _imdbEntities = new ImdbEntities();
-
             _listener = new HttpListener();
             // set the 
             _listener.Prefixes.Add(uri);
