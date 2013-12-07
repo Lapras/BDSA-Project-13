@@ -118,7 +118,12 @@ namespace ImdbRestService.Handlers
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsStringAsync();
-                    
+
+                    if (result.Equals("{\"code\":404, \"error\""))
+                    {
+                        return new List<MovieDto>() {};
+                    }
+
                     return JsonConvert.DeserializeObject<List<MovieDto>>(result);
                 }
 

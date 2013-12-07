@@ -4,17 +4,17 @@
 exe
 C#
 .cs
-C:\Users\Biks\Desktop\BDSA-project\IMDB\WPF_Client\WPF_Client\obj\Debug\
+C:\Users\test.Alex-Laptop\Documents\GitHub\BDSA-Project-13\IMDB\WPF_Client\WPF_Client\obj\Debug\
 WPF_Client
 none
 false
 DEBUG;TRACE
-C:\Users\Biks\Desktop\BDSA-project\IMDB\WPF_Client\WPF_Client\App.xaml
+C:\Users\test.Alex-Laptop\Documents\GitHub\BDSA-Project-13\IMDB\WPF_Client\WPF_Client\App.xaml
 7-1958814396
 
-382062502196
-18118675434
+38-1430456806
+181047121026
 MainWindow.xaml;View\CreateProfileView.xaml;View\LoginView.xaml;View\MovieProfileView.xaml;View\MovieSearchResultView.xaml;View\SearchView.xaml;View\TopviewSearchView.xaml;
 
-False
+True
 
