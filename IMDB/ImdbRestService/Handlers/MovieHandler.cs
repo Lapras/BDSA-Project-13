@@ -119,9 +119,9 @@ namespace ImdbRestService.Handlers
                 {
                     var result = await response.Content.ReadAsStringAsync();
 
-                    if (result.Equals("{\"code\":404, \"error\""))
+                    if (result.Equals("{\"code\":404, \"error\":\"Film not found\"}"))
                     {
-                        return new List<MovieDto>() {};
+                        return new List<MovieDto>() {};     
                     }
 
                     return JsonConvert.DeserializeObject<List<MovieDto>>(result);
