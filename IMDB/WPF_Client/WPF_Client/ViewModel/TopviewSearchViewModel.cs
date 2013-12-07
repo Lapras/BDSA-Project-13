@@ -9,11 +9,12 @@ using WPF_Client.Controller;
 
 namespace WPF_Client.ViewModel
 {
-    internal class TopviewSearchViewModel : IViewModel
+    internal class TopviewSearchViewModel : ViewModelBase
     {
         private string _textBox; //The text input from the user from the textbox.
         private int _comboBoxSelectedIndex; //The selected index from the combobox.
         public ICommand TopSearchCommand { get; set; } //The command attached to the Search button.
+        public ICommand LogoutCommand { get; set; } // The command attached to the Logout textblock
 
 
         /// <summary>
@@ -59,7 +60,9 @@ namespace WPF_Client.ViewModel
         /// </summary>
         public TopviewSearchViewModel()
         {
+            
             TopSearchCommand = new TopSearchCommand(this);
+            LogoutCommand = new LogoutCommand(this);
             ComboBoxSelectedIndex = 0; // This does that "Movies" is the selected from the start.
         }
 
@@ -102,5 +105,39 @@ namespace WPF_Client.ViewModel
         }
     }
 
+    class LogoutCommand : ICommand
+    {
+        private TopviewSearchViewModel _vm;
+
+
+        public LogoutCommand(TopviewSearchViewModel vm)
+        {
+            _vm = vm;
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return (SessionController._isLoggedIn);
+        }
+
+        public void Execute(object parameter)
+        {
+            if (SessionController._isLoggedIn)
+            {
+                MessageBox.Show("You have been logged out");
+                ViewModelManager.Main.TopViewModel = new LoginViewModel();
+                SessionController._currentUser = null;
+                SessionController._isLoggedIn = false;
+            }
+            MessageBox.Show("You have to be logged in before you can log out");
+        }
+
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+
+        }
+    }
     
 }

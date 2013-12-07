@@ -4,12 +4,14 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WPF_Client.Dtos;
 using DtoSubsystem;
 using WPF_Client.Storage;
 
 namespace WPF_Client.Model
 {
+    /// <summary>
+    /// The Model class represents the main business data of the application.
+    /// </summary>
     public class Model : IModel
     {
         private Storage.Storage _storage;

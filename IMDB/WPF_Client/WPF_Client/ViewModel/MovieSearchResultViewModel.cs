@@ -12,7 +12,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using WPF_Client.Commands;
-using WPF_Client.Dtos;
 using WPF_Client.Model;
 using WPF_Client.Controller;
 
@@ -24,7 +23,7 @@ namespace WPF_Client.ViewModel
     /// <summary>
     /// ViewModel for the MovieSearchResultView.
     /// </summary>
-    public class MovieSearchResultViewModel : IViewModel
+    public class MovieSearchResultViewModel : ViewModelBase
     {
         private ObservableCollection<MovieDto> _movieDtos;
         private int _moviesFound;

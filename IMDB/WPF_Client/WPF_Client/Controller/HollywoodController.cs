@@ -4,13 +4,13 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WPF_Client.Dtos;
 using WPF_Client.Model;
 using WPF_Client.ViewModel;
 using DtoSubsystem;
 
 namespace WPF_Client.Controller
 {
+
     public static class HollywoodController
     {
         public static IModel _model = new Model.Model();

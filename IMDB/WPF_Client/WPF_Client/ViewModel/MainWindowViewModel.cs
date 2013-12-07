@@ -10,13 +10,18 @@ using System.Globalization;
 
 namespace WPF_Client.ViewModel
 {
-    public class MainWindowViewModel : IViewModel
+    public class MainWindowViewModel : ViewModelBase
     {
         /// <summary>
         /// The current view.
         /// </summary>
-        private IViewModel _currentViewModel;
-        private IViewModel _topViewModel;
+        private ViewModelBase _currentViewModel;
+
+
+        /// <summary>
+        /// The toolbar.
+        /// </summary>
+        private ViewModelBase _topViewModel;
 
         /// <summary>
         /// The default constructor. We set the initial viewmodel to the SearchViewModel.
@@ -31,7 +36,7 @@ namespace WPF_Client.ViewModel
         /// The CurrentView property. When the View is changed,
         /// we need to raise a property changed event.
         /// </summary>
-        public IViewModel CurrentViewModel
+        public ViewModelBase CurrentViewModel
         {
             get
             {
@@ -47,7 +52,7 @@ namespace WPF_Client.ViewModel
             }
         }
 
-        public IViewModel TopViewModel
+        public ViewModelBase TopViewModel
         {
             get
             {
