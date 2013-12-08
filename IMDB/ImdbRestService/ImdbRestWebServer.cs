@@ -115,7 +115,7 @@ namespace ImdbRestService
             if (path.Count > 0)
             {
                 // checks for a handler able to handle that specific path
-                var handler = handlers.FirstOrDefault(x => x.CanHandle(path[1]));
+                var handler = handlers.FirstOrDefault(x => x.CanHandle(path[0]));
 
                 var url = path.Skip(1).ToList();
                 url.Add(rawBody);

@@ -15,8 +15,7 @@ namespace ImdbRestService.Handlers
     /// </summary>
     public class ProfileHandler : IHandler
     {
-        private const string PathSegment = "Registration";
-        private const string PathSegment2 = "Login";
+        private const string PathSegment = "User";
 
 
 
@@ -28,7 +27,7 @@ namespace ImdbRestService.Handlers
         /// <returns> wether or not the class is able to handle the request </returns>
         public bool CanHandle(string pathSegment)
         {
-            return pathSegment.Equals(PathSegment, StringComparison.CurrentCultureIgnoreCase) || pathSegment.Equals(PathSegment2, StringComparison.CurrentCultureIgnoreCase);
+            return pathSegment.Equals(PathSegment, StringComparison.CurrentCultureIgnoreCase);
         }
 
         /// <summary>
