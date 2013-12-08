@@ -127,3 +127,6 @@ C:\Users\test.Alex-Laptop\Documents\GitHub\BDSA-Project-13\IMDB\WPF_Client\WPF_C
 C:\Users\test.Alex-Laptop\Documents\GitHub\BDSA-Project-13\IMDB\WPF_Client\WPF_Client\obj\Debug\WPF_Client.csproj.GenerateResource.Cache
 C:\Users\test.Alex-Laptop\Documents\GitHub\BDSA-Project-13\IMDB\WPF_Client\WPF_Client\obj\Debug\WPF_Client.exe
 C:\Users\test.Alex-Laptop\Documents\GitHub\BDSA-Project-13\IMDB\WPF_Client\WPF_Client\obj\Debug\WPF_Client.pdb
+C:\Users\test.Alex-Laptop\Documents\GitHub\BDSA-Project-13\IMDB\WPF_Client\WPF_Client\bin\Debug\System.Net.Http.Formatting.dll
+C:\Users\test.Alex-Laptop\Documents\GitHub\BDSA-Project-13\IMDB\WPF_Client\WPF_Client\bin\Debug\System.Net.Http.Formatting.xml
+C:\Users\test.Alex-Laptop\Documents\GitHub\BDSA-Project-13\IMDB\WPF_Client\WPF_Client\bin\Debug\de\System.Net.Http.Formatting.resources.dll

@@ -13,7 +13,7 @@ namespace ImdbRestService
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ImdbEntities : DbContext
+    public partial class ImdbEntities : DbContext, IImdbEntities
     {
         public ImdbEntities()
             : base("name=ImdbEntities")
@@ -28,7 +28,7 @@ namespace ImdbRestService
         public DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public DbSet<InfoType> InfoTypes { get; set; }
         public DbSet<MovieInfo> MovieInfoes { get; set; }
-        public DbSet<Movie> Movies { get; set; }
+        public virtual IDbSet<Movie> Movies { get; set; }
         public DbSet<Participate> Participates { get; set; }
         public DbSet<Person> People { get; set; }
         public DbSet<PersonInfo> PersonInfoes { get; set; }

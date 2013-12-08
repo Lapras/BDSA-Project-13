@@ -1,13 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using System.Web.Caching;
-using System.Web.Configuration;
 using System.Web.Mvc;
 using ASP_Client.Models;
-using DtoSubsystem;
-using Newtonsoft.Json;
 
 namespace ASP_Client.Controllers
 {
@@ -43,8 +37,8 @@ namespace ASP_Client.Controllers
             //    return RedirectToAction("Login", "User");
             //}
 
-            var foundMovies = await CommunicationFacade.GetMoviesAsync(searchString);  
-            
+            var foundMovies = await CommunicationFacade.GetMoviesAsync(searchString);
+
             var movieOverviewViewModel = new MovieOverviewViewModel();
 
             if (foundMovies.Count != 0)
@@ -77,7 +71,7 @@ namespace ASP_Client.Controllers
                 movieDetailsViewModel.Title = movieDetails.Title;
                 movieDetailsViewModel.Year = movieDetails.Year;
 
-               var temp = movieDetails.Participants.Select(participant => new ActorViewModel()
+               var temp = movieDetails.Participants.Select(participant => new ActorViewModel
                {
                    Id = participant.Id, 
                    Name = participant.Name, 

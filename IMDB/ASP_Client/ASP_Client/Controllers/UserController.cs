@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using ASP_Client.ClientRequests;
@@ -56,9 +57,9 @@ namespace ASP_Client.Controllers
         {
             if (ModelState.IsValid)
             {
-                var response = await _userRepository.Login(user);
+                //var response = await _userRepository.Login(user);
 
-                //var response = new HttpResponseMessage();
+                var response = new HttpResponseMessage();
 
                 response.StatusCode = HttpStatusCode.Accepted;
                 if (response.IsSuccessStatusCode)
