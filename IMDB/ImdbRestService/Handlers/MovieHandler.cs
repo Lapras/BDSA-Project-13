@@ -122,7 +122,7 @@ namespace ImdbRestService.Handlers
                     if (result.Equals("{\"code\":404, \"error\":\"Film not found\"}"))
                     {
                         return new List<MovieDto>() {};     
-                    }
+                    }           
 
                     return JsonConvert.DeserializeObject<List<MovieDto>>(result);
                 }
@@ -188,7 +188,7 @@ namespace ImdbRestService.Handlers
             }
         }
 
-		private void AddMoviesToDb(IEnumerable<MovieDto> movies)
+		private void    AddMoviesToDb(IEnumerable<MovieDto> movies)
 		{
 			//Adding found movies to app server database
 			

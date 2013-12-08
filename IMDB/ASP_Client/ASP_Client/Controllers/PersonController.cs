@@ -19,7 +19,7 @@ namespace ASP_Client.Controllers
         public async Task<ActionResult> PersonDetails(int id)
         {
 
-            var personDetails = await GetPersonDetailsLocallyAsync(id);
+            var personDetails = await CommunicationFacade.GetPersonDetailsLocallyAsync(id);
 
             var personDetailsViewModel = new PersonDetailsViewModel();
 
@@ -31,20 +31,11 @@ namespace ASP_Client.Controllers
             }
             throw new NotImplementedException();
 
-            // Can't resolve the PersonDetails view for some reason
+            // Can't resolve the PersonDetails view for some reason 
+            // - I guess because there is no method responding by the server yet (Alex)
 
            // return  View(personDetailsViewModel);
 
-        }
-
-        private async Task<List<PersonDetailsDto>> GetPersonDetailsLocallyAsync(int personId)
-        {
-            using (var httpClient = new HttpClient())
-            {
-                return JsonConvert.DeserializeObject<List<PersonDetailsDto>>(
-                    await httpClient.GetStringAsync("http://localhost:54321/movies/?personId=" + personId)
-                );
-            }
         }
     }
 }

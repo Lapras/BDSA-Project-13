@@ -83,7 +83,6 @@ namespace ImdbRestService
 
                         if (handler != null)
                         {
-                            var test = path.Skip(1).ToList();
                             //updates the responseData
                             responseData = await handler.Handle(path.Skip(1).ToList(), responseData);
                         }

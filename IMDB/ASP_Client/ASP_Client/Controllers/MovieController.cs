@@ -43,7 +43,7 @@ namespace ASP_Client.Controllers
             //    return RedirectToAction("Login", "User");
             //}
 
-            var foundMovies = await GetMoviesAsync(searchString);
+            var foundMovies = await CommunicationFacade.GetMoviesAsync(searchString);  
             
             var movieOverviewViewModel = new MovieOverviewViewModel();
 
@@ -56,32 +56,22 @@ namespace ASP_Client.Controllers
             return View(movieOverviewViewModel);
         }
 
-        private async Task<List<MovieDto>> GetMoviesAsync(string searchString)
-        {
-            using (var httpClient = new HttpClient())
-            {
-                return JsonConvert.DeserializeObject<List<MovieDto>>(
-                    await httpClient.GetStringAsync("http://localhost:54321/movies/?title=" + searchString)
-                );
-            }
-        }
-
          // GET: /Search/MovieDetails/5
 
         public async Task<ActionResult> MovieDetails(int id)
         {
 
-            var movieDetails = await GetMovieDetailsLocallyAsync(id);
+            var movieDetails = await CommunicationFacade.GetMovieDetailsLocallyAsync(id);
 
             var movieDetailsViewModel = new MovieDetailsViewModel();
 
             if (movieDetails != null)
             {
-                movieDetailsViewModel.Id = movieDetails[0].Id;
-                movieDetailsViewModel.Title = movieDetails[0].Title;
-                movieDetailsViewModel.Year = movieDetails[0].Year;
+                movieDetailsViewModel.Id = movieDetails.Id;
+                movieDetailsViewModel.Title = movieDetails.Title;
+                movieDetailsViewModel.Year = movieDetails.Year;
 
-               var temp = movieDetails[0].Participants.Select(participant => new ActorViewModel()
+               var temp = movieDetails.Participants.Select(participant => new ActorViewModel()
                {
                    Id = participant.Id, 
                    Name = participant.Name, 
@@ -93,16 +83,6 @@ namespace ASP_Client.Controllers
 
             return View(movieDetailsViewModel);
 
-        }
-
-        private async Task<List<MovieDetailsDto>> GetMovieDetailsLocallyAsync(int movieId)
-        {
-            using (var httpClient = new HttpClient())
-            {
-                return JsonConvert.DeserializeObject<List<MovieDetailsDto>>(
-                    await httpClient.GetStringAsync("http://localhost:54321/movies/?movieId=" + movieId)
-                );
-            }
         }
     }
 }

@@ -135,6 +135,7 @@
     <Compile Include="ClientRequests\IUserRepository.cs" />
     <Compile Include="ClientRequests\UserRepository.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CommunicationFacade.cs" />
     <Compile Include="Controllers\MovieController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\UserController.cs" />
