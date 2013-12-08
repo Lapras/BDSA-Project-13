@@ -105,7 +105,7 @@ namespace ImdbRestService.Handlers
         /// <returns> a list of MovieDto's containing information on the movies found </returns>
         public List<MovieDto> GetMoviesByTitle(string title) 
         {
-            using (var entities = _imdbEntities ?? new ImdbEntities())
+            using (var entities = new ImdbEntities())
             {
                 if (String.IsNullOrEmpty(title))
                 {
