@@ -13,7 +13,7 @@ namespace ASP_Client.Controllers
     /// PersonController class is the controller for every view concerning a representation of a single person.
     /// From here the views get the required models to show.
     /// </summary>
-    public class PersonController : Controller
+    public class PersonController : BaseController
     {
         
         public async Task<ActionResult> PersonDetails(int id)

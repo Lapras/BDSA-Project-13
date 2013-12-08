@@ -9,7 +9,7 @@ namespace ASP_Client.Controllers
     /// MovieController class is the controller for every view concerning a representation of a movie.
     /// From here the views get the required models to show.
     /// </summary>
-    public class MovieController : Controller
+    public class MovieController : BaseController
     {
         //private readonly IMoviesRepository _repository;
 

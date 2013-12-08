@@ -14,7 +14,7 @@ namespace ASP_Client.Controllers
     /// <summary>
     /// Reponsible to Communicate with the application server holding the data
     /// </summary>
-    public static class CommunicationFacade
+    public static class CommunicationFacade 
     {
        
         /// <summary>

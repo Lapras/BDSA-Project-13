@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ImdbModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ImdbModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="ImdbModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="ImdbModel.Store.__MigrationHistory" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="InfoType" EntityType="ImdbModel.Store.InfoType" store:Type="Tables" Schema="dbo" />
@@ -13,6 +13,7 @@
           <EntitySet Name="Participate" EntityType="ImdbModel.Store.Participate" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="People" EntityType="ImdbModel.Store.People" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PersonInfo" EntityType="ImdbModel.Store.PersonInfo" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="User" EntityType="ImdbModel.Store.User" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK_dbo_MovieInfo_dbo_InfoType_Type_Id" Association="ImdbModel.Store.FK_dbo_MovieInfo_dbo_InfoType_Type_Id">
             <End Role="InfoType" EntitySet="InfoType" />
             <End Role="MovieInfo" EntitySet="MovieInfo" />
@@ -110,6 +111,16 @@
           <Property Name="Person_Id" Type="int" Nullable="false" />
           <Property Name="Type_Id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="email" Type="varchar" MaxLength="20" />
+          <Property Name="salt" Type="varchar" MaxLength="255" />
+          <Property Name="password" Type="varchar" MaxLength="255" />
+        </EntityType>
         <Association Name="FK_dbo_MovieInfo_dbo_InfoType_Type_Id">
           <End Role="InfoType" Type="ImdbModel.Store.InfoType" Multiplicity="0..1" />
           <End Role="MovieInfo" Type="ImdbModel.Store.MovieInfo" Multiplicity="*" />
@@ -200,8 +211,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ImdbModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -241,6 +251,7 @@
             <End Role="People" EntitySet="People" />
             <End Role="PersonInfo" EntitySet="PersonInfoes" />
           </AssociationSet>
+          <EntitySet Name="User" EntityType="ImdbModel.User" />
         </EntityContainer>
         <EntityType Name="C__MigrationHistory">
           <Key>
@@ -414,6 +425,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="name" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="email" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="salt" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="password" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -492,6 +513,17 @@
                 <ScalarProperty Name="Note" ColumnName="Note" />
                 <ScalarProperty Name="Person_Id" ColumnName="Person_Id" />
                 <ScalarProperty Name="Type_Id" ColumnName="Type_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="ImdbModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="salt" ColumnName="salt" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

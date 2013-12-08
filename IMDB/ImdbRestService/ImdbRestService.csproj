@@ -111,6 +111,9 @@
     <Compile Include="PersonInfo.cs">
       <DependentUpon>Imdb.tt</DependentUpon>
     </Compile>
+    <Compile Include="User.cs">
+      <DependentUpon>Imdb.tt</DependentUpon>
+    </Compile>
     <Compile Include="WebServerHostProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
