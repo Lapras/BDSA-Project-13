@@ -64,8 +64,50 @@ namespace ImdbRestService.Handlers
                         return new ResponseData(msg, HttpStatusCode.OK);
                     }
                 }
+              
+                if (key == "Login")
+                {
+                    path[1] = path[1].Replace("k__BackingField", "");
+                    path[1] = path[1].Replace("<", "");
+                    path[1] = path[1].Replace(">", "");
+
+                    // Parse Json object back to data
+                    var data = JsonConvert.DeserializeObject<UserModelDto>(path[1]);
+
+                    if (LoginDataIsValid(data.Email, data.Password))
+                    {
+                        // Missing : I guess create a session
+
+                        var msg = new JavaScriptSerializer().Serialize(new ReplyDto() { Executed = true, Message = "User was logged in"});
+                        return new ResponseData(msg, HttpStatusCode.OK);
+                    }
+                    else
+                    {
+                        var msg = new JavaScriptSerializer().Serialize(new ReplyDto() { Executed = false, Message = "Username or password is invalid" });
+                        return new ResponseData(msg, HttpStatusCode.OK);
+                    }
+                }
             }
             return responseData;
+        }
+
+        private bool LoginDataIsValid(string email, string password)
+        {
+            using (var entities = new ImdbEntities())
+            {
+
+                /*
+                var matchingProfile = (from p in entities.Profile
+                             where p.Name == profileName, p.Password == password
+                             select p.Name).ToList();
+              if(matchingProfile.Count > 0) {
+                  return true;
+              }
+                    return false;
+               */
+            }
+
+            return true;
         }
 
 
@@ -78,7 +120,7 @@ namespace ImdbRestService.Handlers
                 var matchingProfiles = (from p in entities.Profile
                              where p.Name == profileName
                              select p.Name).ToList();
-              if(!matchingProfiles.contain(profileName) {
+              if(!matchingProfiles.contain(profileName)) {
                   return true;
               }
                     return false;
@@ -105,6 +147,12 @@ namespace ImdbRestService.Handlers
 
                  context.SaveChanges();
             }
+        }
+
+        public ResponseData FailureReply(Exception e)
+        {
+            var msg = new JavaScriptSerializer().Serialize(new ReplyDto() { Executed = false, Message = e.Message });
+            return new ResponseData(msg, HttpStatusCode.OK);
         }
     }
 }

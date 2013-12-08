@@ -53,24 +53,38 @@ namespace ImdbRestService.Handlers
 
                     if (key == "title")
                     {
-                        var movies = GetMoviesByTitle(value);
-
-                        if (movies.Count == 0)
+                        try
                         {
-                            movies = await GetMoviesFromIMDbAsync(value);
-							AddMoviesToDb(movies);
-                        }
+                            var movies = GetMoviesByTitle(value);
 
-                        var msg = new JavaScriptSerializer().Serialize(movies);
-                        return new ResponseData(msg, HttpStatusCode.OK);
+                            if (movies.Count == 0)
+                            {
+                                movies = await GetMoviesFromIMDbAsync(value);
+                                AddMoviesToDb(movies);
+                            }
+
+                            var msg = new JavaScriptSerializer().Serialize(movies);
+                            return new ResponseData(msg, HttpStatusCode.OK);
+                        }
+                        catch (Exception e)
+                        {
+                            return FailureReply(e);
+                        }
                     }
 					
 					if (key == "movieId")
                     {
-                        var movie = GetMovieById(Convert.ToInt32(value));
+                        try
+                        {
+                            var movie = GetMovieById(Convert.ToInt32(value));
 
-                        var msg = new JavaScriptSerializer().Serialize(movie);
-                        return new ResponseData(msg, HttpStatusCode.OK);
+                            var msg = new JavaScriptSerializer().Serialize(movie);
+                            return new ResponseData(msg, HttpStatusCode.OK);
+                        }
+                        catch (Exception e)
+                        {
+                            return FailureReply(e);
+                        }
                     }
                 }
             }
@@ -78,12 +92,18 @@ namespace ImdbRestService.Handlers
             return responseData;
         }
 
+        public ResponseData FailureReply(Exception e)
+        {
+            var msg = new JavaScriptSerializer().Serialize(new ReplyDto() {Executed = false, Message = e.Message});
+            return new ResponseData(msg, HttpStatusCode.OK);
+        }
+
         /// <summary>
         /// Method recieving movies by title from the local database
         /// </summary>
         /// <param name="title"> the title to search for </param>
         /// <returns> a list of MovieDto's containing information on the movies found </returns>
-        public List<MovieDto> GetMoviesByTitle(string title)
+        public List<MovieDto> GetMoviesByTitle(string title) 
         {
             using (var entities = _imdbEntities ?? new ImdbEntities())
             {
@@ -188,7 +208,7 @@ namespace ImdbRestService.Handlers
             }
         }
 
-		private void    AddMoviesToDb(IEnumerable<MovieDto> movies)
+		private void AddMoviesToDb(IEnumerable<MovieDto> movies)
 		{
 			//Adding found movies to app server database
 			
