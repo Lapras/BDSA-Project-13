@@ -15,6 +15,9 @@ namespace ImdbRestService.Handlers
     public class ProfileHandler : IHandler
     {
         private const string PathSegment = "Registration";
+        private const string PathSegment2 = "Login";
+
+
 
         /// <summary>
         /// Method checking if the given path segment matches the one that
@@ -24,7 +27,7 @@ namespace ImdbRestService.Handlers
         /// <returns> wether or not the class is able to handle the request </returns>
         public bool CanHandle(string pathSegment)
         {
-            return pathSegment.Equals(PathSegment, StringComparison.CurrentCultureIgnoreCase);
+            return pathSegment.Equals(PathSegment, StringComparison.CurrentCultureIgnoreCase) || pathSegment.Equals(PathSegment2, StringComparison.CurrentCultureIgnoreCase);
         }
 
         /// <summary>
@@ -40,14 +43,20 @@ namespace ImdbRestService.Handlers
             {
                 var key = path.First();
 
+                Console.WriteLine("KEY: " + key);
+
                 if (key == "Registration")
                 {
+                    Console.WriteLine("muuuh");
+
                     path[1] = path[1].Replace("k__BackingField", "");
                     path[1] = path[1].Replace("<", "");
                     path[1] = path[1].Replace(">", "");
 
                     // Parse Json object back to data
                     var data = JsonConvert.DeserializeObject<UserModelDto>(path[1]);
+
+                    Console.WriteLine(data.Email + " " + data.Password);
 
                     if (ProfileAlreadyExist(data.Email))
                     {
@@ -66,12 +75,16 @@ namespace ImdbRestService.Handlers
               
                 if (key == "Login")
                 {
+                    Console.WriteLine("muuuh");
                     path[1] = path[1].Replace("k__BackingField", "");
                     path[1] = path[1].Replace("<", "");
                     path[1] = path[1].Replace(">", "");
 
                     // Parse Json object back to data
                     var data = JsonConvert.DeserializeObject<UserModelDto>(path[1]);
+
+                    
+                    Console.WriteLine(data.Email + " " + data.Password);
 
                     if (LoginDataIsValid(data.Email, data.Password))
                     {

@@ -91,7 +91,7 @@ namespace WPF_Client.ViewModel
             }
             else
             {
-                MessageBox.Show("Login failed: You entered the worng username or password");
+                MessageBox.Show("Login failed: You entered the wrong username or password");
             }
             
         }

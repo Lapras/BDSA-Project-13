@@ -34,12 +34,15 @@ namespace WPF_Client.Controller
             {
                 _currentUser = name;
                 _isLoggedIn = true;
-                return _model.LoginInfo(name, password);
+                return true;
+            }
+            else
+            {
+                _isLoggedIn = false;
+                return false;
             }
 
 
-            _isLoggedIn = false;
-            return false;
 
         }
 

@@ -114,12 +114,12 @@ namespace WPF_Client.Storage
 
                 Console.WriteLine("JSON string received:" + response.Result);
                 Console.WriteLine("Starting deserializing");
-                var result = JsonConvert.DeserializeObject<List<MovieDetailsDto>>(response.Result);
+                var result = JsonConvert.DeserializeObject<MovieDetailsDto>(response.Result);
                 Console.WriteLine("deserializing done");
 
 
 
-                return result[0];
+                return result;
             }
 
 
@@ -158,7 +158,34 @@ namespace WPF_Client.Storage
 
         public bool LoginInfo(string name, string password)
         {
-          /*  string dd = "asd";
+            var user = new UserModelDto()
+            {
+                Email = name,
+                Password = password
+            };
+
+
+           // Console.WriteLine(name + " " + password);
+
+            using (var httpClient = new HttpClient())
+            {
+                Console.WriteLine("Getting reponse from REST server");
+                var response = httpClient.PostAsJsonAsync("http://localhost:54321/User/Login", user).Result;
+                var msg = response.Content.ReadAsStringAsync();
+
+                Console.WriteLine("JSON string received:" + response);
+                Console.WriteLine("Starting deserializing");
+                var result = JsonConvert.DeserializeObject<ReplyDto>(msg.Result);
+                Console.WriteLine("deserializing done");
+
+                return result.Executed;
+
+                
+            }
+            
+            
+            
+            /*  string dd = "asd";
             string _pw = PasswordHash.CreateHash(password);
             password += dd;
             if (PasswordHash.ValidatePassword(password, _pw))
@@ -168,7 +195,10 @@ namespace WPF_Client.Storage
                 return false;
             }
             Console.WriteLine("yay!"); */
-            return true; // example just returns true for now.
+            
+            
+            
+            //return true; // example just returns true for now.
 
         }
     }
