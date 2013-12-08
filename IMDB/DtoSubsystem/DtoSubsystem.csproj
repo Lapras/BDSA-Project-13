@@ -52,6 +52,7 @@
     <Compile Include="PersonDetailsDto.cs" />
     <Compile Include="PersonDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReplyDto.cs" />
     <Compile Include="UserModelDto.cs" />
   </ItemGroup>
   <ItemGroup>

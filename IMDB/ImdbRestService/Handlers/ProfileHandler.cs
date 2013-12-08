@@ -55,12 +55,12 @@ namespace ImdbRestService.Handlers
                         // acutally push to database
                         AddProfileToDb(data);
 
-                        var msg = new JavaScriptSerializer().Serialize(true);
+                        var msg = new JavaScriptSerializer().Serialize(new ReplyDto() {Executed = true, Message = "Profile was created"});
                         return new ResponseData(msg, HttpStatusCode.OK);
                     }
                     else
                     {
-                        var msg = new JavaScriptSerializer().Serialize(false);
+                        var msg = new JavaScriptSerializer().Serialize(new ReplyDto() {Executed = false, Message = "Profile already exists"});
                         return new ResponseData(msg, HttpStatusCode.OK);
                     }
                 }
