@@ -25,9 +25,9 @@ namespace ASP_Client.Controllers
 
             if (personDetails != null)
             {
-                personDetailsViewModel.Id = personDetails[0].Id;
-                personDetailsViewModel.Name = personDetails[0].Name;
-                personDetailsViewModel.Gender = personDetails[0].Gender;
+                personDetailsViewModel.Id = personDetails.Id;
+                personDetailsViewModel.Name = personDetails.Name;
+                personDetailsViewModel.Gender = personDetails.Gender;
             }
             throw new NotImplementedException();
 

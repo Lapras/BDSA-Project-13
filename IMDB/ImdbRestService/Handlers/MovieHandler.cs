@@ -140,7 +140,7 @@ namespace ImdbRestService.Handlers
         /// </summary>
         /// <param name="id"> id of the movie we search for </param>
         /// <returns> movie we requested </returns>
-        public List<MovieDetailsDto> GetMovieById(int id)
+        public MovieDetailsDto GetMovieById(int id)
         {
             using (var entities = new ImdbEntities())
             {
@@ -184,7 +184,7 @@ namespace ImdbRestService.Handlers
                     }
                 
 
-                return movie;
+                return movie[0];
             }
         }
 
