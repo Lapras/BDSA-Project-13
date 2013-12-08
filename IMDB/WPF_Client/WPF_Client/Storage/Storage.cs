@@ -35,19 +35,32 @@ namespace WPF_Client.Storage
         /// </summary>
         public ObservableCollection<MovieDto> MovieDtos(string searchString)
         {
-            var cachedMovieDtos = _cache.MovieDtos(searchString);
-
-            if (cachedMovieDtos == null)
+            try
             {
-                var storageMovieDtos = _strategy.MovieDtos(searchString);
-                _cache.AddMovieDtos(storageMovieDtos);
+                var cachedMovieDtos = _cache.MovieDtos(searchString);
 
-                return storageMovieDtos;
+                if (cachedMovieDtos == null)
+                {
+                    var storageMovieDtos = _strategy.MovieDtos(searchString);
+                    _cache.AddMovieDtos(storageMovieDtos);
+
+                    return storageMovieDtos;
+                }
+                else
+                {
+                    return cachedMovieDtos;
+                }
             }
-            else
+            catch (Exception)
             {
-                return cachedMovieDtos;
+                {
+                    
+
+                }
+                throw;
             }
+            
+            
 
         }
 
