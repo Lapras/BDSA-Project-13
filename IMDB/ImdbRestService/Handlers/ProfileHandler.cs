@@ -68,7 +68,7 @@ namespace ImdbRestService.Handlers
                     {
                         Console.WriteLine("Account already exist");
                         var msg = new JavaScriptSerializer().Serialize(new ReplyDto {Executed = false, Message = "Profile already exists"});
-                        return new ResponseData(msg, HttpStatusCode.OK);
+                        return new ResponseData(msg, HttpStatusCode.Conflict);
                     }
                 }
               
@@ -95,7 +95,7 @@ namespace ImdbRestService.Handlers
                     {
                         Console.WriteLine("Login data not valid");
                         var msg = new JavaScriptSerializer().Serialize(new ReplyDto { Executed = false, Message = "Username or password is invalid" });
-                        return new ResponseData(msg, HttpStatusCode.OK);
+                        return new ResponseData(msg, HttpStatusCode.Forbidden);
                     }
                 }
             }
