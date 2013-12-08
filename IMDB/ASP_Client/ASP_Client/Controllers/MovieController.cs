@@ -58,6 +58,12 @@ namespace ASP_Client.Controllers
 
          // GET: /Search/MovieDetails/5
 
+        /// <summary>
+        /// Method getting a movie's details based on an id given to the CommunicationFacade and puts
+        /// them in a MovieDetailsViewModel which is given to the IndexView.
+        /// </summary>
+        /// <param name="id">Id of the movie to look for</param>
+        /// <returns>Desired movies </returns>
         public async Task<ActionResult> MovieDetails(int id)
         {
 

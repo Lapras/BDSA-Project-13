@@ -94,11 +94,11 @@ namespace WPF_Client.ViewModel
         {
             if (UserProfileController.CreateProfile(_vm.UsernameTextBox, _vm.PasswordTextBox))
             {
-                MessageBox.Show(_vm.UsernameTextBox + "successfully created!", "Success");
+                MessageBox.Show(_vm.UsernameTextBox + " successfully created!", "Success");
             }
             else
             {
-                MessageBox.Show(_vm.UsernameTextBox + "already taken.", "Username already taken.");
+                MessageBox.Show(_vm.UsernameTextBox + " already taken :(.", "Username already taken.");
             }
             
         }

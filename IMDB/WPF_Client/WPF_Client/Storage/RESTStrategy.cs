@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
+using System.Data.Common;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Sockets;
+using System.Web;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -35,23 +39,35 @@ namespace WPF_Client.Storage
             return result;
             */
 
-
             
-            using (var httpClient = new HttpClient())
+
+
+            try
             {
-                Console.WriteLine("Getting reponse from REST server");
-                var response = httpClient.GetStringAsync("http://localhost:54321/movies/?title=" + searchString);
+                using (var httpClient = new HttpClient())
+                {
+                    Console.WriteLine("Getting reponse from REST server");
+                    var response = httpClient.GetStringAsync("http://localhost:54321/movies/?title=" + searchString);
 
 
-                Console.WriteLine("JSON string received:" + response.Result);
-                Console.WriteLine("Starting deserializing");
-                var result = JsonConvert.DeserializeObject<ObservableCollection<MovieDto>>(response.Result);
-                Console.WriteLine("deserializing done");
+                    Console.WriteLine("JSON string received:" + response.Result);
+                    Console.WriteLine("Starting deserializing");
+                    var result = JsonConvert.DeserializeObject<ObservableCollection<MovieDto>>(response.Result);
+                    Console.WriteLine("deserializing done");
 
-                return result;
+                    return result;
+                }
+
             }
-            
-            
+            catch (AggregateException e)
+            {
+                throw new DataException("Error response from DB.", e);
+            }
+
+
+            return null;
+
+
         }
 
 
@@ -116,21 +132,27 @@ namespace WPF_Client.Storage
             //example for now:
             //return true;
 
+            var user = new UserModelDto()
+            {
+                Email = name,
+                Password = password
+            };
+
+
             using (var httpClient = new HttpClient())
             {
                 Console.WriteLine("Getting reponse from REST server");
-                var response = httpClient.GetStringAsync("http://localhost:54321/createProfile/?username=" + name + "?password=" + password);
+                var response = httpClient.PostAsJsonAsync("http://localhost:54321/User/Registration", user).Result;
+                var msg = response.Content.ReadAsStringAsync();
 
-
-                Console.WriteLine("JSON string received:" + response.Result);
+                Console.WriteLine("JSON string received:" + response);
                 Console.WriteLine("Starting deserializing");
-                var result = JsonConvert.DeserializeObject<bool>(response.Result);
+                var result = JsonConvert.DeserializeObject<ReplyDto>(msg.Result);
                 Console.WriteLine("deserializing done");
 
-
-
-                return result;
+                return result.Executed;
             }
+
 
         }
 
@@ -147,6 +169,7 @@ namespace WPF_Client.Storage
             }
             Console.WriteLine("yay!"); */
             return true; // example just returns true for now.
+
         }
     }
 
