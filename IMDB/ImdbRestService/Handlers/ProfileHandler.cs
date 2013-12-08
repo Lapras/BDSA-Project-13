@@ -134,7 +134,7 @@ namespace ImdbRestService.Handlers
                 var matchingProfiles = (from p in entities.User
                     where p.name == profileName
                     select p.name).ToList();
-                if (matchingProfiles.Contains(profileName))
+                if (matchingProfiles.Count > 0)
                 {
                     return true;
                 }

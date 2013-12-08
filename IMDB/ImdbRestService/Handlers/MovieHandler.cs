@@ -51,40 +51,74 @@ namespace ImdbRestService.Handlers
                     var key = firstSegment.Substring(1).Split(new[] { '=' })[0];
                     var value = firstSegment.Split(new[] { '=' })[1];
 
-                    if (key == "title")
+                    try
                     {
-                        try
-                        {
-                            var movies = GetMoviesByTitle(value);
+                        String msg;
 
-                            if (movies.Count == 0)
-                            {
-                                movies = await GetMoviesFromIMDbAsync(value);
-                                AddMoviesToDb(movies);
-                            }
-
-                            var msg = new JavaScriptSerializer().Serialize(movies);
-                            return new ResponseData(msg, HttpStatusCode.OK);
-                        }
-                        catch (Exception e)
+                        switch (key)
                         {
-                            return FailureReply(e);
+                            case "title":
+
+                                var movies = GetMoviesByTitle(value);
+
+                                if (movies.Count == 0)
+                                {
+                                    movies = await GetMoviesFromIMDbAsync(value);
+                                    AddMoviesToDb(movies);
+                                }
+
+                                msg = new JavaScriptSerializer().Serialize(movies);
+                                return new ResponseData(msg, HttpStatusCode.OK);
+                                break;
+
+                            case "movieId":
+
+                                var movie = GetMovieById(Convert.ToInt32(value));
+
+                                msg = new JavaScriptSerializer().Serialize(movie);
+                                return new ResponseData(msg, HttpStatusCode.OK);
+                                break;
+
+                            case "review":
+
+                                path[1] = path[1].Replace("k__BackingField", "");
+                                path[1] = path[1].Replace("<", "");
+                                path[1] = path[1].Replace(">", "");
+
+                                // Parse Json object back to data
+                                var data = JsonConvert.DeserializeObject<ReviewDto>(path[1]);
+
+                                Console.WriteLine("Movie: {0}\nUser: {1}\nRating: {2}", data.MovieId, data.UserId,
+                                    data.Rating);
+
+                                if (MovieAndProfileExist(data.MovieId, data.UserId))
+                                {
+                                    // acutally push to database
+                                    AddRatingToDatabase(data);
+
+                                    msg =
+                                        new JavaScriptSerializer().Serialize(new ReplyDto
+                                        {
+                                            Executed = true,
+                                            Message = "Rating was added"
+                                        });
+                                    return new ResponseData(msg, HttpStatusCode.OK);
+                                }
+
+                                msg =
+                                    new JavaScriptSerializer().Serialize(new ReplyDto
+                                    {
+                                        Executed = true,
+                                        Message = "Rating could not be added"
+                                    });
+                                return new ResponseData(msg, HttpStatusCode.OK);
+
+                                break;
                         }
                     }
-					
-					if (key == "movieId")
+                    catch (Exception e)
                     {
-                        try
-                        {
-                            var movie = GetMovieById(Convert.ToInt32(value));
-
-                            var msg = new JavaScriptSerializer().Serialize(movie);
-                            return new ResponseData(msg, HttpStatusCode.OK);
-                        }
-                        catch (Exception e)
-                        {
-                            return FailureReply(e);
-                        }
+                        return FailureReply(e);
                     }
                 }
             }
@@ -92,6 +126,49 @@ namespace ImdbRestService.Handlers
             return responseData;
         }
 
+        /// <summary>
+        /// Add Rating to local database
+        /// </summary>
+        /// <param name="data">MovieId, UserId, Rating</param>
+        private void AddRatingToDatabase(ReviewDto data)
+        {
+            // Add rating to review table & Update rating attribute in movies
+
+            using (var entities = new ImdbEntities())
+            {
+                
+            }
+
+        //    throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Check if movie and user are in our database
+        /// </summary>
+        /// <param name="movieId">Id of the movie</param>
+        /// <param name="userId">Id of the user</param>
+        /// <returns>True if both exist, else false</returns>
+        private bool MovieAndProfileExist(int movieId, int userId)
+        {
+            using (var entities = new ImdbEntities())
+            {
+                var matchingMovies = (from movie in entities.Movies
+                    where movie.Id == movieId
+                    select movie.Title).ToList();
+
+                var matchingProfiles = (from user in entities.User
+                    where user.Id == userId
+                    select user.name).ToList();
+
+                return matchingProfiles.Count > 0 && matchingMovies.Count > 0;
+            }
+        }
+
+        /// <summary>
+        /// Method to return exception messages to the client
+        /// </summary>
+        /// <param name="e">Catched exception</param>
+        /// <returns>Message to send back</returns>
         public ResponseData FailureReply(Exception e)
         {
             var msg = new JavaScriptSerializer().Serialize(new ReplyDto() {Executed = false, Message = e.Message});

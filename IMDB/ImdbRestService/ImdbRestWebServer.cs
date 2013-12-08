@@ -1,25 +1,26 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
-using System.Web.Script.Serialization;
-using DtoSubsystem;
 using ImdbRestService.Handlers;
-using Newtonsoft.Json;
 
 namespace ImdbRestService
 {
+    /// <summary>
+    /// Class handling incoming REST requests
+    /// </summary>
     class ImdbRestWebServer
     {
-        // the listener for http requests
+        /// <summary>
+        /// Listener for http requests
+        /// </summary>
         private readonly HttpListener _listener;
+        /// <summary>
+        /// Message returned to the client
+        /// </summary>
         public ResponseData ResponseData { get; private set; }
 
         // give the base address as argument
@@ -28,7 +29,10 @@ namespace ImdbRestService
             _listener = new HttpListener();
         }
 
-        // starting the web server
+        /// <summary>
+        /// Start the web server
+        /// </summary>
+        /// <param name="uri">Adress to connect to</param>
         public async void Start(string uri)
         {
             _listener.Prefixes.Add(uri);
@@ -40,7 +44,7 @@ namespace ImdbRestService
                     // get next request
                     var context = await _listener.GetContextAsync();
                     // start a task for each request given the context of the request
-                    Task.Run(() => ProcessRequest(context));
+                    await Task.Run(() => ProcessRequest(context));
                 }
                 catch (HttpListenerException)
                 {
@@ -53,14 +57,20 @@ namespace ImdbRestService
             }
         }
 
-        // stop the web server
+        /// <summary>
+        /// Stop the server
+        /// </summary>
         public void Stop()
         {
             _listener.Stop();
             _listener.Prefixes.Clear();
         }
 
-        // process a request
+        /// <summary>
+        /// Process a request
+        /// </summary>
+        /// <param name="context">Received data</param>
+        /// <param name="handlers">Handlers to process received data</param>
         private async void ProcessRequest(HttpListenerContext context, List<IHandler> handlers = null)
         {
             handlers = handlers ?? new List<IHandler>(new IHandler[] { new MovieHandler(), new ProfileHandler() });
@@ -100,6 +110,12 @@ namespace ImdbRestService
             }
         }
 
+        /// <summary>
+        /// Method process POST requests and hand the content to proper handlers
+        /// </summary>
+        /// <param name="context">Received message</param>
+        /// <param name="handlers">Number of handlers to pass the received data to</param>
+        /// <returns></returns>
         private async Task PostRequest(HttpListenerContext context, List<IHandler> handlers)
         {
             // split the request URL by '/'
@@ -134,7 +150,12 @@ namespace ImdbRestService
         }
 
 
-
+        /// <summary>
+        /// Method process GET requests and hand the content to proper handlers
+        /// </summary>
+        /// <param name="context">Received message</param>
+        /// <param name="handlers">Number of handlers to pass the received data to</param>
+        /// <returns></returns>
         private async Task GetResponse(HttpListenerContext context, List<IHandler> handlers)
         {
             // split the request URL by '/'
