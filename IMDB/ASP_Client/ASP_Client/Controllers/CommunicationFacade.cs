@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using ASP_Client.Models;
 using DtoSubsystem;
 using Newtonsoft.Json;
-using RestSharp;
 
 namespace ASP_Client.Controllers
 {
@@ -16,7 +14,6 @@ namespace ASP_Client.Controllers
     /// </summary>
     public static class CommunicationFacade 
     {
-       
         /// <summary>
         /// Get a list of movies maching the search string
         /// </summary>
@@ -24,10 +21,10 @@ namespace ASP_Client.Controllers
         /// <returns>List of movies matching the search string</returns>
         public static async Task<List<MovieDto>> GetMoviesAsync(string searchString)
         {
-            List<MovieDto> data;            
-            CacheHelper.Get(searchString, out data);
+            List<MovieDto> desiredMovies;            
+            CacheHelper.Get(searchString, out desiredMovies);
 
-            if (data != null) return data;
+            if (desiredMovies != null) return desiredMovies;
 
             using (var httpClient = new HttpClient())
             {
@@ -35,9 +32,9 @@ namespace ASP_Client.Controllers
                     await httpClient.GetStringAsync("http://localhost:54321/movies/?title=" + searchString)
                     );
 
-                foreach (var movieDto in receivedData)
+                foreach (var movie in receivedData)
                 {
-                    CacheHelper.Add(movieDto, movieDto.Title);
+                    CacheHelper.Add(movie, movie.Title);
                 }
                 return receivedData;
             }
@@ -50,10 +47,10 @@ namespace ASP_Client.Controllers
         /// <returns>Detailed data of the movie</returns>
         public static async Task<MovieDetailsDto> GetMovieDetailsLocallyAsync(int movieId)
         {
-            MovieDetailsDto data;
-            CacheHelper.Get(""+movieId, out data);
+            MovieDetailsDto desiredMovie;
+            CacheHelper.Get(""+movieId, out desiredMovie);
 
-            if (data != null) return data;
+            if (desiredMovie != null) return desiredMovie;
 
             using (var httpClient = new HttpClient())
             {
@@ -76,10 +73,10 @@ namespace ASP_Client.Controllers
         /// <returns>Detailed data of the person</returns>
         public static async Task<PersonDetailsDto> GetPersonDetailsLocallyAsync(int personId)
         {
-            PersonDetailsDto data;
-            CacheHelper.Get("" + personId, out data);
+            PersonDetailsDto desiredPerson;
+            CacheHelper.Get("" + personId, out desiredPerson);
 
-            if (data != null) return data;
+            if (desiredPerson != null) return desiredPerson;
 
             using (var httpClient = new HttpClient())
             {
@@ -130,14 +127,14 @@ namespace ASP_Client.Controllers
         /// appropriate name/value pairs
         /// </summary>
         /// <typeparam name="T">Type of cached item</typeparam>
-        /// <param name="o">Item to be cached</param>
-        /// <param name="key">Name of item</param>
-        public static void Add<T>(T o, string key)
+        /// <param name="newItem">Item to be cached</param>
+        /// <param name="keyOfNewItem">Name of item</param>
+        public static void Add<T>(T newItem, string keyOfNewItem)
         {
-            // After 5 minutes the object is removed from the cache again
+            // After 5 minutes the object is removed from the cache 
             HttpContext.Current.Cache.Insert(
-                key,
-                o,
+                keyOfNewItem,
+                newItem,
                 null,
                 DateTime.Now.AddMinutes(5),
                 System.Web.Caching.Cache.NoSlidingExpiration);
@@ -146,48 +143,47 @@ namespace ASP_Client.Controllers
         /// <summary>
         /// Remove item from cache
         /// </summary>
-        /// <param name="key">Name of cached item</param>
-        public static void Clear(string key)
+        /// <param name="nameOfItem">Name of cached item</param>
+        public static void Clear(string nameOfItem)
         {
-            HttpContext.Current.Cache.Remove(key);
+            HttpContext.Current.Cache.Remove(nameOfItem);
         }
 
         /// <summary>
         /// Check for item in cache
         /// </summary>
-        /// <param name="key">Name of cached item</param>
+        /// <param name="nameOfItem">Name of cached item</param>
         /// <returns></returns>
-        public static bool Exists(string key)
+        public static bool Exists(string nameOfItem)
         {
-            return HttpContext.Current.Cache[key] != null;
+            return HttpContext.Current.Cache[nameOfItem] != null;
         }
 
         /// <summary>
         /// Retrieve cached item
         /// </summary>
         /// <typeparam name="T">Type of cached item</typeparam>
-        /// <param name="key">Name of cached item</param>
-        /// <param name="value">Cached value. Default(T) if
+        /// <param name="nameOfItem">Name of cached item</param>
+        /// <param name="desiredItem">Cached value. Default(T) if
         /// item doesn't exist.</param>
         /// <returns>Cached item as type</returns>
-        public static bool Get<T>(string key, out T value)
+        public static bool Get<T>(string nameOfItem, out T desiredItem)
         {
             try
             {
-                if (!Exists(key))
+                if (!Exists(nameOfItem))
                 {
-                    value = default(T);
+                    desiredItem = default(T);
                     return false;
                 }
 
-                value = (T) HttpContext.Current.Cache[key];
+                desiredItem = (T) HttpContext.Current.Cache[nameOfItem];
             }
-            catch(Exception e)
+            catch(Exception)
             {
-                value = default(T);
+                desiredItem = default(T);
                 return false;
             }
-
             return true;
         }
     }

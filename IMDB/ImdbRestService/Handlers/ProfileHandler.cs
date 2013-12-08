@@ -47,8 +47,6 @@ namespace ImdbRestService.Handlers
 
                 if (key == "Registration")
                 {
-                    Console.WriteLine("muuuh");
-
                     path[1] = path[1].Replace("k__BackingField", "");
                     path[1] = path[1].Replace("<", "");
                     path[1] = path[1].Replace(">", "");
@@ -68,6 +66,7 @@ namespace ImdbRestService.Handlers
                     }
                     else
                     {
+                        Console.WriteLine("Account already exist");
                         var msg = new JavaScriptSerializer().Serialize(new ReplyDto {Executed = false, Message = "Profile already exists"});
                         return new ResponseData(msg, HttpStatusCode.OK);
                     }
@@ -75,7 +74,6 @@ namespace ImdbRestService.Handlers
               
                 if (key == "Login")
                 {
-                    Console.WriteLine("muuuh");
                     path[1] = path[1].Replace("k__BackingField", "");
                     path[1] = path[1].Replace("<", "");
                     path[1] = path[1].Replace(">", "");
@@ -95,6 +93,7 @@ namespace ImdbRestService.Handlers
                     }
                     else
                     {
+                        Console.WriteLine("Login data not valid");
                         var msg = new JavaScriptSerializer().Serialize(new ReplyDto { Executed = false, Message = "Username or password is invalid" });
                         return new ResponseData(msg, HttpStatusCode.OK);
                     }
