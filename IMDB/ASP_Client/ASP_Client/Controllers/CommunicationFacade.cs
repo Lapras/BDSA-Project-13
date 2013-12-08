@@ -57,9 +57,9 @@ namespace ASP_Client.Controllers
 
             using (var httpClient = new HttpClient())
             {
-                var receivedData = JsonConvert.DeserializeObject<List<MovieDetailsDto>>(
+                var receivedData = JsonConvert.DeserializeObject<MovieDetailsDto>(
                     await httpClient.GetStringAsync("http://localhost:54321/movies/?movieId=" + movieId)
-                    )[0];
+                    );
 
            
                     CacheHelper.Add(receivedData, ""+receivedData.Id);
@@ -74,13 +74,22 @@ namespace ASP_Client.Controllers
         /// </summary>
         /// <param name="personId">Id of the person to get the data of</param>
         /// <returns>Detailed data of the person</returns>
-        public static async Task<List<PersonDetailsDto>> GetPersonDetailsLocallyAsync(int personId)
+        public static async Task<PersonDetailsDto> GetPersonDetailsLocallyAsync(int personId)
         {
+            PersonDetailsDto data;
+            CacheHelper.Get("" + personId, out data);
+
+            if (data != null) return data;
+
             using (var httpClient = new HttpClient())
             {
-                return JsonConvert.DeserializeObject<List<PersonDetailsDto>>(
+                var receivedData = JsonConvert.DeserializeObject<PersonDetailsDto>(
                     await httpClient.GetStringAsync("http://localhost:54321/movies/?personId=" + personId)
                     );
+
+                CacheHelper.Add(receivedData, "" + receivedData.Id);
+
+                return receivedData;
             }
         }
 
