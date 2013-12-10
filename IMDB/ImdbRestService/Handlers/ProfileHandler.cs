@@ -17,8 +17,6 @@ namespace ImdbRestService.Handlers
     {
         private const string PathSegment = "User";
 
-
-
         /// <summary>
         /// Method checking if the given path segment matches the one that
         /// this handler can handle
