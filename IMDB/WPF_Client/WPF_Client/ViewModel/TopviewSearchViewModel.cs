@@ -124,12 +124,14 @@ namespace WPF_Client.ViewModel
         {
             if (SessionController._isLoggedIn)
             {
-                MessageBox.Show("You have been logged out");
-                ViewModelManager.Main.TopViewModel = new LoginViewModel();
-                SessionController._currentUser = null;
-                SessionController._isLoggedIn = false;
+                SessionController.Logout();
+                MessageBox.Show("You have been logged out","Logged out");
             }
-            MessageBox.Show("You have to be logged in before you can log out");
+            else
+            {
+                MessageBox.Show("You have to be logged in before you can log out","Mismatch" );
+            }
+            
         }
 
         public event EventHandler CanExecuteChanged

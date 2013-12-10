@@ -34,11 +34,24 @@ namespace WPF_Client.Controller
             {
                 _currentUser = name;
                 _isLoggedIn = true;
+                ViewModelManager.Main.TopViewModel = new TopviewSearchViewModel();
                 return true;
             }
-            
+            else
+            {
+                _isLoggedIn = false;
                 return false;
+            }
+
+
+
         }
 
+        public static void Logout()
+        {
+            ViewModelManager.Main.TopViewModel = new LoginViewModel();
+            _currentUser = null;
+            _isLoggedIn = false;
+        } 
     }
 }
