@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Input;
 using WPF_Client.Commands;
 using WPF_Client.Controller;
+using WPF_Client.Exceptions;
 
 namespace WPF_Client.ViewModel
 {
@@ -92,14 +93,27 @@ namespace WPF_Client.ViewModel
 
         public void Execute(object parameter)
         {
-            if (UserProfileController.CreateProfile(_vm.UsernameTextBox, _vm.PasswordTextBox))
+            try
             {
-                MessageBox.Show(_vm.UsernameTextBox + " successfully created!", "Success");
+                if (UserProfileController.CreateProfile(_vm.UsernameTextBox, _vm.PasswordTextBox))
+                {
+                    MessageBox.Show(_vm.UsernameTextBox + " successfully created!", "Success");
+                }
+                else
+                {
+                    MessageBox.Show(_vm.UsernameTextBox + " already taken :(.", "Username already taken.");
+                }
             }
-            else
+            catch (StorageException e)
             {
-                MessageBox.Show(_vm.UsernameTextBox + " already taken :(.", "Username already taken.");
+                MessageBox.Show("Data error.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            catch (UnavailableConnection e)
+            {
+                MessageBox.Show("There is no connection.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+
             
         }
 

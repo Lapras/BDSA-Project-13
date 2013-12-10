@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using DtoSubsystem;
 using WPF_Client.Controller;
+using WPF_Client.Exceptions;
 using Newtonsoft.Json;
 using WPF_Client.PwBoxAssistant;
 
@@ -39,8 +40,6 @@ namespace WPF_Client.Storage
             return result;
             */
 
-            
-
 
             try
             {
@@ -61,12 +60,22 @@ namespace WPF_Client.Storage
             }
             catch (AggregateException e)
             {
-                throw new DataException("Error response from DB.", e);
+
+                foreach (Exception ex in e.InnerExceptions)
+                {
+                    if (ex.GetType() == typeof (HttpRequestException))
+                    {
+                        throw new UnavailableConnection("No connection", e);
+                    }
+                }
+                
+                throw new RESTserviceException("AggregateException response from DB.", e);
+
             }
-
-
-            return null;
-
+            catch (JsonSerializationException e)
+            {
+                throw new RESTserviceException("There was an serializaton or deserializaton error", e);
+            }
 
         }
 
@@ -106,22 +115,45 @@ namespace WPF_Client.Storage
             }
             */
 
-            using (var httpClient = new HttpClient())
+            try
             {
-                Console.WriteLine("Getting reponse from REST server");
-                var response = httpClient.GetStringAsync("http://localhost:54321/movies/?movieId=" + movieId);
+                using (var httpClient = new HttpClient())
+                {
+                    Console.WriteLine("Getting reponse from REST server");
+                    var response = httpClient.GetStringAsync("http://localhost:54321/movies/?movieId=" + movieId);
 
 
-                Console.WriteLine("JSON string received:" + response.Result);
-                Console.WriteLine("Starting deserializing");
-                var result = JsonConvert.DeserializeObject<MovieDetailsDto>(response.Result);
-                Console.WriteLine("deserializing done");
+                    Console.WriteLine("JSON string received:" + response.Result);
+                    Console.WriteLine("Starting deserializing");
+                    var result = JsonConvert.DeserializeObject<MovieDetailsDto>(response.Result);
+                    Console.WriteLine("deserializing done");
 
 
 
-                return result;
+                    return result;
+                }
             }
+            catch (AggregateException e)
+            {
+                foreach (Exception ex in e.InnerExceptions)
+                {
+                    if (ex.GetType() == typeof (HttpRequestException))
+                    {
+                        throw new UnavailableConnection("No connection", e);
+                    }
+                }
 
+                throw new RESTserviceException("AggregateException response from DB.", e);
+
+            }
+            catch (JsonSerializationException e)
+            {
+                throw new RESTserviceException("there was an serializaton or deserializaton error", e);
+            }
+            catch (JsonReaderException e)
+            {
+                throw new RESTserviceException("there was an serializaton or deserializaton error", e);
+            }
 
 
 
@@ -131,58 +163,96 @@ namespace WPF_Client.Storage
         {
             //example for now:
             //return true;
-
-            var user = new UserModelDto()
+            try
             {
-                Name = name,
-                Password = password
-            };
+                var user = new UserModelDto()
+                {
+                    Name = name,
+                    Password = password
+                };
 
 
-            using (var httpClient = new HttpClient())
-            {
-                Console.WriteLine("Getting reponse from REST server");
-                var response = httpClient.PostAsJsonAsync("http://localhost:54321/User/Registration", user).Result;
-                var msg = response.Content.ReadAsStringAsync();
+                using (var httpClient = new HttpClient())
+                {
+                    Console.WriteLine("Getting reponse from REST server");
+                    var response = httpClient.PostAsJsonAsync("http://localhost:54321/User/Registration", user).Result;
+                    var msg = response.Content.ReadAsStringAsync();
 
-                Console.WriteLine("JSON string received:" + response);
-                Console.WriteLine("Starting deserializing");
-                var result = JsonConvert.DeserializeObject<ReplyDto>(msg.Result);
-                Console.WriteLine("deserializing done");
+                    Console.WriteLine("JSON string received:" + response);
+                    Console.WriteLine("Starting deserializing");
+                    var result = JsonConvert.DeserializeObject<ReplyDto>(msg.Result);
+                    Console.WriteLine("deserializing done");
 
-                return result.Executed;
+                    return result.Executed;
+                }
             }
+            catch (AggregateException e)
+            {
+                foreach (Exception ex in e.InnerExceptions)
+                {
+                    if (ex.GetType() == typeof(HttpRequestException))
+                    {
+                        throw new UnavailableConnection("No connection", e);
+                    }
+                }
+
+                throw new RESTserviceException("AggregateException response from DB.", e);
+
+            }
+            catch (JsonSerializationException e)
+            {
+                throw new RESTserviceException("there was an serializaton or deserializaton error", e);
+            }
+
 
 
         }
 
         public bool LoginInfo(string name, string password)
         {
-            var user = new UserModelDto()
+            try
             {
-                Name = name,
-                Password = password
-            };
+                var user = new UserModelDto()
+                {
+                    Name = name,
+                    Password = password
+                };
+                
+                // Console.WriteLine(name + " " + password);
 
+                using (var httpClient = new HttpClient())
+                {
+                    Console.WriteLine("Getting reponse from REST server");
+                    var response = httpClient.PostAsJsonAsync("http://localhost:54321/User/Login", user).Result;
+                    var msg = response.Content.ReadAsStringAsync();
 
-           // Console.WriteLine(name + " " + password);
+                    Console.WriteLine("JSON string received:" + response);
+                    Console.WriteLine("Starting deserializing");
+                    var result = JsonConvert.DeserializeObject<ReplyDto>(msg.Result);
+                    Console.WriteLine("deserializing done");
 
-            using (var httpClient = new HttpClient())
-            {
-                Console.WriteLine("Getting reponse from REST server");
-                var response = httpClient.PostAsJsonAsync("http://localhost:54321/User/Login", user).Result;
-                var msg = response.Content.ReadAsStringAsync();
-
-                Console.WriteLine("JSON string received:" + response);
-                Console.WriteLine("Starting deserializing");
-                var result = JsonConvert.DeserializeObject<ReplyDto>(msg.Result);
-                Console.WriteLine("deserializing done");
-
-                return result.Executed;
-
+                    return result.Executed;
+                }
                 
             }
-            
+                
+            catch (AggregateException e)
+            {
+                foreach (Exception ex in e.InnerExceptions)
+                {
+                    if (ex.GetType() == typeof(HttpRequestException))
+                    {
+                        throw new UnavailableConnection("No connection", e);
+                    }
+                }
+
+                throw new RESTserviceException("AggregateException response from DB.", e);
+
+            }
+            catch (JsonSerializationException e)
+            {
+                throw new RESTserviceException("there was an serializaton or deserializaton error", e);
+            }
             
             
             /*  string dd = "asd";

@@ -12,6 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using WPF_Client.Commands;
+using WPF_Client.Exceptions;
 using WPF_Client.Model;
 using WPF_Client.Controller;
 
@@ -114,10 +115,21 @@ namespace WPF_Client.ViewModel
 
             //Mediator.MovieId = dto.Id;
             //HollywoodController.MovieId = dto.Id;
-
-            if (!HollywoodController.GetMovie(dto.Id))
+            try
             {
-                MessageBox.Show("Could not find movie");
+                if (!HollywoodController.GetMovie(dto.Id))
+                {
+
+                    MessageBox.Show("Could not find movie", "No results", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            catch (StorageException e)
+            {
+                MessageBox.Show("Data error.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (UnavailableConnection e)
+            {
+                MessageBox.Show("There is no connection.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             
