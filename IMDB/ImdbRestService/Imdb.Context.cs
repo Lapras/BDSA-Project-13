@@ -12,12 +12,8 @@ namespace ImdbRestService
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    
-<<<<<<< HEAD
+
     public partial class ImdbEntities : DbContext, IImdbEntities
-=======
-    public partial class ImdbEntities : DbContext
->>>>>>> ff29b7c77d7736c3a3d6f6548c7924385153f0ea
     {
         public ImdbEntities()
             : base("name=ImdbEntities")
@@ -29,7 +25,6 @@ namespace ImdbRestService
             throw new UnintentionalCodeFirstException();
         }
     
-<<<<<<< HEAD
         public IDbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public IDbSet<InfoType> InfoTypes { get; set; }
         public IDbSet<MovieInfo> MovieInfoes { get; set; }
@@ -38,15 +33,5 @@ namespace ImdbRestService
         public IDbSet<Person> People { get; set; }
         public IDbSet<PersonInfo> PersonInfoes { get; set; }
         public IDbSet<User> User { get; set; }
-=======
-        public DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
-        public DbSet<InfoType> InfoTypes { get; set; }
-        public DbSet<MovieInfo> MovieInfoes { get; set; }
-        public DbSet<Movie> Movies { get; set; }
-        public DbSet<Participate> Participates { get; set; }
-        public DbSet<Person> People { get; set; }
-        public DbSet<PersonInfo> PersonInfoes { get; set; }
-        public DbSet<User> User { get; set; }
->>>>>>> ff29b7c77d7736c3a3d6f6548c7924385153f0ea
     }
 }
