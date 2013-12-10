@@ -12,7 +12,7 @@ namespace ImdbRestService
     /// <summary>
     /// Class handling incoming REST requests
     /// </summary>
-    class ImdbRestWebServer
+    public class ImdbRestWebServer
     {
         /// <summary>
         /// Listener for http requests

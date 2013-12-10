@@ -36,14 +36,8 @@ namespace WPF_Client.Controller
                 _isLoggedIn = true;
                 return true;
             }
-            else
-            {
-                _isLoggedIn = false;
+            
                 return false;
-            }
-
-
-
         }
 
     }
