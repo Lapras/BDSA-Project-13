@@ -62,5 +62,45 @@ namespace WPF_ClientUnitTest
 
             
         }
+
+
+        /// <summary>
+        ///  Tests whether a user gets logged in.
+        /// </summary>
+        [TestMethod]
+        public void Login_CorrectlyLoggedIn()
+        {
+
+            var modelMock = new Mock<IModel>();
+            modelMock.Setup(m => m.LoginInfo("Simon","password")).Returns(true);
+            SessionController._model = modelMock.Object;
+
+            // we simulate that a viewmodel wants to log in a user and therefore calls the sessioncontroller
+            // with the login information
+            SessionController.LoginInfo("Simon", "password");
+
+            Assert.AreEqual("Simon",SessionController._currentUser);
+            Assert.AreEqual(true, SessionController._isLoggedIn);
+
+        }
+
+
+        /// <summary>
+        ///  Tests whether a user gets logged out.
+        /// </summary>
+        [TestMethod]
+        public void Logout_CorrectlyLoggedOut()
+        {
+            SessionController._isLoggedIn = true;
+            SessionController._currentUser = "Morten";
+
+            // we simulate that a viewmodel wants to log out a user and therefore calls the sessioncontroller
+            SessionController.Logout();
+
+            Assert.AreEqual(null, SessionController._currentUser);
+            Assert.AreEqual(false, SessionController._isLoggedIn);
+
+        }
+
     }
 }
