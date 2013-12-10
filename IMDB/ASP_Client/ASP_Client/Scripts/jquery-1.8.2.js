@@ -1,4 +1,4 @@
-/*!
+﻿/*!
  * jQuery JavaScript Library v1.8.2
  * http://jquery.com/
  *
@@ -1027,7 +1027,7 @@ jQuery.Callbacks = function( options ) {
 						var index;
 						while( ( index = jQuery.inArray( arg, list, index ) ) > -1 ) {
 							list.splice( index, 1 );
-							// Handle firing indexes
+							// Handle firing SearchMoviees
 							if ( firing ) {
 								if ( index <= firingLength ) {
 									firingLength--;
@@ -1944,7 +1944,7 @@ jQuery.fn.extend({
 		});
 	},
 	// Based off of the plugin by Clint Helfers, with permission.
-	// http://blindsignals.com/index.php/2009/07/jquery-delay/
+	// http://blindsignals.com/SearchMovie.php/2009/07/jquery-delay/
 	delay: function( time, type ) {
 		time = jQuery.fx ? jQuery.fx.speeds[ time ] || time : time;
 		type = type || "fx";
@@ -2457,8 +2457,8 @@ jQuery.extend({
 		tabIndex: {
 			get: function( elem ) {
 				// elem.tabIndex doesn't always return the correct value when it hasn't been explicitly set
-				// http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/
-				var attributeNode = elem.getAttributeNode("tabindex");
+				// http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabSearchMovie-values-with-javascript/
+				var attributeNode = elem.getAttributeNode("tabSearchMovie");
 
 				return attributeNode && attributeNode.specified ?
 					parseInt( attributeNode.value, 10 ) :
@@ -3697,7 +3697,7 @@ var cachedruns,
 	pop = [].pop,
 	push = [].push,
 	slice = [].slice,
-	// Use a stripped-down indexOf if a native one is unavailable
+	// Use a stripped-down SearchMovieOf if a native one is unavailable
 	indexOf = [].indexOf || function( elem ) {
 		var i = 0,
 			len = this.length;
@@ -3974,7 +3974,7 @@ function createPositionalPseudo( fn ) {
 				matchIndexes = fn( [], seed.length, argument ),
 				i = matchIndexes.length;
 
-			// Match elements found at the specified indexes
+			// Match elements found at the specified SearchMoviees
 			while ( i-- ) {
 				if ( seed[ (j = matchIndexes[i]) ] ) {
 					seed[j] = !(matches[j] = seed[j]);
@@ -4219,7 +4219,7 @@ Expr = Sizzle.selectors = {
 					// advance to the next closing parenthesis
 					(excess = unquoted.indexOf( ")", unquoted.length - excess ) - unquoted.length) ) {
 
-					// excess is a negative index
+					// excess is a negative SearchMovie
 					unquoted = unquoted.slice( 0, excess );
 					match[0] = match[0].slice( 0, excess );
 				}
@@ -5028,7 +5028,7 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 						}
 					}
 
-					// Discard index placeholder values to get only actual matches
+					// Discard SearchMovie placeholder values to get only actual matches
 					setMatched = condense( setMatched );
 				}
 
@@ -5450,12 +5450,12 @@ jQuery.fn.extend({
 	// the matched set of elements
 	index: function( elem ) {
 
-		// No argument, return index in parent
+		// No argument, return SearchMovie in parent
 		if ( !elem ) {
 			return ( this[0] && this[0].parentNode ) ? this.prevAll().length : -1;
 		}
 
-		// index in selector
+		// SearchMovie in selector
 		if ( typeof elem === "string" ) {
 			return jQuery.inArray( this[0], jQuery( elem ) );
 		}
@@ -5602,7 +5602,7 @@ jQuery.extend({
 // Implement the identical functionality for filter and not
 function winnow( elements, qualifier, keep ) {
 
-	// Can't pass null or undefined to indexOf in Firefox 4
+	// Can't pass null or undefined to SearchMovieOf in Firefox 4
 	// Set to 0 to skip string check
 	qualifier = qualifier || 0;
 
@@ -6395,7 +6395,7 @@ jQuery.extend({
 						// handleScript alters the DOM, so use jQuery.merge to ensure snapshot iteration
 						jsTags = jQuery.grep( jQuery.merge( [], elem.getElementsByTagName("script") ), handleScript );
 
-						// Splice the scripts into ret after their former ancestor and advance our index beyond them
+						// Splice the scripts into ret after their former ancestor and advance our SearchMovie beyond them
 						ret.splice.apply( ret, [i + 1, 0].concat( jsTags ) );
 						i += jsTags.length;
 					}
@@ -7240,7 +7240,7 @@ function buildParams( prefix, obj, traditional, add ) {
 
 			} else {
 				// If array item is non-scalar (array or object), encode its
-				// numeric index to resolve deserialization ambiguity issues.
+				// numeric SearchMovie to resolve deserialization ambiguity issues.
 				// Note that rack (as of 1.0.0) can't currently deserialize
 				// nested arrays properly, and attempting to do so may cause
 				// a server error. Possible fixes are to modify rack's
@@ -8426,7 +8426,7 @@ if ( jQuery.support.ajax ) {
 
 						// Firefox throws exceptions when accessing properties
 						// of an xhr when a network error occurred
-						// http://helpful.knobs-dials.com/index.php/Component_returned_failure_code:_0x80040111_(NS_ERROR_NOT_AVAILABLE)
+						// http://helpful.knobs-dials.com/SearchMovie.php/Component_returned_failure_code:_0x80040111_(NS_ERROR_NOT_AVAILABLE)
 						try {
 
 							// Was never called and is aborted or complete
@@ -8725,7 +8725,7 @@ function propFilter( props, specialEasing ) {
 			delete props[ name ];
 
 			// not quite $.extend, this wont overwrite keys already present.
-			// also - reusing 'index' from above because we have the correct "name"
+			// also - reusing 'SearchMovie' from above because we have the correct "name"
 			for ( index in value ) {
 				if ( !( index in props ) ) {
 					props[ index ] = value[ index ];

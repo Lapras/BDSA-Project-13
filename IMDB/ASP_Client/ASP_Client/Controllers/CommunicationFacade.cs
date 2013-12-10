@@ -22,7 +22,7 @@ namespace ASP_Client.Controllers
         public static async Task<List<MovieDto>> GetMoviesAsync(string searchString)
         {
             List<MovieDto> desiredMovies;            
-            CacheHelper.Get(searchString, out desiredMovies);
+            CacheHelper.GetItem(searchString, out desiredMovies);
 
             if (desiredMovies != null) return desiredMovies;
 
@@ -34,7 +34,7 @@ namespace ASP_Client.Controllers
 
                 foreach (var movie in receivedData)
                 {
-                    CacheHelper.Add(movie, movie.Title);
+                    CacheHelper.AddItem(movie, movie.Title);
                 }
                 return receivedData;
             }
@@ -48,7 +48,7 @@ namespace ASP_Client.Controllers
         public static async Task<MovieDetailsDto> GetMovieDetailsLocallyAsync(int movieId)
         {
             MovieDetailsDto desiredMovie;
-            CacheHelper.Get(""+movieId, out desiredMovie);
+            CacheHelper.GetItem(""+movieId, out desiredMovie);
 
             if (desiredMovie != null) return desiredMovie;
 
@@ -59,7 +59,7 @@ namespace ASP_Client.Controllers
                     );
 
            
-                    CacheHelper.Add(receivedData, ""+receivedData.Id);
+                    CacheHelper.AddItem(receivedData, ""+receivedData.Id);
                 
 
                 return receivedData;
@@ -74,7 +74,7 @@ namespace ASP_Client.Controllers
         public static async Task<PersonDetailsDto> GetPersonDetailsLocallyAsync(int personId)
         {
             PersonDetailsDto desiredPerson;
-            CacheHelper.Get("" + personId, out desiredPerson);
+            CacheHelper.GetItem("" + personId, out desiredPerson);
 
             if (desiredPerson != null) return desiredPerson;
 
@@ -84,7 +84,7 @@ namespace ASP_Client.Controllers
                     await httpClient.GetStringAsync("http://localhost:54321/movies/?personId=" + personId)
                     );
 
-                CacheHelper.Add(receivedData, "" + receivedData.Id);
+                CacheHelper.AddItem(receivedData, "" + receivedData.Id);
 
                 return receivedData;
             }
@@ -129,7 +129,7 @@ namespace ASP_Client.Controllers
         /// <typeparam name="T">Type of cached item</typeparam>
         /// <param name="newItem">Item to be cached</param>
         /// <param name="keyOfNewItem">Name of item</param>
-        public static void Add<T>(T newItem, string keyOfNewItem)
+        public static void AddItem<T>(T newItem, string keyOfNewItem)
         {
             // After 5 minutes the object is removed from the cache 
             HttpContext.Current.Cache.Insert(
@@ -144,7 +144,7 @@ namespace ASP_Client.Controllers
         /// Remove item from cache
         /// </summary>
         /// <param name="nameOfItem">Name of cached item</param>
-        public static void Clear(string nameOfItem)
+        public static void RemoveItem(string nameOfItem)
         {
             HttpContext.Current.Cache.Remove(nameOfItem);
         }
@@ -154,7 +154,7 @@ namespace ASP_Client.Controllers
         /// </summary>
         /// <param name="nameOfItem">Name of cached item</param>
         /// <returns></returns>
-        public static bool Exists(string nameOfItem)
+        public static bool ItemExists(string nameOfItem)
         {
             return HttpContext.Current.Cache[nameOfItem] != null;
         }
@@ -167,11 +167,11 @@ namespace ASP_Client.Controllers
         /// <param name="desiredItem">Cached value. Default(T) if
         /// item doesn't exist.</param>
         /// <returns>Cached item as type</returns>
-        public static bool Get<T>(string nameOfItem, out T desiredItem)
+        public static bool GetItem<T>(string nameOfItem, out T desiredItem)
         {
             try
             {
-                if (!Exists(nameOfItem))
+                if (!ItemExists(nameOfItem))
                 {
                     desiredItem = default(T);
                     return false;

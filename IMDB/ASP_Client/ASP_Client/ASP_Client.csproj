@@ -237,8 +237,8 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Movie\MovieDetails.cshtml" />
-    <Content Include="Views\Movie\Index.cshtml" />
+    <Content Include="Views\Movie\SearchMovieDetails.cshtml" />
+    <Content Include="Views\Movie\SearchMovie.cshtml" />
     <Content Include="Views\Movie\PersonDetails.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\User\Registration.cshtml" />

@@ -65,7 +65,7 @@ namespace ASP_Client.Controllers
 
                     //var requestAuthentication = Request.IsAuthenticated;
 
-                    return RedirectToAction("Index", "Movie");
+                    return RedirectToAction("SearchMovie", "Movie");
                 }
 
             }
@@ -79,7 +79,7 @@ namespace ASP_Client.Controllers
         public ActionResult LogOut()
         {
             UserSession.Logout();
-            return RedirectToAction("Index", "Movie");
+            return RedirectToAction("SearchMovie", "Movie");
         }
 
         /// <summary>
