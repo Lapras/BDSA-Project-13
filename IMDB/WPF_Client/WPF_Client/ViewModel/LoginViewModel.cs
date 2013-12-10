@@ -87,7 +87,7 @@ namespace WPF_Client.ViewModel
             if (SessionController.LoginInfo(_vm.UsernameTextBox, _vm.PasswordBox))
             {
                 MessageBox.Show("Login succes: You are now logged in to the system");
-                ViewModelManager.Main.TopViewModel = new TopviewSearchViewModel();
+                
             }
             else
             {

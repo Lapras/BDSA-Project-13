@@ -34,6 +34,7 @@ namespace WPF_Client.Controller
             {
                 _currentUser = name;
                 _isLoggedIn = true;
+                ViewModelManager.Main.TopViewModel = new TopviewSearchViewModel();
                 return true;
             }
             else
