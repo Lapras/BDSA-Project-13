@@ -36,7 +36,7 @@
                         <ColumnDefinition MinWidth="15" MaxWidth="15"/>
                         <ColumnDefinition MinWidth="70" Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Name="Currentuser" Margin="5,0,5,0"  Grid.Row="0" Grid.Column="2" Width="65" Height="20" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding LogoutCommand, UpdateSourceTrigger=PropertyChanged}" TextDecorations="Underline" TextAlignment="Center"></TextBlock>
+                    <Button Name="LogOutButton" Margin="5,0,5,0"  Grid.Row="0" Grid.Column="2" Width="65" Height="20" HorizontalAlignment="Right" VerticalAlignment="Center" Command="{Binding LogoutCommand}" Content="Logout"></Button>
                                
                     <TextBlock/>
                     <Button Name="Search" Margin="5,0,5,0" Grid.Row="0" Width="55" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding SearchCommand}" Content="Search"/>

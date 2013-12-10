@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Runtime.Caching;
 using System.Threading.Tasks;
 using DtoSubsystem;
 
@@ -17,8 +18,8 @@ namespace WPF_Client.Storage
     {
         private IStorageStrategy _strategy;
 
-        private Cache _cache;
-
+        private ObjectCache _movieDtocache;
+        private ObjectCache _movieDetailDtocache;
 
         /// <summary>
         /// Default constructor.
@@ -26,8 +27,11 @@ namespace WPF_Client.Storage
         public Storage(IStorageStrategy strategy)
         {
             _strategy = strategy;
-            _cache = new Cache();
-            
+            //_cache = new Cache();
+
+            _movieDtocache = MemoryCache.Default;
+            _movieDetailDtocache = MemoryCache.Default;
+
         }
 
         /// <summary>
@@ -35,33 +39,27 @@ namespace WPF_Client.Storage
         /// </summary>
         public ObservableCollection<MovieDto> MovieDtos(string searchString)
         {
-            try
+
+            if (_movieDtocache.Get(searchString) == null)
             {
-                var cachedMovieDtos = _cache.MovieDtos(searchString);
+                Console.WriteLine("did not find in cache");
 
-                if (cachedMovieDtos == null)
-                {
-                    var storageMovieDtos = _strategy.MovieDtos(searchString);
-                    _cache.AddMovieDtos(storageMovieDtos);
+                var storageMovieDtos = _strategy.MovieDtos(searchString); // now we search in the strategy
 
-                    return storageMovieDtos;
-                }
-                else
-                {
-                    return cachedMovieDtos;
-                }
-            }
-            catch (Exception)
-            {
-                {
-                    
 
-                }
-                throw;
+                CacheItemPolicy policy = new CacheItemPolicy();
+                policy.AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(900.0); //15 min
+
+                _movieDtocache.Set(searchString, storageMovieDtos, policy);
+
+                return storageMovieDtos;
+
             }
             
             
-
+            Console.WriteLine("found in cache");
+            return (ObservableCollection<MovieDto>) _movieDtocache.Get(searchString);
+            
         }
 
         /// <summary>
@@ -69,19 +67,26 @@ namespace WPF_Client.Storage
         /// </summary>
         public MovieDetailsDto MovieDetailsDto(int movieId)
         {
-            var catchedMovieDetailDto = _cache.MovieDetailsDto(movieId);
 
-            if (catchedMovieDetailDto == null)
+            if (_movieDetailDtocache.Get(movieId.ToString()) == null)
             {
-                var storageMovieDetailDto = _strategy.MovieDetailsDto(movieId);
-                _cache.AddMovieDetailsDto(storageMovieDetailDto);
+                Console.WriteLine("did not find in cache");
+
+                var storageMovieDetailDto = _strategy.MovieDetailsDto(movieId); // now we search in the strategy
+
+
+                CacheItemPolicy policy = new CacheItemPolicy();
+                policy.AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(10.0); //10 sec
+
+                _movieDetailDtocache.Set(movieId.ToString(), storageMovieDetailDto, policy);
 
                 return storageMovieDetailDto;
+
             }
-            else
-            {
-                return catchedMovieDetailDto;
-            }
+
+
+            Console.WriteLine("found in cache");
+            return (MovieDetailsDto) _movieDetailDtocache.Get(movieId.ToString());
 
         }
 
