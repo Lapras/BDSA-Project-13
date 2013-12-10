@@ -19,7 +19,7 @@
         <AssociationConnector Association="ImdbModel.FK_dbo_Participate_dbo_Movies_Movie_Id" ManuallyRouted="false" />
         <AssociationConnector Association="ImdbModel.FK_dbo_Participate_dbo_People_Person_Id" ManuallyRouted="false" />
         <AssociationConnector Association="ImdbModel.FK_dbo_PersonInfo_dbo_People_Person_Id" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="ImdbModel.User" Width="1.5" PointX="11.872080903440752" PointY="2.2129464457803159" />
+        <EntityTypeShape EntityType="ImdbModel.User" Width="1.5" PointX="5.125" PointY="7.625" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -9,8 +9,8 @@ namespace ASP_Client.Models
         [Required]
         [EmailAddress]
         [StringLength(150)]
-        [Display(Name = "Email: ")]
-        public string Email { get; set; }
+        [Display(Name = "Name: ")]
+        public string Name { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

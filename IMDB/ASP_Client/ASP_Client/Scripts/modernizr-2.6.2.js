@@ -491,10 +491,10 @@ window.Modernizr = (function( window, document, undefined ) {
 
     // Vendors had inconsistent prefixing with the experimental Indexed DB:
     // - Webkit's implementation is accessible through webkitIndexedDB
-    // - Firefox shipped moz_indexedDB before FF4b9, but since then has been mozIndexedDB
-    // For speed, we don't test the legacy (and beta-only) indexedDB
+    // - Firefox shipped moz_SearchMovieedDB before FF4b9, but since then has been mozIndexedDB
+    // For speed, we don't test the legacy (and beta-only) SearchMovieedDB
     tests['indexedDB'] = function() {
-      return !!testPropsAll("indexedDB", window);
+      return !!testPropsAll("SearchMovieedDB", window);
     };
 
     // documentMode logic from YUI to filter out IE8 Compat Mode
@@ -717,7 +717,7 @@ window.Modernizr = (function( window, document, undefined ) {
     // e.g.  Modernizr.video     // true
     //       Modernizr.video.ogg // 'probably'
     //
-    // Codec values from : github.com/NielsLeenheer/html5test/blob/9106a8/index.html#L845
+    // Codec values from : github.com/NielsLeenheer/html5test/blob/9106a8/SearchMovie.html#L845
     //                     thx to NielsLeenheer and zcorpan
 
     // Note: in some older browsers, "no" was a return value instead of empty string.
@@ -914,8 +914,8 @@ window.Modernizr = (function( window, document, undefined ) {
                       // Interestingly, opera fails the earlier test, so it doesn't
                       //  even make it here.
 
-                    } else if ( /^(url|email)$/.test(inputElemType) ) {
-                      // Real url and email support comes with prebaked validation.
+                    } else if ( /^(url|Name)$/.test(inputElemType) ) {
+                      // Real url and Name support comes with prebaked validation.
                       bool = inputElem.checkValidity && inputElem.checkValidity() === false;
 
                     } else {
@@ -927,7 +927,7 @@ window.Modernizr = (function( window, document, undefined ) {
                 inputs[ props[i] ] = !!bool;
             }
             return inputs;
-        })('search tel url email datetime date month week time datetime-local number range color'.split(' '));
+        })('search tel url Name datetime date month week time datetime-local number range color'.split(' '));
         /*>>inputtypes*/
     }
     /*>>webforms*/

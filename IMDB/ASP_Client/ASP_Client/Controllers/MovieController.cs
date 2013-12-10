@@ -30,7 +30,7 @@ namespace ASP_Client.Controllers
         /// </summary>
         /// <param name="searchString"> search criteria for movies </param>
         /// <returns> A Task containing an ActionResult to be handled </returns>        
-        public async Task<ActionResult> Index(string searchString)
+        public async Task<ActionResult> SearchMovie(string searchString)
         {
             //if (Session["User"] == null)
             //{
@@ -50,7 +50,7 @@ namespace ASP_Client.Controllers
             return View(movieOverviewViewModel);
         }
 
-         // GET: /Search/MovieDetails/5
+         // GET: /Search/SearchMovieDetails/5
 
         /// <summary>
         /// Method getting a movie's details based on an id given to the CommunicationFacade and puts
@@ -58,7 +58,7 @@ namespace ASP_Client.Controllers
         /// </summary>
         /// <param name="id">Id of the movie to look for</param>
         /// <returns>Desired movies </returns>
-        public async Task<ActionResult> MovieDetails(int id)
+        public async Task<ActionResult> SearchMovieDetails(int id)
         {
 
             var movieDetails = await CommunicationFacade.GetMovieDetailsLocallyAsync(id);

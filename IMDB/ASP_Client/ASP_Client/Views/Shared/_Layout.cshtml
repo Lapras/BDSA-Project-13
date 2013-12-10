@@ -12,7 +12,7 @@
     <div style="width: auto; background-color: #728ea7;">
         @if (ViewBag.User != null)
         {
-            <strong>@Html.Encode((ViewBag.User as UserModel).Email)</strong>
+            <strong>@Html.Encode((ViewBag.User as UserModel).Name)</strong>
             @Html.ActionLink("Sign Out", "Logout", "User")
         }
         else {
