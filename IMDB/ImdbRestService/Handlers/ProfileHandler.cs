@@ -167,11 +167,5 @@ namespace ImdbRestService.Handlers
 
             }
         }
-
-        public ResponseData FailureReply(Exception e)
-        {
-            var msg = new JavaScriptSerializer().Serialize(new ReplyDto { Executed = false, Message = e.Message });
-            return new ResponseData(msg, HttpStatusCode.OK);
-        }
     }
 }

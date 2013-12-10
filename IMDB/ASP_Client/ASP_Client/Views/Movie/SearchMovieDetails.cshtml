@@ -1,4 +1,5 @@
-﻿@model ASP_Client.Models.MovieDetailsViewModel
+﻿@using System.Collections.ObjectModel
+@model ASP_Client.Models.MovieDetailsViewModel
 
 @{
     ViewBag.Title = "Movie";
@@ -12,6 +13,31 @@ Title
 @Model.Title<br/>
 Year 
 @Model.Year<br/>
+Rating
+@Model.Rating
+
+
+@using (Html.BeginForm())
+  {
+      <p style="padding:10px;border:1px solid grey; background: grey; width: 200px">
+          Your Rating
+       
+          <select>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+          </select>
+          <input type="submit" value="Submit" />
+      </p>
+  }
+
 Participants 
 <table>
     <tr><th>Role</th><th>Name</th></tr>

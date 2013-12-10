@@ -12,6 +12,5 @@ namespace ImdbRestService.Handlers
     {
         bool CanHandle(string pathSegment);
         Task<ResponseData> Handle(List<string> path, ResponseData responseData);
-        ResponseData FailureReply(Exception e);
     }
 }

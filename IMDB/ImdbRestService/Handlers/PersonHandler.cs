@@ -40,55 +40,36 @@ namespace ImdbRestService.Handlers
                 var firstSegment = path.First();
                 if (firstSegment.StartsWith("?"))
                 {
-                    var key = firstSegment.Substring(1).Split(new[] { '=' })[0];
-                    var value = firstSegment.Split(new[] { '=' })[1];
+                    var key = firstSegment.Substring(1).Split(new[] {'='})[0];
+                    var value = firstSegment.Split(new[] {'='})[1];
 
-                    try
+
+                    String msg;
+
+                    switch (key)
                     {
-                        String msg;
+                        case "person":
 
-                        switch (key)
-                        {
-                            case "person":
+                            var people = GetPeopleByName(value);
 
-                                var people = GetPeopleByName(value);
+                            // Maybe search in external database when not found like in movies?
 
-                                // Maybe search in external database when not found like in movies?
+                            msg = new JavaScriptSerializer().Serialize(people);
+                            return new ResponseData(msg, HttpStatusCode.OK);
+                            break;
 
-                                msg = new JavaScriptSerializer().Serialize(people);
-                                return new ResponseData(msg, HttpStatusCode.OK);
-                                break;
+                        case "personId":
 
-                            case "personId":
+                            var person = GetPersonById(Convert.ToInt32(value));
 
-                                var person = GetPersonById(Convert.ToInt32(value));
-
-                                msg = new JavaScriptSerializer().Serialize(person);
-                                return new ResponseData(msg, HttpStatusCode.OK);
-                                break;
-
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        return FailureReply(e);
+                            msg = new JavaScriptSerializer().Serialize(person);
+                            return new ResponseData(msg, HttpStatusCode.OK);
+                            break;
                     }
                 }
             }
 
             return responseData;
-        }
-
-        
-        /// <summary>
-        /// Method to return exception messages to the client
-        /// </summary>
-        /// <param name="e">Catched exception</param>
-        /// <returns>Message to send back</returns>
-        public ResponseData FailureReply(Exception e)
-        {
-            var msg = new JavaScriptSerializer().Serialize(new ReplyDto() { Executed = false, Message = e.Message });
-            return new ResponseData(msg, HttpStatusCode.OK);
         }
 
         /// <summary>
@@ -102,7 +83,7 @@ namespace ImdbRestService.Handlers
             {
                 return (from person in entities.People
                     join participant in entities.Participates on person.Id equals participant.ParticipateId
-                    where person.Name.Contains(name) 
+                    where person.Name.Contains(name)
                     select new PersonDto()
                     {
                         Id = person.Id,

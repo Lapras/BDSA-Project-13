@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using ASP_Client.Models;
@@ -71,7 +72,7 @@ namespace ASP_Client.Controllers
                 movieDetailsViewModel.Title = movieDetails.Title;
                 movieDetailsViewModel.Year = movieDetails.Year;
 
-               var temp = movieDetails.Participants.Select(participant => new ActorViewModel
+                var temp = movieDetails.Participants.Select(participant => new ActorViewModel
                {
                    Id = participant.Id, 
                    Name = participant.Name, 

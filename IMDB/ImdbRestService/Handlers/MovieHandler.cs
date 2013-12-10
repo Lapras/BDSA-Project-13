@@ -51,8 +51,6 @@ namespace ImdbRestService.Handlers
                     var key = firstSegment.Substring(1).Split(new[] { '=' })[0];
                     var value = firstSegment.Split(new[] { '=' })[1];
 
-                    try
-                    {
                         String msg;
 
                         switch (key)
@@ -115,11 +113,6 @@ namespace ImdbRestService.Handlers
 
                                 break;
                         }
-                    }
-                    catch (Exception e)
-                    {
-                        return FailureReply(e);
-                    }
                 }
             }
 
@@ -162,17 +155,6 @@ namespace ImdbRestService.Handlers
 
                 return matchingProfiles.Count > 0 && matchingMovies.Count > 0;
             }
-        }
-
-        /// <summary>
-        /// Method to return exception messages to the client
-        /// </summary>
-        /// <param name="e">Catched exception</param>
-        /// <returns>Message to send back</returns>
-        public ResponseData FailureReply(Exception e)
-        {
-            var msg = new JavaScriptSerializer().Serialize(new ReplyDto() {Executed = false, Message = e.Message});
-            return new ResponseData(msg, HttpStatusCode.OK);
         }
 
         /// <summary>

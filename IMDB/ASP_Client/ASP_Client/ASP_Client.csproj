@@ -135,7 +135,8 @@
     <Compile Include="ClientRequests\IUserRepository.cs" />
     <Compile Include="ClientRequests\UserRepository.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\CommunicationFacade.cs" />
+    <Compile Include="Controllers\RESTCommunicationFacade.cs" />
+    <Compile Include="Controllers\ICommunicationFacade.cs" />
     <Compile Include="Controllers\MovieController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -274,7 +275,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>6179</DevelopmentServerPort>
+          <DevelopmentServerPort>25853</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:54321</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
