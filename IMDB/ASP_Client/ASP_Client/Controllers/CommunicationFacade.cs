@@ -99,7 +99,8 @@ namespace ASP_Client.Controllers
         {
             using (var httpClient = new HttpClient())
             {
-                return await httpClient.PostAsJsonAsync("http://localhost:54321/User/Login", user);
+                var response = await httpClient.PostAsJsonAsync("http://localhost:54321/User/Login", user);
+                return response;
             }
         }
 
@@ -112,7 +113,11 @@ namespace ASP_Client.Controllers
         {
             using (var httpClient = new HttpClient())
             {
-                return await httpClient.PostAsJsonAsync("http://localhost:54321/User/Registration", user);
+                var response = await httpClient.PostAsJsonAsync("http://localhost:54321/User/Registration", user);
+                var returnValue = response.Content.ReadAsAsync<String>().Result;
+                String results;
+                var result = response.TryGetContentValue(out results);
+                return response;
             }
         }
     }

@@ -53,10 +53,10 @@ namespace ImdbRestService.Handlers
 
                     // Parse Json object back to data
                     var data = JsonConvert.DeserializeObject<UserModelDto>(path[1]);
+                    
+                    Console.WriteLine(data.Name + " " + data.Password);
 
-                    Console.WriteLine(data.Email + " " + data.Password);
-
-                    if (!ProfileAlreadyExist(data.Email))
+                    if (!ProfileAlreadyExist(data.Name))
                     {
                         // acutally push to database
                         AddProfileToDb(data);
@@ -66,7 +66,6 @@ namespace ImdbRestService.Handlers
                     }
                     else
                     {
-                        Console.WriteLine("Account already exist");
                         var msg = new JavaScriptSerializer().Serialize(new ReplyDto {Executed = false, Message = "Profile already exists"});
                         return new ResponseData(msg, HttpStatusCode.Conflict);
                     }
@@ -81,19 +80,13 @@ namespace ImdbRestService.Handlers
                     // Parse Json object back to data
                     var data = JsonConvert.DeserializeObject<UserModelDto>(path[1]);
 
-                    
-                    Console.WriteLine(data.Email + " " + data.Password);
-
-                    if (LoginDataIsValid(data.Email, data.Password))
+                    if (LoginDataIsValid(data.Name, data.Password))
                     {
-                        // Missing : I guess create a session
-
                         var msg = new JavaScriptSerializer().Serialize(new ReplyDto { Executed = true, Message = "User was logged in"});
                         return new ResponseData(msg, HttpStatusCode.OK);
                     }
                     else
                     {
-                        Console.WriteLine("Login data not valid");
                         var msg = new JavaScriptSerializer().Serialize(new ReplyDto { Executed = false, Message = "Username or password is invalid" });
                         return new ResponseData(msg, HttpStatusCode.Forbidden);
                     }
@@ -166,9 +159,9 @@ namespace ImdbRestService.Handlers
                 context.User.Add(new User
                 {
                     Id = id,
-                    name = profileData.Email,
+                    name = profileData.Name,
                     salt = "muh",
-                    email = profileData.Email,
+                    email = profileData.Name,
                     password = profileData.Password
                 });
 

@@ -134,7 +134,7 @@ namespace WPF_Client.Storage
 
             var user = new UserModelDto()
             {
-                Email = name,
+                Name = name,
                 Password = password
             };
 
@@ -160,7 +160,7 @@ namespace WPF_Client.Storage
         {
             var user = new UserModelDto()
             {
-                Email = name,
+                Name = name,
                 Password = password
             };
 
