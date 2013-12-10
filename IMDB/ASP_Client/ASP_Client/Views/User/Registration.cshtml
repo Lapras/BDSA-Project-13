@@ -1,12 +1,14 @@
-﻿@model ASP_Client.Models.UserModel
+﻿@using System.Web.UI.WebControls
+@model ASP_Client.Models.UserModel
 
 @{
     ViewBag.Title = "Registration";
+    ViewBag.Executed = "False";
 }
 
 @using (Html.BeginForm())
 {
-    @Html.ValidationSummary(true, "Login failed. Check your fields")
+    @Html.ValidationSummary(true, "Registration failed. Check your fields")
 
     <div>
         <fieldset>

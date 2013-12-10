@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using ASP_Client.Controllers;
 using ASP_Client.Models;
+using DtoSubsystem;
 
 namespace ASP_Client.ClientRequests
 {
@@ -17,7 +18,7 @@ namespace ASP_Client.ClientRequests
         /// </summary>
         /// <param name="user"> Model containing the input from a user </param>
         /// <returns> Response message from the Communication facade </returns>
-        public Task<HttpResponseMessage> Login(UserModel user)
+        public Task<ReplyDto> Login(UserModel user)
         { 
             return CommunicationFacade.Login(user);         
         }
@@ -27,7 +28,7 @@ namespace ASP_Client.ClientRequests
         /// </summary>
         /// <param name="user"> Model containing the input from a user </param>
         /// <returns> Response message from the Communication facade </returns>
-        public Task<HttpResponseMessage> Registration(UserModel user)
+        public Task<ReplyDto> Registration(UserModel user)
         {
             return CommunicationFacade.Registration(user);
         }

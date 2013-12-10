@@ -59,7 +59,7 @@ namespace ASP_Client.Controllers
             {
                 var response = await _userRepository.Login(user);
 
-                if (response.IsSuccessStatusCode)
+                if (response.Executed)
                 {
                     UserSession.Login(user);
 
@@ -104,7 +104,7 @@ namespace ASP_Client.Controllers
             {
                 var response = await _userRepository.Registration(user);
 
-                if (response.IsSuccessStatusCode)
+                if (response.Executed)
                 {
                     RedirectToAction("Login", "User");
                 }

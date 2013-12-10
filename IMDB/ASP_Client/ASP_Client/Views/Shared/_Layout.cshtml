@@ -8,23 +8,23 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
-    <div style="width: auto; background-color: #728ea7;">
-        @if (ViewBag.User != null)
-        {
-            <strong>@Html.Encode((ViewBag.User as UserModel).Name)</strong>
-            @Html.ActionLink("Sign Out", "Logout", "User")
-        }
-        else {
-            @Html.ActionLink("Register", "Registration", "User")
-            <span> | </span>
-            @Html.ActionLink("Sign In", "Login", "User")
-        }
-    </div>
+    <body>
+        <div style="width: auto; background-color: #728ea7;">
+            @if (ViewBag.User != null)
+            {
+                <strong>@Html.Encode((ViewBag.User as UserModel).Name)</strong>
+                @Html.ActionLink("Sign Out", "Logout", "User")
+            }
+            else {
+                @Html.ActionLink("Register", "Registration", "User")
+                <span> | </span>
+                @Html.ActionLink("Sign In", "Login", "User")
+            }
+        </div>
  
-    @RenderBody()
+        @RenderBody()
  
-    @Scripts.Render("~/bundles/jquery")
-    @RenderSection("scripts", required: false)
-</body>
+        @Scripts.Render("~/bundles/jquery")
+        @RenderSection("scripts", required: false)
+    </body>
 </html>
