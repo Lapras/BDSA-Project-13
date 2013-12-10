@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Input;
 using WPF_Client.Commands;
 using WPF_Client.Controller;
+using WPF_Client.Exceptions;
 
 namespace WPF_Client.ViewModel
 {
@@ -14,7 +15,7 @@ namespace WPF_Client.ViewModel
     /// <summary>
     /// ViewModel for the LoginView
     /// </summary>
-    class LoginViewModel : ViewModelBase
+    public class LoginViewModel : ViewModelBase
     {
         private string _usernameTextBox; //The username inputtet by the user
         private string _passwordBox; //The password from the user.
@@ -84,14 +85,25 @@ namespace WPF_Client.ViewModel
 
         public void Execute(object parameter)
         {
-            if (SessionController.LoginInfo(_vm.UsernameTextBox, _vm.PasswordBox))
+            try
             {
-                MessageBox.Show("Login succes: You are now logged in to the system");
-                
+                if (SessionController.LoginInfo(_vm.UsernameTextBox, _vm.PasswordBox))
+                {
+                    MessageBox.Show("Login succes: You are now logged in to the system");
+
+                }
+                else
+                {
+                    MessageBox.Show("Login failed: You entered the wrong username or password");
+                }
             }
-            else
+            catch (StorageException e)
             {
-                MessageBox.Show("Login failed: You entered the wrong username or password");
+                MessageBox.Show("Data error.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (UnavailableConnection e)
+            {
+                MessageBox.Show("There is no connection.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             
         }

@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Runtime.Caching;
+using Newtonsoft.Json;
+using WPF_Client.Exceptions;
 using System.Threading.Tasks;
 using DtoSubsystem;
 
@@ -40,25 +43,34 @@ namespace WPF_Client.Storage
         public ObservableCollection<MovieDto> MovieDtos(string searchString)
         {
 
-            if (_movieDtocache.Get(searchString) == null)
+            try
             {
-                Console.WriteLine("did not find in cache");
+                if (_movieDtocache.Get(searchString) == null)
+                {
+                    Console.WriteLine("did not find in cache");
 
-                var storageMovieDtos = _strategy.MovieDtos(searchString); // now we search in the strategy
+                    var storageMovieDtos = _strategy.MovieDtos(searchString); // now we search in the strategy
 
 
-                CacheItemPolicy policy = new CacheItemPolicy();
-                policy.AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(900.0); //15 min
+                    CacheItemPolicy policy = new CacheItemPolicy();
+                    policy.AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(900.0); //15 min
 
-                _movieDtocache.Set(searchString, storageMovieDtos, policy);
+                    _movieDtocache.Set(searchString, storageMovieDtos, policy);
 
-                return storageMovieDtos;
+                    return storageMovieDtos;
+
+                }
+
+                Console.WriteLine("found in cache");
+                return (ObservableCollection<MovieDto>) _movieDtocache.Get(searchString);
 
             }
-            
-            
-            Console.WriteLine("found in cache");
-            return (ObservableCollection<MovieDto>) _movieDtocache.Get(searchString);
+            catch (RESTserviceException e)
+            {
+                throw new StorageException("REST strategy unavailable.", e);
+            }
+
+
             
         }
 
@@ -67,27 +79,30 @@ namespace WPF_Client.Storage
         /// </summary>
         public MovieDetailsDto MovieDetailsDto(int movieId)
         {
-
-            if (_movieDetailDtocache.Get(movieId.ToString()) == null)
+            try
             {
-                Console.WriteLine("did not find in cache");
+                if (_movieDetailDtocache.Get(movieId.ToString()) == null)
+                {
+                    Console.WriteLine("did not find in cache");
 
-                var storageMovieDetailDto = _strategy.MovieDetailsDto(movieId); // now we search in the strategy
+                    var storageMovieDetailDto = _strategy.MovieDetailsDto(movieId); // now we search in the strategy
 
 
-                CacheItemPolicy policy = new CacheItemPolicy();
-                policy.AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(10.0); //10 sec
+                    CacheItemPolicy policy = new CacheItemPolicy();
+                    policy.AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(10.0); //10 sec
 
-                _movieDetailDtocache.Set(movieId.ToString(), storageMovieDetailDto, policy);
+                    _movieDetailDtocache.Set(movieId.ToString(), storageMovieDetailDto, policy);
 
-                return storageMovieDetailDto;
+                    return storageMovieDetailDto;
 
+                }
+                Console.WriteLine("found in cache");
+                return (MovieDetailsDto)_movieDetailDtocache.Get(movieId.ToString());
             }
-
-
-            Console.WriteLine("found in cache");
-            return (MovieDetailsDto) _movieDetailDtocache.Get(movieId.ToString());
-
+            catch (RESTserviceException e)
+            {
+               throw new StorageException();
+            }
         }
 
 
@@ -96,14 +111,28 @@ namespace WPF_Client.Storage
         /// </summary>
         public bool CreateProfile(string name, string password)
         {
-            return _strategy.CreateProfile(name, password);
+            try
+            {
+                return _strategy.CreateProfile(name, password);
+            }
+            catch (RESTserviceException e)
+            {
+               throw new StorageException();
+            }
 
         }
 
         
         public bool LoginInfo(string name, string password)
         {
-            return _strategy.LoginInfo(name, password);
+            try
+            {
+                return _strategy.LoginInfo(name, password);
+            }
+            catch (RESTserviceException e)
+            {
+               throw new StorageException();
+            }
 
         }
     }

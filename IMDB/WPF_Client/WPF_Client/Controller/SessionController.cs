@@ -10,9 +10,9 @@ using WPF_Client.ViewModel;
 
 namespace WPF_Client.Controller
 {
-    class SessionController
+    public class SessionController
     {
-        private static IModel _model = new Model.Model();
+        public static IModel _model = new Model.Model();
         public static bool _isLoggedIn;
         public static string _currentUser;
         private static string _username;
@@ -34,7 +34,13 @@ namespace WPF_Client.Controller
             {
                 _currentUser = name;
                 _isLoggedIn = true;
-                ViewModelManager.Main.TopViewModel = new TopviewSearchViewModel();
+
+
+                if (!UnitTestDetector.IsInUnitTest)
+                {
+                    ViewModelManager.Main.TopViewModel = new TopviewSearchViewModel();
+                }
+
                 return true;
             }
             else
@@ -49,7 +55,10 @@ namespace WPF_Client.Controller
 
         public static void Logout()
         {
-            ViewModelManager.Main.TopViewModel = new LoginViewModel();
+            if (!UnitTestDetector.IsInUnitTest)
+            {
+                ViewModelManager.Main.TopViewModel = new LoginViewModel();
+            }
             _currentUser = null;
             _isLoggedIn = false;
         } 

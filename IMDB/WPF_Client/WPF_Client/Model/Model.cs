@@ -24,7 +24,6 @@ namespace WPF_Client.Model
 
         public ObservableCollection<MovieDto> MovieDtos(string searchString)
         {
-            
             return _storage.MovieDtos(searchString);
         }
 

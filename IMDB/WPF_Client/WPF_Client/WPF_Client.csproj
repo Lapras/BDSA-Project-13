@@ -71,6 +71,9 @@
     <Compile Include="Controller\SearchController.cs" />
     <Compile Include="Controller\SessionController.cs" />
     <Compile Include="Controller\UserProfileController.cs" />
+    <Compile Include="Exceptions\UnavailableConnection.cs" />
+    <Compile Include="Exceptions\RESTserviceException.cs" />
+    <Compile Include="Exceptions\StorageException.cs" />
     <Compile Include="Model\IModel.cs" />
     <Compile Include="Model\Model.cs" />
     <Compile Include="PwBoxAssistant\PasswordBoxAssistant.cs" />
