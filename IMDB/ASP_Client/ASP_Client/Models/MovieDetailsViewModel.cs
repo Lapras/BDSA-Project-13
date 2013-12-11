@@ -9,6 +9,6 @@ namespace ASP_Client.Models
         public string Title { get; set; }
         public int? Year { get; set; }
         public int Rating { get; set; }
-        public List<ActorViewModel> Participants { get; set; }
+        public List<PersonViewModel> Participants { get; set; }
     }
 }

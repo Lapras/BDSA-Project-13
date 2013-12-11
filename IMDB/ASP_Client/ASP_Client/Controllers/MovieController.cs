@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using ASP_Client.Models;
+using DtoSubsystem;
 
 namespace ASP_Client.Controllers
 {
@@ -59,9 +61,9 @@ namespace ASP_Client.Controllers
         /// </summary>
         /// <param name="id">Id of the movie to look for</param>
         /// <returns>Desired movies </returns>
+        [HttpGet]
         public async Task<ActionResult> SearchMovieDetails(int id)
         {
-
             var movieDetails = await CommunicationFacade.GetMovieDetailsLocallyAsync(id);
 
             var movieDetailsViewModel = new MovieDetailsViewModel();
@@ -72,7 +74,7 @@ namespace ASP_Client.Controllers
                 movieDetailsViewModel.Title = movieDetails.Title;
                 movieDetailsViewModel.Year = movieDetails.Year;
 
-                var temp = movieDetails.Participants.Select(participant => new ActorViewModel
+                var temp = movieDetails.Participants.Select(participant => new PersonViewModel
                {
                    Id = participant.Id, 
                    Name = participant.Name, 
@@ -84,6 +86,33 @@ namespace ASP_Client.Controllers
 
             return View(movieDetailsViewModel);
 
+        }
+        [HttpPost]
+        public async Task<ActionResult> SearchMovieDetails(int movieId, int userId, int rating)
+        {
+            var reviewDto = new ReviewDto() {MovieId = movieId, UserId = userId, Rating = rating};
+
+            var serverReponse = await CommunicationFacade.RateMovie(reviewDto);
+            var ratedMovie = await CommunicationFacade.GetMovieDetailsLocallyAsyncForce(movieId);
+
+            var movieDetailsViewModel = new MovieDetailsViewModel();
+
+            movieDetailsViewModel.Id = ratedMovie.Id;
+            movieDetailsViewModel.Title = ratedMovie.Title;
+            movieDetailsViewModel.Year = ratedMovie.Year;
+            movieDetailsViewModel.Rating = ratedMovie.Rating; 
+
+            var temp = ratedMovie.Participants.Select(participant => new PersonViewModel
+            {
+                Id = participant.Id,
+                Name = participant.Name,
+                CharacterName = participant.CharacterName
+            }).ToList();
+
+            movieDetailsViewModel.Participants = temp;
+
+            // There is now RateMovie view... but how else to get the rating?
+           return View(movieDetailsViewModel);
         }
     }
 }

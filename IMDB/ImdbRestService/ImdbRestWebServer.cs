@@ -73,7 +73,7 @@ namespace ImdbRestService
         /// <param name="handlers">Handlers to process received data</param>
         private async void ProcessRequest(HttpListenerContext context, List<IHandler> handlers = null)
         {
-            handlers = handlers ?? new List<IHandler>(new IHandler[] { new MovieHandler(), new ProfileHandler() });
+            handlers = handlers ?? new List<IHandler>(new IHandler[] { new MovieHandler(), new ProfileHandler(), new PersonHandler() });
    
             // you properly need to split this into a number of methods to make a readable
             // solution :-)

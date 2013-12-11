@@ -29,13 +29,11 @@ namespace ASP_Client.Controllers
                 personDetailsViewModel.Name = personDetails.Name;
                 personDetailsViewModel.Gender = personDetails.Gender;
             }
-            throw new NotImplementedException();
+        //    throw new NotImplementedException();
 
             // Can't resolve the PersonDetails view for some reason 
-            // - I guess because there is no method responding by the server yet (Alex)
 
-           // return  View(personDetailsViewModel);
-
+            return  View(personDetailsViewModel);
         }
     }
 }

@@ -60,9 +60,9 @@ namespace ImdbRestService.Handlers
 
                         case "personId":
 
-                            var person = GetPersonById(Convert.ToInt32(value));
+                           // var person = GetPersonById(Convert.ToInt32(value));
 
-                            msg = new JavaScriptSerializer().Serialize(person);
+                            msg = new JavaScriptSerializer().Serialize(new PersonDetailsDto() {Name = "Rasmus"});
                             return new ResponseData(msg, HttpStatusCode.OK);
                             break;
                     }
