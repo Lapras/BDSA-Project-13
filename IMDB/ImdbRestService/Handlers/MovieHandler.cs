@@ -43,8 +43,10 @@ namespace ImdbRestService.Handlers
         /// <returns></returns>
         public async Task<ResponseData> Handle(List<string> path, ResponseData responseData)
         {
-            if (path != null && path.Count == 1)
+
+            if (path != null || path.Count == 1)
             {
+
                 var firstSegment = path.First();
                 if (firstSegment.StartsWith("?"))
                 {
@@ -77,43 +79,60 @@ namespace ImdbRestService.Handlers
                                 return new ResponseData(msg, HttpStatusCode.OK);
                                 break;
 
-                            case "review":
+                            
+                        }
+                }
 
-                                path[1] = path[1].Replace("k__BackingField", "");
-                                path[1] = path[1].Replace("<", "");
-                                path[1] = path[1].Replace(">", "");
+                if (!firstSegment.StartsWith("?"))
+                {
+                    var key = path.First();
 
-                                // Parse Json object back to data
-                                var data = JsonConvert.DeserializeObject<ReviewDto>(path[1]);
+                    switch (key)
+                    {
+                        case "review":
 
-                                Console.WriteLine("Movie: {0}\nUser: {1}\nRating: {2}", data.MovieId, data.Username,
-                                    data.Rating);
+                            Console.WriteLine("REVIWING");
 
-                                if (MovieAndProfileExist(data.MovieId, data.Username))
-                                {
-                                    // acutally push to database
-                                    AddRatingToDatabase(data);
+                            path[1] = path[1].Replace("k__BackingField", "");
+                            path[1] = path[1].Replace("<", "");
+                            path[1] = path[1].Replace(">", "");
 
-                                    msg =
-                                        new JavaScriptSerializer().Serialize(new ReplyDto
-                                        {
-                                            Executed = true,
-                                            Message = "Rating was added"
-                                        });
-                                    return new ResponseData(msg, HttpStatusCode.OK);
-                                }
+                            // Parse Json object back to data
+                            var data = JsonConvert.DeserializeObject<ReviewDto>(path[1]);
 
-                                msg =
+                            Console.WriteLine("Movie: {0}\nUser: {1}\nRating: {2}", data.MovieId, data.Username,
+                                data.Rating);
+
+                            if (MovieAndProfileExist(data.MovieId, data.Username))
+                            {
+                                // acutally push to database
+                                AddRatingToDatabase(data);
+
+                                var ratingAddedMsg =
                                     new JavaScriptSerializer().Serialize(new ReplyDto
                                     {
                                         Executed = true,
-                                        Message = "Rating could not be added"
+                                        Message = "Rating was added"
                                     });
-                                return new ResponseData(msg, HttpStatusCode.OK);
+                                return new ResponseData(ratingAddedMsg, HttpStatusCode.OK);
+                            }
 
-                                break;
-                        }
+
+                            var ratingNotAddedMsg =
+                                new JavaScriptSerializer().Serialize(new ReplyDto
+                                {
+                                    Executed = true,
+                                    Message = "Rating could not be added"
+                                });
+                            return new ResponseData(ratingNotAddedMsg, HttpStatusCode.OK);
+
+                            break;
+                    }
+
                 }
+
+
+
             }
 
             return responseData;

@@ -309,6 +309,8 @@ namespace WPF_Client.Storage
 
         public bool RateMovie(int id, int rating, string username)
         {
+            Console.WriteLine("Trying to review");
+
             try
             {
                 var user = new ReviewDto()
