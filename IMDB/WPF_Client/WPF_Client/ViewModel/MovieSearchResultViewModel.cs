@@ -30,9 +30,8 @@ namespace WPF_Client.ViewModel
         private int _moviesFound;
         
         public ICommand SelectMovieCommand { get; set; } //The command attached to clicking on a movie.
-        //public ICommand BackToSearchCommand { get; set; }
         public ICommand BackCommand { get; set; }
-
+        
         /// <summary>
         /// The collection of movie results that is displayed in the view.
         /// </summary>
@@ -77,6 +76,7 @@ namespace WPF_Client.ViewModel
         {
             SelectMovieCommand = new SelectMovieCommand(this);
             BackCommand = new BackCommand();
+            
 
             MovieDtos = SearchController.MovieDtos;
             MoviesFound = SearchController.MoviesFound;
@@ -145,37 +145,8 @@ namespace WPF_Client.ViewModel
     }
 
 
-    /// <summary>
-    /// Command bound to the Search Button
-    /// </summary>
-    class BackToSearchCommand : ICommand
-    {
-        private MovieSearchResultViewModel _vm;
 
 
-        public BackToSearchCommand(MovieSearchResultViewModel vm)
-        {
-            _vm = vm;
-        }
 
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public void Execute(object parameter)
-        {
-            ViewModelManager.Main.CurrentViewModel = new SearchViewModel();
-
-
-        }
-
-        public event EventHandler CanExecuteChanged
-        {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
-
-        }
-    }
 
 }

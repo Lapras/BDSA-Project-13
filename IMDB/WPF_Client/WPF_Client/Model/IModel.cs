@@ -15,5 +15,6 @@ namespace WPF_Client.Model
         MovieDetailsDto MovieDetailsDto(int movieId);
         bool CreateProfile(string name, string password);
         bool LoginInfo(string name, string password);
+        PersonDetailsDto PersonDetailsDto(int id);
     }
 }

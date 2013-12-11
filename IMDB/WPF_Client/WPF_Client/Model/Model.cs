@@ -41,5 +41,10 @@ namespace WPF_Client.Model
         {
             return _storage.LoginInfo(name, password);
         }
+
+        public PersonDetailsDto PersonDetailsDto(int id)
+        {
+            return _storage.PersonDetailsDto(id);
+        }
     }
 }

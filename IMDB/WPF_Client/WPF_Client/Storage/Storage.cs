@@ -24,6 +24,8 @@ namespace WPF_Client.Storage
         private ObjectCache _movieDtocache;
         private ObjectCache _movieDetailDtocache;
 
+        private ObjectCache _personDetailDtoCache;
+
         /// <summary>
         /// Default constructor.
         /// </summary>
@@ -34,6 +36,8 @@ namespace WPF_Client.Storage
 
             _movieDtocache = MemoryCache.Default;
             _movieDetailDtocache = MemoryCache.Default;
+
+            _personDetailDtoCache = MemoryCache.Default;
 
         }
 
@@ -135,5 +139,34 @@ namespace WPF_Client.Storage
             }
 
         }
+
+        public PersonDetailsDto PersonDetailsDto(int id)
+        {
+           try
+            {
+                if (_personDetailDtoCache.Get(id.ToString()) == null)
+                {
+                    Console.WriteLine("did not find in cache");
+
+                    var storagePersonDetailDto = _strategy.PersonDetailsDto(id); // now we search in the strategy
+
+
+                    CacheItemPolicy policy = new CacheItemPolicy();
+                    policy.AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(10.0); //10 sec
+
+                    _personDetailDtoCache.Set(id.ToString(), storagePersonDetailDto, policy);
+
+                    return storagePersonDetailDto;
+
+                }
+                Console.WriteLine("found in cache");
+                return (PersonDetailsDto)_personDetailDtoCache.Get(id.ToString());
+            }
+            catch (RESTserviceException e)
+            {
+               throw new StorageException();
+            }
+        }
+    
     }
 }

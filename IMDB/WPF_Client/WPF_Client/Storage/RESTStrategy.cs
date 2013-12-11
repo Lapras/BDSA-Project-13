@@ -254,25 +254,61 @@ namespace WPF_Client.Storage
                 throw new RESTserviceException("there was an serializaton or deserializaton error", e);
             }
             
-            
-            /*  string dd = "asd";
-            string _pw = PasswordHash.CreateHash(password);
-            password += dd;
-            if (PasswordHash.ValidatePassword(password, _pw))
-            {
-
-                Console.WriteLine("nay!");
-                return false;
-            }
-            Console.WriteLine("yay!"); */
-            
-            
-            
-            //return true; // example just returns true for now.
+           
 
         }
+        public PersonDetailsDto PersonDetailsDto(int id)
+        {
+            
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    Console.WriteLine("Getting reponse from REST server");
+                    var response = httpClient.GetStringAsync("http://localhost:54321/person/?personId=" + id);
+
+
+                    Console.WriteLine("JSON string received:" + response.Result);
+                    Console.WriteLine("Starting deserializing");
+                    var result = JsonConvert.DeserializeObject<PersonDetailsDto>(response.Result);
+                    Console.WriteLine("deserializing done");
+
+
+
+                    return result;
+                }
+            }
+            /*
+            catch (AggregateException e)
+            {
+                foreach (Exception ex in e.InnerExceptions)
+                {
+                    
+                    if (ex.GetType() == typeof(HttpRequestException))
+                    {
+                        throw new UnavailableConnection("No connection", e);
+                    }
+                    
+                }
+
+                throw new RESTserviceException("AggregateException response from DB.", e);
+
+            }*/
+            catch (JsonSerializationException e)
+            {
+                throw new RESTserviceException("there was an serializaton or deserializaton error", e);
+            }
+            catch (JsonReaderException e)
+            {
+                throw new RESTserviceException("there was an serializaton or deserializaton error", e);
+            }
+
+
+
+        }
+
     }
 
-
+    
     
 }

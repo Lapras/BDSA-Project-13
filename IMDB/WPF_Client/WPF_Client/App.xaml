@@ -26,5 +26,8 @@
         <DataTemplate DataType="{x:Type vm:TopviewSearchViewModel}">
             <view:TopviewSearchView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ActorProfileViewModel}">
+            <view:ActorProfileView />
+        </DataTemplate>
     </Application.Resources>
 </Application>

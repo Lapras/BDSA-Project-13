@@ -83,6 +83,7 @@
     <Compile Include="Storage\Storage.cs" />
     <Compile Include="UnitTestDetector.cs" />
     <Compile Include="ViewModelManager.cs" />
+    <Compile Include="ViewModel\ActorProfileViewModel.cs" />
     <Compile Include="ViewModel\CreateProfileViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
@@ -91,6 +92,9 @@
     <Compile Include="ViewModel\MovieSearchResultViewModel.cs" />
     <Compile Include="ViewModel\SearchViewModel.cs" />
     <Compile Include="ViewModel\TopviewSearchViewModel.cs" />
+    <Compile Include="View\ActorProfileView.xaml.cs">
+      <DependentUpon>ActorProfileView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\CreateProfileView.xaml.cs">
       <DependentUpon>CreateProfileView.xaml</DependentUpon>
     </Compile>
@@ -121,6 +125,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\ActorProfileView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\CreateProfileView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
