@@ -15,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF_ClientUnitTest", "WPF_C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebServer", "WebServer\WebServer.csproj", "{EDD9F6B0-4877-4607-B87F-8C22B99A21CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImdbRestServiceTests", "ImdbRestServiceTests\ImdbRestServiceTests.csproj", "{9A8E0416-D5A4-47E5-B837-1CDE2E75E902}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,10 +49,6 @@ Global
 		{EDD9F6B0-4877-4607-B87F-8C22B99A21CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDD9F6B0-4877-4607-B87F-8C22B99A21CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDD9F6B0-4877-4607-B87F-8C22B99A21CC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9A8E0416-D5A4-47E5-B837-1CDE2E75E902}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9A8E0416-D5A4-47E5-B837-1CDE2E75E902}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9A8E0416-D5A4-47E5-B837-1CDE2E75E902}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9A8E0416-D5A4-47E5-B837-1CDE2E75E902}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

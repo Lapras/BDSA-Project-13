@@ -103,12 +103,12 @@ namespace ASP_Client.Controllers
             if (ModelState.IsValid)
             {
                 var response = await _userRepository.Registration(user);
-
+	            
                 if (response.Executed)
                 {
-                    RedirectToAction("Login", "User");
+					await Login(user);
+					return RedirectToAction("SearchMovie", "Movie");
                 }
-
             }
             return View(user);
         }
