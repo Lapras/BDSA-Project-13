@@ -48,7 +48,7 @@ Participants
                 @participant.CharacterName
             </td>
             <td>
-                @Html.ActionLink(participant.Name, "PersonDetails", new { participant.Id })
+                @Html.ActionLink(participant.Name, "PersonDetails", "Person", new {participant.Id}, null)
             </td>
         </tr>
     }

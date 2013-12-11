@@ -252,7 +252,8 @@ namespace ImdbRestService.Handlers
                             EpisodeNumber = m.EpisodeNumber,
                             EpisodeOf_Id = m.EpisodeOf_Id,
                             SeasonNumber = m.SeasonNumber,
-                            SeriesYear = m.SeriesYear
+                            SeriesYear = m.SeriesYear,
+                            Rating = 5
                         }).ToList();
 
                     movie[0].Participants = new List<PersonDto>();
