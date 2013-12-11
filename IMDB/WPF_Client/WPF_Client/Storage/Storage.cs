@@ -143,7 +143,7 @@ namespace WPF_Client.Storage
         public PersonDetailsDto PersonDetailsDto(int id)
         {
            try
-            {
+           {
                 if (_personDetailDtoCache.Get(id.ToString()) == null)
                 {
                     Console.WriteLine("did not find in cache");
@@ -167,6 +167,10 @@ namespace WPF_Client.Storage
                throw new StorageException();
             }
         }
-    
+
+        public bool RateMovie(int id, int rating, string username)
+        {
+            return _strategy.RateMovie(id, rating, username);
+        }
     }
 }

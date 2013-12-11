@@ -72,8 +72,9 @@
 
             <DataGrid.Columns>
 
-                <DataGridTextColumn x:Name="CharacterName" Width="1*" Binding="{Binding CharacterName}" Header="Role"/>
-                <DataGridTextColumn x:Name="Name" Width="1*" Binding="{Binding Name}" Header="Name"/>
+                
+                <DataGridTextColumn x:Name="Movie" Width="1*" Binding="{Binding Name}" Header="Movie"/>
+                <DataGridTextColumn x:Name="Role" Width="1*" Binding="{Binding CharacterName}" Header="Role"/>
 
             </DataGrid.Columns>
 

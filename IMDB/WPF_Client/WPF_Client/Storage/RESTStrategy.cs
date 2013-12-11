@@ -278,7 +278,7 @@ namespace WPF_Client.Storage
                     return result;
                 }
             }
-            /*
+            
             catch (AggregateException e)
             {
                 foreach (Exception ex in e.InnerExceptions)
@@ -293,7 +293,7 @@ namespace WPF_Client.Storage
 
                 throw new RESTserviceException("AggregateException response from DB.", e);
 
-            }*/
+            }
             catch (JsonSerializationException e)
             {
                 throw new RESTserviceException("there was an serializaton or deserializaton error", e);
@@ -307,6 +307,53 @@ namespace WPF_Client.Storage
 
         }
 
+        public bool RateMovie(int id, int rating, string username)
+        {
+            try
+            {
+                var user = new ReviewDto()
+                {
+                    MovieId = id,
+                    Rating = rating,
+                    Username = username
+                };
+
+                // Console.WriteLine(name + " " + password);
+
+                using (var httpClient = new HttpClient())
+                {
+                    Console.WriteLine("Getting reponse from REST server");
+                    var response = httpClient.PostAsJsonAsync("http://localhost:54321/movies/review", user).Result;
+                    var msg = response.Content.ReadAsStringAsync();
+
+                    Console.WriteLine("JSON string received:" + response);
+                    Console.WriteLine("Starting deserializing");
+                    var result = JsonConvert.DeserializeObject<ReplyDto>(msg.Result);
+                    Console.WriteLine("deserializing done");
+
+                    return result.Executed;
+                }
+
+            }
+
+            catch (AggregateException e)
+            {
+                foreach (Exception ex in e.InnerExceptions)
+                {
+                    if (ex.GetType() == typeof(HttpRequestException))
+                    {
+                        throw new UnavailableConnection("No connection", e);
+                    }
+                }
+
+                throw new RESTserviceException("AggregateException response from DB.", e);
+
+            }
+            catch (JsonSerializationException e)
+            {
+                throw new RESTserviceException("there was an serializaton or deserializaton error", e);
+            }
+        }
     }
 
     

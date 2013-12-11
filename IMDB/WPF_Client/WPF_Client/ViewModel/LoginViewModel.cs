@@ -89,12 +89,12 @@ namespace WPF_Client.ViewModel
             {
                 if (SessionController.LoginInfo(_vm.UsernameTextBox, _vm.PasswordBox))
                 {
-                    MessageBox.Show("Login succes: You are now logged in to the system");
+                    MessageBox.Show("Login succes: You are now logged in to the system :).", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 }
                 else
                 {
-                    MessageBox.Show("Login failed: You entered the wrong username or password");
+                    MessageBox.Show("Login failed: You entered the wrong username or password.","Wrong information",MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
             catch (StorageException e)

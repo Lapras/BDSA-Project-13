@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WPF_Client.Model;
 using WPF_Client.View;
+using WPF_Client.ViewModel;
 
 namespace WPF_Client.Controller
 {
@@ -14,9 +15,19 @@ namespace WPF_Client.Controller
 
         public static bool CreateProfile(string name, string password)
         {
-            //handle logic here like checking the user's input characters and length etc. before sending createprofile request?
+            var result = _model.CreateProfile(name, password);
 
-            return _model.CreateProfile(name, password);
+            //if the user is successfully logged in we switch to the main menu.
+            if(result)
+            {
+                if (!UnitTestDetector.IsInUnitTest)
+                {
+                    ViewModelManager.Main.CurrentViewModel = new SearchViewModel();
+                }
+            }
+
+
+            return result;
         }
 
     }

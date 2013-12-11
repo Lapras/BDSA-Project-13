@@ -49,5 +49,18 @@ namespace WPF_Client.Controller
             return true;
 
         }
+
+        public static bool RateMovie(int movieId, int rating)
+        {
+            var result = _model.RateMovie(movieId, rating, SessionController._currentUser);
+            
+            if (result)
+            {
+                GetMovie(movieId);
+                ViewModelManager.Main.CurrentViewModel = new MovieProfileViewModel();
+            }
+
+            return result;
+        }
     }
 }

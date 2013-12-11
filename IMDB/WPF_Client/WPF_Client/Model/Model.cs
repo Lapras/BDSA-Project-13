@@ -46,5 +46,10 @@ namespace WPF_Client.Model
         {
             return _storage.PersonDetailsDto(id);
         }
+
+        public bool RateMovie(int id, int rating, string username)
+        {
+            return _storage.RateMovie(id, rating, username);
+        }
     }
 }

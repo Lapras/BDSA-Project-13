@@ -20,5 +20,6 @@ namespace WPF_Client.Storage
         bool CreateProfile(string name, string password);
         bool LoginInfo(string name, string password);
         PersonDetailsDto PersonDetailsDto(int id);
+        bool RateMovie(int id, int rating, string username);
     }
 }

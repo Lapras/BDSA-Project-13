@@ -7,12 +7,13 @@
              
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="400">
+             d:DesignHeight="400" d:DesignWidth="500">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition MinHeight="50"  MaxHeight="100"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition MinHeight="150" MaxHeight="400"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition MinHeight="150" MaxHeight="600"/>
             <RowDefinition MinHeight="10" MaxHeight="50"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -33,32 +34,61 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition MaxWidth="200"/>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
             <TextBlock Grid.Row="0" Grid.Column="0" FontFamily="Resources/#Charlemagne Std" FontSize="18" Text="Title:"></TextBlock>
-            <TextBlock Grid.Row="1" Grid.Column="0" FontFamily="Resources/#Charlemagne Std" FontSize="18" Text="Kind:"></TextBlock>
-            <TextBlock Grid.Row="2" Grid.Column="0" FontFamily="Resources/#Charlemagne Std" FontSize="18" Text="Year:"></TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="0" FontFamily="Resources/#Charlemagne Std" FontSize="18" Text="Rating:"></TextBlock>
+            <TextBlock Grid.Row="2" Grid.Column="0" FontFamily="Resources/#Charlemagne Std" FontSize="18" Text="Kind:"></TextBlock>
+            <TextBlock Grid.Row="3" Grid.Column="0" FontFamily="Resources/#Charlemagne Std" FontSize="18" Text="Year:"></TextBlock>
 
-            <TextBlock Grid.Row="3" Grid.Column="0" FontFamily="Resources/#Charlemagne Std" FontSize="18" Margin="0,10,0,0" FontWeight="Bold" Text="Participants:"></TextBlock>
-
+            
             <TextBlock Grid.Row="0" Grid.Column="1" FontFamily="Resources/#Charlemagne Std" FontSize="18" FontWeight="Bold" Text="{Binding MovieDetailsDto.Title, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
-            <TextBlock Grid.Row="1" Grid.Column="1" FontFamily="Resources/#Charlemagne Std" FontSize="18" FontWeight="Bold" Text="{Binding MovieDetailsDto.Kind, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
-            <TextBlock Grid.Row="2" Grid.Column="1" FontFamily="Resources/#Charlemagne Std" FontSize="18" FontWeight="Bold" Text="{Binding MovieDetailsDto.Year, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
-
+            <TextBlock Grid.Row="1" Grid.Column="1" FontFamily="Resources/#Charlemagne Std" FontSize="18" FontWeight="Bold" Text="{Binding MovieDetailsDto.Year, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Grid.Row="2" Grid.Column="1" FontFamily="Resources/#Charlemagne Std" FontSize="18" FontWeight="Bold" Text="{Binding MovieDetailsDto.Kind, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Grid.Row="3" Grid.Column="1" FontFamily="Resources/#Charlemagne Std" FontSize="18" FontWeight="Bold" Text="{Binding MovieDetailsDto.Year, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+          
+    
 
         </Grid>
 
-        <Button Grid.Row="3" Grid.Column="1" Width="75" Height="25" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding BackCommand}" Content="Back"/>
+        <Grid Grid.Row="2" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
 
+            <ComboBox Grid.Row="0" Grid.Column="0" Width="150" Height="20" SelectedIndex="{Binding SelectedRating}">
+                <ComboBoxItem Tag="0"></ComboBoxItem>
+                <ComboBoxItem Tag="1">★ (1)</ComboBoxItem>
+                <ComboBoxItem Tag="2">★★ (2)</ComboBoxItem>
+                <ComboBoxItem Tag="3">★★★ (3)</ComboBoxItem>
+                <ComboBoxItem Tag="4">★★★★ (4)</ComboBoxItem>
+                <ComboBoxItem Tag="5">★★★★★ (5)</ComboBoxItem>
+                <ComboBoxItem Tag="6">★★★★★★ (6)</ComboBoxItem>
+                <ComboBoxItem Tag="7">★★★★★★★ (7)</ComboBoxItem>
+                <ComboBoxItem Tag="8">★★★★★★★★ (8)</ComboBoxItem>
+                <ComboBoxItem Tag="9">★★★★★★★★★ (9)</ComboBoxItem>
+                <ComboBoxItem Tag="10">★★★★★★★★★★ (10)</ComboBoxItem>
+            </ComboBox>
 
-        <DataGrid Name="DataGrid1" Grid.Row="2" Grid.Column="1"
+            <Button Grid.Row="0" Grid.Column="1" Width="50" Height="20"  FontFamily="Resources/#Charlemagne Std" FontSize="14" Content="Rate!" HorizontalAlignment="Right" Command="{Binding RateCommand, UpdateSourceTrigger=PropertyChanged}"></Button>
+            <TextBlock Grid.Row="1" Grid.Column="0" FontFamily="Resources/#Charlemagne Std" FontSize="18" Margin="0,10,0,0" FontWeight="Bold" Text="Participants:"></TextBlock>
+
+        </Grid>
+
+        <DataGrid Name="DataGrid1" Grid.Row="3" Grid.Column="1"
                   ItemsSource="{Binding MovieDetailsDto.Participants, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedItem}"
                   ScrollViewer.VerticalScrollBarVisibility="Visible"
-                  MinWidth="300" MaxWidth="400" MinHeight="150" MaxHeight="400"  
+                  MinWidth="400" MaxWidth="400" MinHeight="150" MaxHeight="600"  
                   VerticalAlignment="Top"
+                  HorizontalAlignment="Stretch"
                   AlternatingRowBackground="WhiteSmoke"
                   IsReadOnly="True"
                   AutoGenerateColumns="False">
@@ -79,7 +109,7 @@
 
         </DataGrid>
 
-
+        <Button Grid.Row="4" Grid.Column="1" Width="75" Height="25" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding BackCommand}" Content="Back"/>
 
 
 
