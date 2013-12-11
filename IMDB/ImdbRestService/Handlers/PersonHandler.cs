@@ -11,6 +11,9 @@ using DtoSubsystem;
 
 namespace ImdbRestService.Handlers
 {
+    /// <summary>
+    /// Class in charge of handling person requests
+    /// </summary>
     public class PersonHandler : IHandler
     {
         private const string PathSegment = "person";
