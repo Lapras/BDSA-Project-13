@@ -38,9 +38,9 @@ namespace WPF_Client.Controller
                     //unit test doesnt like creating a new viewmodel and assigning it.
                     if (!UnitTestDetector.IsInUnitTest)
                     {
+
                         ViewModelManager.Main.CurrentViewModel = new MovieSearchResultViewModel();
 
-                        
                     }
                     
 

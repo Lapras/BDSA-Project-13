@@ -23,7 +23,6 @@ namespace WPF_Client.ViewModel
 
         private MovieDetailsDto _movieDetailsDto;
 
-        //public ICommand BackToSearchResultCommand { get; set; }
         public ICommand BackCommand { get; set; }
         public ICommand SelectActorCommand { get; set; }
         public ICommand RateCommand { get; set; }
@@ -128,7 +127,7 @@ namespace WPF_Client.ViewModel
             {
                 MessageBox.Show("Data error.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            catch (UnavailableConnection e)
+            catch (UnavailableConnectionException e)
             {
                 MessageBox.Show("There is no connection.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -173,6 +172,7 @@ namespace WPF_Client.ViewModel
                 if (HollywoodController.RateMovie(_vm.MovieDetailsDto.Id, _vm.SelectedRating))
                 {
                     MessageBox.Show("Successfully rated.", "Success!");
+                    _vm.MovieDetailsDto = HollywoodController.MovieDetailsDto;
                 }
                 else
                 {
@@ -185,7 +185,7 @@ namespace WPF_Client.ViewModel
             {
                 MessageBox.Show("Data error.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            catch (UnavailableConnection e)
+            catch (UnavailableConnectionException e)
             {
                 MessageBox.Show("There is no connection.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }

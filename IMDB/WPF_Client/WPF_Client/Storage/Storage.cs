@@ -168,9 +168,34 @@ namespace WPF_Client.Storage
             }
         }
 
-        public bool RateMovie(int id, int rating, string username)
+        public bool RateMovie(int movieId, int rating, string username)
         {
-            return _strategy.RateMovie(id, rating, username);
+            try
+            {
+                var result = _strategy.RateMovie(movieId, rating, username);
+
+                //if we have successfully rated we need to remove it from the cache
+                //so that the old avg. rating is updated.
+                if (result)
+                {
+                    _movieDetailDtocache.Remove(movieId.ToString());
+                }
+
+                return result;
+            }
+            catch (RESTserviceException e)
+            {
+                throw new StorageException();
+            }
+
+
+
+
+
+
+
+
+            
         }
     }
 }

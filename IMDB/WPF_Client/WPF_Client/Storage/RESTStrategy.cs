@@ -65,7 +65,7 @@ namespace WPF_Client.Storage
                 {
                     if (ex.GetType() == typeof (HttpRequestException))
                     {
-                        throw new UnavailableConnection("No connection", e);
+                        throw new UnavailableConnectionException("No connection", e);
                     }
                 }
                 
@@ -139,7 +139,7 @@ namespace WPF_Client.Storage
                 {
                     if (ex.GetType() == typeof (HttpRequestException))
                     {
-                        throw new UnavailableConnection("No connection", e);
+                        throw new UnavailableConnectionException("No connection", e);
                     }
                 }
 
@@ -192,7 +192,7 @@ namespace WPF_Client.Storage
                 {
                     if (ex.GetType() == typeof(HttpRequestException))
                     {
-                        throw new UnavailableConnection("No connection", e);
+                        throw new UnavailableConnectionException("No connection", e);
                     }
                 }
 
@@ -242,7 +242,7 @@ namespace WPF_Client.Storage
                 {
                     if (ex.GetType() == typeof(HttpRequestException))
                     {
-                        throw new UnavailableConnection("No connection", e);
+                        throw new UnavailableConnectionException("No connection", e);
                     }
                 }
 
@@ -286,7 +286,7 @@ namespace WPF_Client.Storage
                     
                     if (ex.GetType() == typeof(HttpRequestException))
                     {
-                        throw new UnavailableConnection("No connection", e);
+                        throw new UnavailableConnectionException("No connection", e);
                     }
                     
                 }
@@ -344,7 +344,7 @@ namespace WPF_Client.Storage
                 {
                     if (ex.GetType() == typeof(HttpRequestException))
                     {
-                        throw new UnavailableConnection("No connection", e);
+                        throw new UnavailableConnectionException("No connection", e);
                     }
                 }
 

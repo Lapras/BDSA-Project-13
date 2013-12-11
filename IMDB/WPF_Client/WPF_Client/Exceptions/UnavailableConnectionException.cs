@@ -9,21 +9,21 @@ namespace WPF_Client.Exceptions
     /// <summary>
     /// Exception for when there is no available connection.
     /// </summary>
-    class UnavailableConnection : Exception
+    class UnavailableConnectionException : Exception
     {
-        public UnavailableConnection()
+        public UnavailableConnectionException()
             : base() { }
 
-        public UnavailableConnection(string message)
+        public UnavailableConnectionException(string message)
             : base(message) { }
 
-        public UnavailableConnection(string format, params object[] args)
+        public UnavailableConnectionException(string format, params object[] args)
             : base(string.Format(format, args)) { }
 
-        public UnavailableConnection(string message, Exception innerException)
+        public UnavailableConnectionException(string message, Exception innerException)
             : base(message, innerException) { }
 
-        public UnavailableConnection(string format, Exception innerException, params object[] args)
+        public UnavailableConnectionException(string format, Exception innerException, params object[] args)
             : base(string.Format(format, args), innerException) { }
     }
 }

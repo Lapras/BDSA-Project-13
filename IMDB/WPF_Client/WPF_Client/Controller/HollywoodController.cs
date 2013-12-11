@@ -56,8 +56,8 @@ namespace WPF_Client.Controller
             
             if (result)
             {
+                Console.WriteLine("Should update");
                 GetMovie(movieId);
-                ViewModelManager.Main.CurrentViewModel = new MovieProfileViewModel();
             }
 
             return result;

@@ -127,7 +127,7 @@ namespace WPF_Client.ViewModel
             {
                 MessageBox.Show("Data error.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            catch (UnavailableConnection e)
+            catch (UnavailableConnectionException e)
             {
                 MessageBox.Show("There is no connection.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }

@@ -71,7 +71,7 @@
     <Compile Include="Controller\SearchController.cs" />
     <Compile Include="Controller\SessionController.cs" />
     <Compile Include="Controller\UserProfileController.cs" />
-    <Compile Include="Exceptions\UnavailableConnection.cs" />
+    <Compile Include="Exceptions\UnavailableConnectionException.cs" />
     <Compile Include="Exceptions\RESTserviceException.cs" />
     <Compile Include="Exceptions\StorageException.cs" />
     <Compile Include="Model\IModel.cs" />
