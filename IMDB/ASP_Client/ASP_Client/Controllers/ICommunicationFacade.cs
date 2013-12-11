@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Web;
 using ASP_Client.Models;
 using DtoSubsystem;
 
@@ -47,7 +44,6 @@ namespace ASP_Client.Controllers
         /// <param name="personId">Id of the person to get the data of</param>
         /// <returns>Detailed data of the person</returns>
         Task<PersonDetailsDto> GetPersonDetailsLocallyAsync(int personId);
-
 
         /// <summary>
         /// Send a Login request to the application server

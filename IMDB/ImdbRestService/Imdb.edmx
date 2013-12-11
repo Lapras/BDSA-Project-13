@@ -13,6 +13,7 @@
           <EntitySet Name="Participate" EntityType="ImdbModel.Store.Participate" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="People" EntityType="ImdbModel.Store.People" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PersonInfo" EntityType="ImdbModel.Store.PersonInfo" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Rating" EntityType="ImdbModel.Store.Rating" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="User" EntityType="ImdbModel.Store.User" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK_dbo_MovieInfo_dbo_InfoType_Type_Id" Association="ImdbModel.Store.FK_dbo_MovieInfo_dbo_InfoType_Type_Id">
             <End Role="InfoType" EntitySet="InfoType" />
@@ -110,6 +111,15 @@
           <Property Name="Note" Type="nvarchar" MaxLength="500" />
           <Property Name="Person_Id" Type="int" Nullable="false" />
           <Property Name="Type_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rating">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="user_Id" Type="int" Nullable="false" />
+          <Property Name="movie_id" Type="int" Nullable="false" />
+          <Property Name="rating" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -252,6 +262,7 @@
             <End Role="PersonInfo" EntitySet="PersonInfoes" />
           </AssociationSet>
           <EntitySet Name="User" EntityType="ImdbModel.User" />
+          <EntitySet Name="Rating" EntityType="ImdbModel.Rating" />
         </EntityContainer>
         <EntityType Name="C__MigrationHistory">
           <Key>
@@ -435,6 +446,15 @@
           <Property Type="String" Name="salt" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="password" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="Rating">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="Int32" Name="user_Id" Nullable="false" />
+          <Property Type="Int32" Name="movie_id" Nullable="false" />
+          <Property Type="Int32" Name="rating1" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -524,6 +544,16 @@
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rating">
+            <EntityTypeMapping TypeName="ImdbModel.Rating">
+              <MappingFragment StoreEntitySet="Rating">
+                <ScalarProperty Name="rating1" ColumnName="rating" />
+                <ScalarProperty Name="movie_id" ColumnName="movie_id" />
+                <ScalarProperty Name="user_Id" ColumnName="user_Id" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

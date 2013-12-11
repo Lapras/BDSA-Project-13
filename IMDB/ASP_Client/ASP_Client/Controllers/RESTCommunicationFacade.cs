@@ -12,14 +12,14 @@ namespace ASP_Client.Controllers
     /// <summary>
     /// Reponsible to Communicate with the application server holding the data
     /// </summary>
-    public static class CommunicationFacade
+    public class RestCommunicationFacade : ICommunicationFacade
     {
         /// <summary>
         /// Get a list of movies maching the search string
         /// </summary>
         /// <param name="searchString">Movie to look for</param>
         /// <returns>List of movies matching the search string</returns>
-        public static async Task<List<MovieDto>> GetMoviesAsync(string searchString)
+        public async Task<List<MovieDto>> GetMoviesAsync(string searchString)
         {
             List<MovieDto> desiredMovies;
             CacheHelper.GetItem(searchString, out desiredMovies);
@@ -45,7 +45,7 @@ namespace ASP_Client.Controllers
         /// </summary>
         /// <param name="movieId">Id of the movie to get the data of</param>
         /// <returns>Detailed data of the movie</returns>
-        public static async Task<MovieDetailsDto> GetMovieDetailsLocallyAsync(int movieId)
+        public async Task<MovieDetailsDto> GetMovieDetailsLocallyAsync(int movieId)
         {
             MovieDetailsDto desiredMovie;
             CacheHelper.GetItem("" + movieId, out desiredMovie);
@@ -71,7 +71,7 @@ namespace ASP_Client.Controllers
         /// </summary>
         /// <param name="personId">Id of the person to get the data of</param>
         /// <returns>Detailed data of the person</returns>
-        public static async Task<PersonDetailsDto> GetPersonDetailsLocallyAsync(int personId)
+        public async Task<PersonDetailsDto> GetPersonDetailsLocallyAsync(int personId)
         {
             PersonDetailsDto desiredPerson;
             CacheHelper.GetItem("" + personId, out desiredPerson);
@@ -95,7 +95,7 @@ namespace ASP_Client.Controllers
         /// </summary>
         /// <param name="user">Data of the user to log in</param>
         /// <returns>Response from the server</returns>
-        public static async Task<ReplyDto> Login(UserModel user)
+        public async Task<ReplyDto> Login(UserModel user)
         {
             using (var httpClient = new HttpClient())
             {
@@ -111,7 +111,7 @@ namespace ASP_Client.Controllers
         /// </summary>
         /// <param name="user">Data of the user to log in</param>
         /// <returns>Response from the server</returns>
-        public static async Task<ReplyDto> Registration(UserModel user)
+        public async Task<ReplyDto> Registration(UserModel user)
         {
             using (var httpClient = new HttpClient())
             {
@@ -127,7 +127,7 @@ namespace ASP_Client.Controllers
         /// </summary>
         /// <param name="review">The review of the user</param>
         /// <returns>Reply of the server</returns>
-        public static async Task<ReplyDto> RateMovie(ReviewDto review)
+        public async Task<ReplyDto> RateMovie(ReviewDto review)
         {
             using (var httpClient = new HttpClient())
             {
@@ -143,7 +143,7 @@ namespace ASP_Client.Controllers
         /// </summary>
         /// <param name="movieId">Id of the movie to get the data of</param>
         /// <returns>Detailed data of the movie</returns>
-        public static async Task<MovieDetailsDto> GetMovieDetailsLocallyAsyncForce(int movieId)
+        public async Task<MovieDetailsDto> GetMovieDetailsLocallyAsyncForce(int movieId)
         {
             using (var httpClient = new HttpClient())
             {
