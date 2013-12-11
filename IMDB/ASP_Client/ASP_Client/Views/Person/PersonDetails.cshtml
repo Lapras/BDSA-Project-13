@@ -1,4 +1,5 @@
-﻿@model ASP_Client.Models.PersonDetailsViewModel
+﻿@using System.ServiceModel.Description
+@model ASP_Client.Models.PersonDetailsViewModel
 
 @{
     ViewBag.Title = "Person";
@@ -8,5 +9,48 @@
 @Html.ActionLink("Home", "SearchMovie", "Movie")<br/>
 <a href="javascript:window.history.back();">Back</a><br/>
 
-Name: @Model.Name <br/>
-Gender: @Model.Gender
+<table>
+    <tr>
+        <td>
+            <b>Name</b>
+        </td>
+        <td>
+            @Model.Name
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <b>Gender</b>
+        </td>
+        <td>
+            @Model.Gender
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <b>Role</b>
+        </td>
+        <td>
+            @Model.Role
+        </td>
+    </tr>
+     <tr>
+        <td>
+            <b>Character</b>
+        </td>
+        <td>
+            @Model.CharName
+        </td>
+    </tr>
+    @foreach (var detail in Model.Info)
+    {
+        <tr>
+            <td>
+                <b>@detail.Name</b>
+            </td>
+            <td>
+                @detail.Info
+            </td>
+        </tr>
+    }
+</table>

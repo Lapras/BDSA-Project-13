@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InfoDto.cs" />
     <Compile Include="MovieDetailsDto.cs" />
     <Compile Include="MovieDto.cs" />
     <Compile Include="PersonDetailsDto.cs" />

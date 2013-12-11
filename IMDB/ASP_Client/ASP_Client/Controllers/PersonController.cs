@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -28,11 +29,18 @@ namespace ASP_Client.Controllers
                 personDetailsViewModel.Id = personDetails.Id;
                 personDetailsViewModel.Name = personDetails.Name;
                 personDetailsViewModel.Gender = personDetails.Gender;
+                personDetailsViewModel.Role = personDetails.Role;
+        //        personDetailsViewModel.Info = personDetails.Info;
+
+                var temp = personDetails.Info.Select(detail => new InfoModel()
+                {
+                    Name = detail.Name,
+                    Info = detail.Info
+                }).ToList();
+
+                personDetailsViewModel.Info = temp;
             }
-        //    throw new NotImplementedException();
-
-            // Can't resolve the PersonDetails view for some reason 
-
+  
             return  View(personDetailsViewModel);
         }
     }

@@ -128,11 +128,7 @@ namespace ImdbRestService.Handlers
 
                             break;
                     }
-
                 }
-
-
-
             }
 
             return responseData;
@@ -146,7 +142,7 @@ namespace ImdbRestService.Handlers
         {
             // Add rating to review table & Update rating attribute in movies
 
-            using (var entities = new ImdbEntities())
+            using (var entities = _imdbEntities ?? new ImdbEntities())
             {
                 
             }
@@ -162,7 +158,7 @@ namespace ImdbRestService.Handlers
         /// <returns>True if both exist, else false</returns>
         private bool MovieAndProfileExist(int movieId, string username)
         {
-            using (var entities = new ImdbEntities())
+            using (var entities = _imdbEntities ?? new ImdbEntities())
             {
                 var matchingMovies = (from movie in entities.Movies
                     where movie.Id == movieId
@@ -245,7 +241,7 @@ namespace ImdbRestService.Handlers
         /// <returns> movie we requested </returns>
         public MovieDetailsDto GetMovieById(int id)
         {
-            using (var entities = new ImdbEntities())
+            using (var entities = _imdbEntities ?? new ImdbEntities())
             {
                 var participants = (from peo in entities.People
                                     join par in entities.Participates on peo.Id equals par.Person_Id

@@ -17,6 +17,14 @@ namespace ImdbRestService.Handlers
     {
         private const string PathSegment = "User";
 
+         private readonly IImdbEntities _imdbEntities;
+
+        public ProfileHandler(IImdbEntities imdbEntities = null)
+        {
+            _imdbEntities = imdbEntities;
+        }
+
+
         /// <summary>
         /// Method checking if the given path segment matches the one that
         /// this handler can handle
@@ -101,7 +109,7 @@ namespace ImdbRestService.Handlers
         /// <returns>True if valid</returns>
         private bool LoginDataIsValid(string name, string password)
         {
-            using (var entities = new ImdbEntities())
+            using (var entities = _imdbEntities ?? new ImdbEntities())
             {
                 var matchingProfile = (from p in entities.User
                     where p.name == name && p.password == password
@@ -121,7 +129,7 @@ namespace ImdbRestService.Handlers
         /// <returns>True if the name already exists</returns>
         public bool ProfileAlreadyExist(string profileName)
         {
-            using (var entities = new ImdbEntities())
+            using (var entities = _imdbEntities ?? new ImdbEntities())
             {
 
 
@@ -154,20 +162,20 @@ namespace ImdbRestService.Handlers
         {
             // Adding profiles to app server database 
 
-            using (var context = new ImdbEntities())
+            using (var entities = _imdbEntities ?? new ImdbEntities())
             {
                 int id;
 
-                if (context.User.Count() == 0)
+                if (!entities.User.Any())
                 {
                     id = 1;
                 }
                 else
                 {
-                    id = context.User.Max(u => u.Id) + 1;
+                    id = entities.User.Max(u => u.Id) + 1;
                 }
 
-                context.User.Add(new User
+                entities.User.Add(new User
                 {
                     Id = id,
                     name = profileData.Name,
@@ -176,7 +184,7 @@ namespace ImdbRestService.Handlers
                     password = profileData.Password
                 });
 
-                context.SaveChanges();
+                entities.SaveChanges();
 
             }
         }

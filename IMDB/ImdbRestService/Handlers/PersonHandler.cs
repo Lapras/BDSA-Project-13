@@ -17,6 +17,12 @@ namespace ImdbRestService.Handlers
     public class PersonHandler : IHandler
     {
         private const string PathSegment = "person";
+        private readonly IImdbEntities _imdbEntities;
+
+        public PersonHandler(IImdbEntities imdbEntities = null)
+        {
+            _imdbEntities = imdbEntities;
+        }
 
         /// <summary>
         /// Method checking if the given path segment matches the one that
@@ -63,9 +69,9 @@ namespace ImdbRestService.Handlers
 
                         case "personId":
 
-                           // var person = GetPersonById(Convert.ToInt32(value));
+                           var person = GetPersonById(Convert.ToInt32(value));
 
-                            msg = new JavaScriptSerializer().Serialize(new PersonDetailsDto() {Name = "Rasmus"});
+                            msg = new JavaScriptSerializer().Serialize(person);
                             return new ResponseData(msg, HttpStatusCode.OK);
                             break;
                     }
@@ -82,7 +88,7 @@ namespace ImdbRestService.Handlers
         /// <returns> a list of MovieDto's containing information on the movies found </returns>
         public List<PersonDto> GetPeopleByName(string name)
         {
-            using (var entities = new ImdbEntities())
+            using (var entities = _imdbEntities ?? new ImdbEntities())
             {
                 return (from person in entities.People
                     join participant in entities.Participates on person.Id equals participant.ParticipateId
@@ -103,7 +109,7 @@ namespace ImdbRestService.Handlers
         /// <returns> movie we requested </returns>
         public PersonDetailsDto GetPersonById(int id)
         {
-            using (var entities = new ImdbEntities())
+            using (var entities = _imdbEntities ?? new ImdbEntities())
             {
                 var person = (from people in entities.People join participant in entities.Participates on people.Id equals participant.ParticipateId 
                               where people.Id == id
@@ -120,19 +126,19 @@ namespace ImdbRestService.Handlers
                     join personInfo in entities.PersonInfoes on people.Id equals personInfo.Person_Id
                     join infoType in entities.InfoTypes on personInfo.Type_Id equals infoType.Id
                     where person.Id == people.Id
-                    select new {infoType.Name, personInfo.Info}).ToArray();
+                    select new InfoDto{ Name = infoType.Name, Info = personInfo.Info}).ToList();
 
-                person.Info = new string[][] {};
+                 //   person.Info = new string[additionalDetailsOnPerson.Length, 2];
+                
+                person.Info = new List<InfoDto>();
 
-                for (int i = 0; i < additionalDetailsOnPerson.Length; i++)
+                foreach (var detail in additionalDetailsOnPerson)
                 {
-                    person.Info[i][0] = additionalDetailsOnPerson[i].Name;
-                    person.Info[i][1] = additionalDetailsOnPerson[i].Info;
+                    person.Info.Add(detail);
                 }
 
                 return person;
             }
         }
-
     }
 }

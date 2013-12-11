@@ -80,9 +80,8 @@ namespace ASP_Client.Controllers
 
             using (var httpClient = new HttpClient())
             {
-                var receivedData = JsonConvert.DeserializeObject<PersonDetailsDto>(
-                    await httpClient.GetStringAsync("http://localhost:54321/person/?personId=" + personId)
-                    );
+                var result = await httpClient.GetStringAsync("http://localhost:54321/person/?personId=" + personId);
+                var receivedData = JsonConvert.DeserializeObject<PersonDetailsDto>(result);
 
                 CacheHelper.AddItem(receivedData, "" + receivedData.Id);
 
