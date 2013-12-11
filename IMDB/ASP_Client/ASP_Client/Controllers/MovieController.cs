@@ -88,9 +88,9 @@ namespace ASP_Client.Controllers
 
         }
         [HttpPost]
-        public async Task<ActionResult> SearchMovieDetails(int movieId, int userId, int rating)
+        public async Task<ActionResult> SearchMovieDetails(int movieId, string userId, int rating)
         {
-            var reviewDto = new ReviewDto() {MovieId = movieId, UserId = userId, Rating = rating};
+            var reviewDto = new ReviewDto() {MovieId = movieId, Username = userId, Rating = rating};
 
             var serverReponse = await CommunicationFacade.RateMovie(reviewDto);
             var ratedMovie = await CommunicationFacade.GetMovieDetailsLocallyAsyncForce(movieId);

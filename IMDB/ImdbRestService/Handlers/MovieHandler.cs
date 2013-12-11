@@ -86,10 +86,10 @@ namespace ImdbRestService.Handlers
                                 // Parse Json object back to data
                                 var data = JsonConvert.DeserializeObject<ReviewDto>(path[1]);
 
-                                Console.WriteLine("Movie: {0}\nUser: {1}\nRating: {2}", data.MovieId, data.UserId,
+                                Console.WriteLine("Movie: {0}\nUser: {1}\nRating: {2}", data.MovieId, data.Username,
                                     data.Rating);
 
-                                if (MovieAndProfileExist(data.MovieId, data.UserId))
+                                if (MovieAndProfileExist(data.MovieId, data.Username))
                                 {
                                     // acutally push to database
                                     AddRatingToDatabase(data);
@@ -122,7 +122,7 @@ namespace ImdbRestService.Handlers
         /// <summary>
         /// Add Rating to local database
         /// </summary>
-        /// <param name="data">MovieId, UserId, Rating</param>
+        /// <param name="data">MovieId, Username, Rating</param>
         private void AddRatingToDatabase(ReviewDto data)
         {
             // Add rating to review table & Update rating attribute in movies
@@ -141,7 +141,7 @@ namespace ImdbRestService.Handlers
         /// <param name="movieId">Id of the movie</param>
         /// <param name="userId">Id of the user</param>
         /// <returns>True if both exist, else false</returns>
-        private bool MovieAndProfileExist(int movieId, int userId)
+        private bool MovieAndProfileExist(int movieId, string username)
         {
             using (var entities = new ImdbEntities())
             {
@@ -150,7 +150,7 @@ namespace ImdbRestService.Handlers
                     select movie.Title).ToList();
 
                 var matchingProfiles = (from user in entities.User
-                    where user.Id == userId
+                    where user.name == username
                     select user.name).ToList();
 
                 return matchingProfiles.Count > 0 && matchingMovies.Count > 0;
@@ -164,7 +164,7 @@ namespace ImdbRestService.Handlers
         /// <returns> a list of MovieDto's containing information on the movies found </returns>
         public List<MovieDto> GetMoviesByTitle(string title) 
         {
-            using (var entities = new ImdbEntities())
+            using (var entities = _imdbEntities ?? new ImdbEntities())
             {
                 if (String.IsNullOrEmpty(title))
                 {
@@ -188,6 +188,11 @@ namespace ImdbRestService.Handlers
             }
         }
 
+        /// <summary>
+        /// Get a movie vom the MyMovieApi interface
+        /// </summary>
+        /// <param name="searchString">Name of the movie to search for</param>
+        /// <returns>List of matching movies</returns>
         private async Task<List<MovieDto>> GetMoviesFromIMDbAsync(string searchString)
         {
             using (var httpClient = new HttpClient())
@@ -268,6 +273,10 @@ namespace ImdbRestService.Handlers
             }
         }
 
+        /// <summary>
+        /// Add Movie to local database
+        /// </summary>
+        /// <param name="movies">Movies to add to the local database</param>
 		private void AddMoviesToDb(IEnumerable<MovieDto> movies)
 		{
 			//Adding found movies to app server database

@@ -93,12 +93,18 @@ namespace ImdbRestService.Handlers
             return responseData;
         }
 
-        private bool LoginDataIsValid(string email, string password)
+        /// <summary>
+        /// Checks if the provides name and password match in out database
+        /// </summary>
+        /// <param name="name">Name provided by the user</param>
+        /// <param name="password">Password provided by the user</param>
+        /// <returns>True if valid</returns>
+        private bool LoginDataIsValid(string name, string password)
         {
             using (var entities = new ImdbEntities())
             {
                 var matchingProfile = (from p in entities.User
-                    where p.name == email && p.password == password
+                    where p.name == name && p.password == password
                     select p.name).ToList();
                 if (matchingProfile.Count > 0)
                 {
@@ -108,7 +114,11 @@ namespace ImdbRestService.Handlers
             }
         }
 
-
+        /// <summary>
+        /// Checks if a profile name already exists in our database
+        /// </summary>
+        /// <param name="profileName">Searched profileName</param>
+        /// <returns>True if the name already exists</returns>
         public bool ProfileAlreadyExist(string profileName)
         {
             using (var entities = new ImdbEntities())
@@ -136,7 +146,10 @@ namespace ImdbRestService.Handlers
             
         }
 
-
+        /// <summary>
+        /// Add a profile to the database
+        /// </summary>
+        /// <param name="profileData">Profile to add to the database</param>
         private void AddProfileToDb(UserModelDto profileData)
         {
             // Adding profiles to app server database 

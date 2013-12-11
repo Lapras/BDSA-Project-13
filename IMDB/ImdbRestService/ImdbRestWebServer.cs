@@ -149,7 +149,6 @@ namespace ImdbRestService
             }
         }
 
-
         /// <summary>
         /// Method process GET requests and hand the content to proper handlers
         /// </summary>
@@ -175,7 +174,11 @@ namespace ImdbRestService
             }
         }
 
-        // helper method
+        /// <summary>
+        /// Method to split urls by '/' characters
+        /// </summary>
+        /// <param name="context">Context to split</param>
+        /// <returns>List of splitted parts</returns>
         private static List<string> SplitUrl(HttpListenerContext context)
         {
             return context.Request.RawUrl.Split(
