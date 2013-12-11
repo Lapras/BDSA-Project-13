@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="C__MigrationHistory.cs">
       <DependentUpon>Imdb.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Handlers\PersonHandler.cs" />
     <Compile Include="Handlers\ProfileHandler.cs" />
@@ -82,38 +83,48 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Imdb.Context.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Imdb.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Imdb.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Imdb.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Imdb.edmx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="ImdbRestWebServer.cs" />
     <Compile Include="InfoType.cs">
       <DependentUpon>Imdb.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Movie.cs">
       <DependentUpon>Imdb.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="MovieInfo.cs">
       <DependentUpon>Imdb.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Participate.cs">
       <DependentUpon>Imdb.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Person.cs">
       <DependentUpon>Imdb.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="PersonInfo.cs">
       <DependentUpon>Imdb.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="User.cs">
       <DependentUpon>Imdb.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="WebServerHostProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -123,19 +134,23 @@
     <EntityDeploy Include="Imdb.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Imdb.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EntityDeploy>
     <None Include="Imdb.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Imdb.edmx</DependentUpon>
       <LastGenOutput>Imdb.Context.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Imdb.edmx.diagram">
       <DependentUpon>Imdb.edmx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Imdb.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Imdb.edmx</DependentUpon>
       <LastGenOutput>Imdb.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

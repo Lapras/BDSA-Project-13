@@ -40,7 +40,7 @@ namespace ASP_Client.Controllers
             //    return RedirectToAction("Login", "User");
             //}
 
-            var foundMovies = await CommunicationFacade.GetMoviesAsync(searchString);
+            var foundMovies = await Storage.GetMoviesAsync(searchString);
 
             var movieOverviewViewModel = new MovieOverviewViewModel();
 
@@ -64,7 +64,7 @@ namespace ASP_Client.Controllers
         [HttpGet]
         public async Task<ActionResult> SearchMovieDetails(int id)
         {
-            var movieDetails = await CommunicationFacade.GetMovieDetailsLocallyAsync(id);
+            var movieDetails = await Storage.GetMovieDetailsLocallyAsync(id);
 
             var movieDetailsViewModel = new MovieDetailsViewModel();
 
@@ -88,12 +88,13 @@ namespace ASP_Client.Controllers
 
         }
         [HttpPost]
-        public async Task<ActionResult> SearchMovieDetails(int movieId, string userId, int rating)
+        public async Task<ActionResult> SearchMovieDetails(int movieId, int rating)
         {
-            var reviewDto = new ReviewDto() {MovieId = movieId, Username = userId, Rating = rating};
+            var username = UserSession.GetLoggedInUser().Name;
+            var reviewDto = new ReviewDto() {MovieId = movieId, Username = username, Rating = rating};
 
-            var serverReponse = await CommunicationFacade.RateMovie(reviewDto);
-            var ratedMovie = await CommunicationFacade.GetMovieDetailsLocallyAsyncForce(movieId);
+            var serverReponse = await Storage.RateMovie(reviewDto);
+            var ratedMovie = await Storage.GetMovieDetailsLocallyAsyncForce(movieId);
 
             var movieDetailsViewModel = new MovieDetailsViewModel();
 

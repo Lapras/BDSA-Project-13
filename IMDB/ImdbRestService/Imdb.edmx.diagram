@@ -20,6 +20,7 @@
         <AssociationConnector Association="ImdbModel.FK_dbo_Participate_dbo_People_Person_Id" ManuallyRouted="false" />
         <AssociationConnector Association="ImdbModel.FK_dbo_PersonInfo_dbo_People_Person_Id" ManuallyRouted="false" />
         <EntityTypeShape EntityType="ImdbModel.User" Width="1.5" PointX="5.125" PointY="7.625" />
+        <EntityTypeShape EntityType="ImdbModel.Rating" Width="1.5" PointX="3.125" PointY="8.125" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

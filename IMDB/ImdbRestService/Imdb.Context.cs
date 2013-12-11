@@ -12,7 +12,7 @@ namespace ImdbRestService
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-
+    
     public partial class ImdbEntities : DbContext, IImdbEntities
     {
         public ImdbEntities()

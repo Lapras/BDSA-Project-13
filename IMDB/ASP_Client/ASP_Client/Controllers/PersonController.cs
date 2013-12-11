@@ -19,7 +19,7 @@ namespace ASP_Client.Controllers
         public async Task<ActionResult> PersonDetails(int id)
         {
 
-            var personDetails = await CommunicationFacade.GetPersonDetailsLocallyAsync(id);
+            var personDetails = await Storage.GetPersonDetailsLocallyAsync(id);
 
             var personDetailsViewModel = new PersonDetailsViewModel();
 

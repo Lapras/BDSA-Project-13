@@ -175,3 +175,5 @@ C:\Users\Rasmus\Documents\GitHub\BDSA-Project-13\IMDB\WPF_Client\WPF_Client\obj\
 C:\Users\Rasmus\Documents\GitHub\BDSA-Project-13\IMDB\WPF_Client\WPF_Client\obj\Debug\WPF_Client.csproj.GenerateResource.Cache
 C:\Users\Rasmus\Documents\GitHub\BDSA-Project-13\IMDB\WPF_Client\WPF_Client\obj\Debug\WPF_Client.exe
 C:\Users\Rasmus\Documents\GitHub\BDSA-Project-13\IMDB\WPF_Client\WPF_Client\obj\Debug\WPF_Client.pdb
+C:\Users\test.Alex-Laptop\Documents\GitHub\BDSA-Project-13\IMDB\WPF_Client\WPF_Client\obj\Debug\View\ActorProfileView.g.cs
+C:\Users\test.Alex-Laptop\Documents\GitHub\BDSA-Project-13\IMDB\WPF_Client\WPF_Client\obj\Debug\View\ActorProfileView.baml

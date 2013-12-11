@@ -1,4 +1,5 @@
 ﻿@using System.Collections.ObjectModel
+@using System.Diagnostics.Eventing.Reader
 @model ASP_Client.Models.MovieDetailsViewModel
 
 @{
@@ -19,7 +20,7 @@ Rating
 
 @using (Html.BeginForm())
   {
-      <p style="padding:10px;border:1px solid grey; background: grey; width: 200px">
+      <p style="padding:10px;border:1px solid grey; background: grey; width: 250px">
           Your Rating
        
           <select>
@@ -34,7 +35,16 @@ Rating
               <option value="9">9</option>
               <option value="10">10</option>
           </select>
-          <input type="submit" value="Submit" />
+
+          
+          @if (ViewBag.User != null)
+          {
+              <input type="submit" value="Submit" @Model.Id/>
+          }
+          else
+          {
+              <label>Login required</label>
+          }
       </p>
   }
 
