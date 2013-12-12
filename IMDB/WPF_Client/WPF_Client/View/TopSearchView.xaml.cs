@@ -17,11 +17,11 @@ using WPF_Client.ViewModel;
 namespace WPF_Client.View
 {
     /// <summary>
-    /// Interaction logic for TopviewSearchView.xaml
+    /// Interaction logic for TopSearchView.xaml
     /// </summary>
-    public partial class TopviewSearchView : UserControl
+    public partial class TopSearchView : UserControl
     {
-        public TopviewSearchView()
+        public TopSearchView()
         {
             InitializeComponent();
             DataContext = new TopSearchViewModel();

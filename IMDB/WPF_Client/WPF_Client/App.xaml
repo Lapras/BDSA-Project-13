@@ -23,8 +23,8 @@
         <DataTemplate DataType="{x:Type vm:LoginViewModel}">
             <view:LoginView />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:TopviewSearchViewModel}">
-            <view:TopviewSearchView />
+        <DataTemplate DataType="{x:Type vm:TopSearchViewModel}">
+            <view:TopSearchView />
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:ActorProfileViewModel}">
             <view:ActorProfileView />
