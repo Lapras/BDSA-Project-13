@@ -11,5 +11,6 @@ namespace ASP_Client.Models
         public int Rating { get; set; }
         public int UserRating { get; set; }
         public List<PersonViewModel> Participants { get; set; }
+        public string ErrorMsg { get; set; }
     }
 }

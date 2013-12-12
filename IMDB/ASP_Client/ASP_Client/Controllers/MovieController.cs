@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Web.WebPages;
 using ASP_Client.Models;
 using DtoSubsystem;
 
@@ -68,20 +69,24 @@ namespace ASP_Client.Controllers
 
             var movieDetailsViewModel = new MovieDetailsViewModel();
 
-            if (movieDetails != null)
+            if (movieDetails != null && movieDetails.ErrorMsg.IsEmpty())
             {
                 movieDetailsViewModel.Id = movieDetails.Id;
                 movieDetailsViewModel.Title = movieDetails.Title;
                 movieDetailsViewModel.Year = movieDetails.Year;
 
                 var temp = movieDetails.Participants.Select(participant => new PersonViewModel
-               {
-                   Id = participant.Id, 
-                   Name = participant.Name, 
-                   CharacterName = participant.CharacterName
-               }).ToList();
+                {
+                    Id = participant.Id,
+                    Name = participant.Name,
+                    CharacterName = participant.CharacterName
+                }).ToList();
 
                 movieDetailsViewModel.Participants = temp;
+            }
+            else
+            {
+                movieDetailsViewModel.ErrorMsg = movieDetails.ErrorMsg;
             }
 
             return View(movieDetailsViewModel);

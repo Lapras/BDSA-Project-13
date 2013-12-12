@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using ASP_Client.Models;
 using DtoSubsystem;
 using Newtonsoft.Json;
+using ASP_Client.Exceptions;
 
 namespace ASP_Client.Controllers
 {
@@ -26,18 +28,39 @@ namespace ASP_Client.Controllers
 
             if (desiredMovies != null) return desiredMovies;
 
-            using (var httpClient = new HttpClient())
+            try
             {
-                var receivedData = JsonConvert.DeserializeObject<List<MovieDto>>(
-                    await httpClient.GetStringAsync("http://localhost:54321/movies/?title=" + searchString)
-                    );
-
-                foreach (var movie in receivedData)
+                using (var httpClient = new HttpClient())
                 {
-                    CacheHelper.AddItem(movie, movie.Title);
+                    var receivedData = JsonConvert.DeserializeObject<List<MovieDto>>(
+                        await httpClient.GetStringAsync("http://localhost:54321/movies/?title=" + searchString)
+                        );
+
+                    foreach (var movie in receivedData)
+                    {
+                        CacheHelper.AddItem(movie, movie.Title);
+                    }
+                    return receivedData;
                 }
-                return receivedData;
             }
+            catch (AggregateException e)
+            {
+                if (e.InnerExceptions.Any(ex => ex.GetType() == typeof(HttpRequestException)))
+                {
+                    throw new UnavailableConnectionException("No connection", e);
+                }
+
+                throw new RESTserviceException("AggregateException response from DB.", e);
+            }
+            catch (JsonSerializationException e)
+            {
+                throw new RESTserviceException("There was an serializaton or deserializaton error", e);
+            }
+            catch (Exception e)
+            {
+                return new List<MovieDto>() {};
+            }
+
         }
 
         /// <summary>
@@ -51,19 +74,43 @@ namespace ASP_Client.Controllers
             CacheHelper.GetItem("" + movieId, out desiredMovie);
 
             if (desiredMovie != null) return desiredMovie;
-
-            using (var httpClient = new HttpClient())
+            try
             {
-                var receivedData = JsonConvert.DeserializeObject<MovieDetailsDto>(
-                    await httpClient.GetStringAsync("http://localhost:54321/movies/?movieId=" + movieId)
-                    );
+                using (var httpClient = new HttpClient())
+                {
+                    var receivedData = JsonConvert.DeserializeObject<MovieDetailsDto>(
+                        await httpClient.GetStringAsync("http://localhost:54321/movies/?movieId=" + movieId)
+                        );
 
 
-                CacheHelper.AddItem(receivedData, "" + receivedData.Id);
+                    CacheHelper.AddItem(receivedData, "" + receivedData.Id);
 
 
-                return receivedData;
+                    return receivedData;
+                }
             }
+            catch (AggregateException e)
+            {
+                if (e.InnerExceptions.Any(ex => ex.GetType() == typeof(HttpRequestException)))
+                {
+                    throw new UnavailableConnectionException("No connection", e);
+                }
+
+                throw new RESTserviceException("AggregateException response from DB.", e);
+            }
+            catch (JsonSerializationException e)
+            {
+                throw new RESTserviceException("there was an serializaton or deserializaton error", e);
+            }
+            catch (JsonReaderException e)
+            {
+                throw new RESTserviceException("there was an serializaton or deserializaton error", e);
+            }
+            catch (Exception)
+            {
+                return new MovieDetailsDto {ErrorMsg = "Application server unavailable"};
+            }
+
         }
 
         /// <summary>
@@ -78,14 +125,38 @@ namespace ASP_Client.Controllers
 
             if (desiredPerson != null) return desiredPerson;
 
-            using (var httpClient = new HttpClient())
+            try
             {
-                var result = await httpClient.GetStringAsync("http://localhost:54321/person/?personId=" + personId);
-                var receivedData = JsonConvert.DeserializeObject<PersonDetailsDto>(result);
+                using (var httpClient = new HttpClient())
+                {
+                    var result = await httpClient.GetStringAsync("http://localhost:54321/person/?personId=" + personId);
+                    var receivedData = JsonConvert.DeserializeObject<PersonDetailsDto>(result);
 
-                CacheHelper.AddItem(receivedData, "" + receivedData.Id);
+                    CacheHelper.AddItem(receivedData, "" + receivedData.Id);
 
-                return receivedData;
+                    return receivedData;
+                }
+            }
+            catch (AggregateException e)
+            {
+                if (e.InnerExceptions.Any(ex => ex.GetType() == typeof(HttpRequestException)))
+                {
+                    throw new UnavailableConnectionException("No connection", e);
+                }
+
+                throw new RESTserviceException("AggregateException response from DB.", e);
+            }
+            catch (JsonSerializationException e)
+            {
+                throw new RESTserviceException("there was an serializaton or deserializaton error", e);
+            }
+            catch (JsonReaderException e)
+            {
+                throw new RESTserviceException("there was an serializaton or deserializaton error", e);
+            }
+            catch (Exception e)
+            {
+                return null;
             }
         }
 
@@ -96,13 +167,35 @@ namespace ASP_Client.Controllers
         /// <returns>Response from the server</returns>
         public async Task<ReplyDto> Login(UserModel user)
         {
-            using (var httpClient = new HttpClient())
+            try
             {
-                var response = await httpClient.PostAsJsonAsync("http://localhost:54321/User/Login", user);
-                var attachedMessage =
-                    JsonConvert.DeserializeObject<ReplyDto>(response.Content.ReadAsStringAsync().Result);
-                return attachedMessage;
+                using (var httpClient = new HttpClient())
+                {
+                    var response = await httpClient.PostAsJsonAsync("http://localhost:54321/User/Login", user);
+                    var attachedMessage =
+                        JsonConvert.DeserializeObject<ReplyDto>(response.Content.ReadAsStringAsync().Result);
+                    return attachedMessage;
+                }
             }
+            catch (AggregateException e)
+            {
+                if (e.InnerExceptions.Any(ex => ex.GetType() == typeof(HttpRequestException)))
+                {
+                    throw new UnavailableConnectionException("No connection", e);
+                }
+
+                throw new RESTserviceException("AggregateException response from DB.", e);
+            }
+            catch (JsonSerializationException e)
+            {
+                throw new RESTserviceException("there was an serializaton or deserializaton error", e);
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+
+
         }
 
         /// <summary>
@@ -112,12 +205,32 @@ namespace ASP_Client.Controllers
         /// <returns>Response from the server</returns>
         public async Task<ReplyDto> Registration(UserModel user)
         {
-            using (var httpClient = new HttpClient())
+            try
             {
-                var response = await httpClient.PostAsJsonAsync("http://localhost:54321/User/Registration", user);
-                var attachedMessage =
-                    JsonConvert.DeserializeObject<ReplyDto>(response.Content.ReadAsStringAsync().Result);
-                return attachedMessage;
+                using (var httpClient = new HttpClient())
+                {
+                    var response = await httpClient.PostAsJsonAsync("http://localhost:54321/User/Registration", user);
+                    var attachedMessage =
+                        JsonConvert.DeserializeObject<ReplyDto>(response.Content.ReadAsStringAsync().Result);
+                    return attachedMessage;
+                }
+            }
+            catch (AggregateException e)
+            {
+                if (e.InnerExceptions.Any(ex => ex.GetType() == typeof(HttpRequestException)))
+                {
+                    throw new UnavailableConnectionException("No connection", e);
+                }
+
+                throw new RESTserviceException("AggregateException response from DB.", e);
+            }
+            catch (JsonSerializationException e)
+            {
+                throw new RESTserviceException("there was an serializaton or deserializaton error", e);
+            }
+            catch (Exception e)
+            {
+                return null;
             }
         }
 
@@ -128,12 +241,32 @@ namespace ASP_Client.Controllers
         /// <returns>Reply of the server</returns>
         public async Task<ReplyDto> RateMovie(ReviewDto review)
         {
-            using (var httpClient = new HttpClient())
+            try
             {
-                var response = await httpClient.PostAsJsonAsync("http://localhost:54321/movies/review", review);
-                var attachedMessage =
-                    JsonConvert.DeserializeObject<ReplyDto>(response.Content.ReadAsStringAsync().Result);
-                return attachedMessage;
+                using (var httpClient = new HttpClient())
+                {
+                    var response = await httpClient.PostAsJsonAsync("http://localhost:54321/movies/review", review);
+                    var attachedMessage =
+                        JsonConvert.DeserializeObject<ReplyDto>(response.Content.ReadAsStringAsync().Result);
+                    return attachedMessage;
+                }
+            }
+            catch (AggregateException e)
+            {
+                if (e.InnerExceptions.Any(ex => ex.GetType() == typeof(HttpRequestException)))
+                {
+                    throw new UnavailableConnectionException("No connection", e);
+                }
+
+                throw new RESTserviceException("AggregateException response from DB.", e);
+            }
+            catch (JsonSerializationException e)
+            {
+                throw new RESTserviceException("there was an serializaton or deserializaton error", e);
+            }
+            catch (Exception e)
+            {
+                return null;
             }
         }
 
@@ -144,17 +277,41 @@ namespace ASP_Client.Controllers
         /// <returns>Detailed data of the movie</returns>
         public async Task<MovieDetailsDto> GetMovieDetailsLocallyAsyncForce(int movieId)
         {
-            using (var httpClient = new HttpClient())
+            try
             {
-                var receivedData = JsonConvert.DeserializeObject<MovieDetailsDto>(
-                    await httpClient.GetStringAsync("http://localhost:54321/movies/?movieId=" + movieId)
-                    );
+                using (var httpClient = new HttpClient())
+                {
+                    var receivedData = JsonConvert.DeserializeObject<MovieDetailsDto>(
+                        await httpClient.GetStringAsync("http://localhost:54321/movies/?movieId=" + movieId)
+                        );
 
-                CacheHelper.RemoveItem(""+receivedData.Id);
-                CacheHelper.AddItem(receivedData, "" + receivedData.Id);
+                    CacheHelper.RemoveItem("" + receivedData.Id);
+                    CacheHelper.AddItem(receivedData, "" + receivedData.Id);
 
 
-                return receivedData;
+                    return receivedData;
+                }
+            }
+            catch (AggregateException e)
+            {
+                if (e.InnerExceptions.Any(ex => ex.GetType() == typeof(HttpRequestException)))
+                {
+                    throw new UnavailableConnectionException("No connection", e);
+                }
+
+                throw new RESTserviceException("AggregateException response from DB.", e);
+            }
+            catch (JsonSerializationException e)
+            {
+                throw new RESTserviceException("there was an serializaton or deserializaton error", e);
+            }
+            catch (JsonReaderException e)
+            {
+                throw new RESTserviceException("there was an serializaton or deserializaton error", e);
+            }
+            catch (Exception e)
+            {
+                return null;
             }
         }
 
@@ -225,7 +382,7 @@ namespace ASP_Client.Controllers
                         return false;
                     }
 
-                    desiredItem = (T) HttpContext.Current.Cache[nameOfItem];
+                    desiredItem = (T)HttpContext.Current.Cache[nameOfItem];
                 }
                 catch (Exception)
                 {

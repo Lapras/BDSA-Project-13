@@ -92,6 +92,10 @@ namespace ImdbRestService
                     await PostRequest(context, handlers);
                 }
 
+                if (ResponseData == null)
+                {
+                    ResponseData = new ResponseData("Database is unavailable",HttpStatusCode.InternalServerError);
+                }
                 // now we need to prepare the response. First we must encode it into a byte array
                 // with the std. web encoding iso-8859-1
                 byte[] result = Encoding.GetEncoding("iso-8859-1").GetBytes(ResponseData.Message);
