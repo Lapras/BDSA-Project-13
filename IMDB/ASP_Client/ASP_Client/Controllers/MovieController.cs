@@ -75,13 +75,17 @@ namespace ASP_Client.Controllers
                 movieDetailsViewModel.Year = movieDetails.Year;
 
                 var temp = movieDetails.Participants.Select(participant => new PersonViewModel
-               {
-                   Id = participant.Id, 
-                   Name = participant.Name, 
-                   CharacterName = participant.CharacterName
-               }).ToList();
+                {
+                    Id = participant.Id,
+                    Name = participant.Name,
+                    CharacterName = participant.CharacterName
+                }).ToList();
 
                 movieDetailsViewModel.Participants = temp;
+            }
+            else
+            {
+                movieDetailsViewModel.ErrorMsg = movieDetails.ErrorMsg;
             }
 
             return View(movieDetailsViewModel);

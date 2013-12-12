@@ -106,9 +106,9 @@ namespace ASP_Client.Controllers
             {
                 throw new RESTserviceException("there was an serializaton or deserializaton error", e);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return null;
+                return new MovieDetailsDto {ErrorMsg = "Application server unavailable"};
             }
 
         }

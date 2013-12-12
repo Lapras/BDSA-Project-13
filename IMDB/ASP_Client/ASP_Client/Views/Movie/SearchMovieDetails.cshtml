@@ -1,4 +1,6 @@
-﻿@using System.Collections.ObjectModel
+﻿@using System.Activities.Statements
+@using System.Collections.ObjectModel
+@using System.Collections.Specialized
 @using System.Diagnostics.Eventing.Reader
 @model ASP_Client.Models.MovieDetailsViewModel
 
@@ -9,46 +11,46 @@
 <h2>Movie</h2>
 @Html.ActionLink("Home", "SearchMovie")<br/>
 <a href="javascript:window.history.back();">Back</a><br/>
-
-Title 
-@Model.Title<br/>
-Year 
-@Model.Year<br/>
-Rating
-@Model.Rating
-
-
-@using (Html.BeginForm())
-  {
-      <p style="padding:10px;border:1px solid grey; background: grey; width: 250px">
-          Your Rating
        
-          <select>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
-          </select>
+        Title
+        @Model.Title<br/> 
+        Year 
+        @Model.Year<br/>
+        Rating
+        @Model.Rating<br/>
+
+
+        @using (Html.BeginForm())
+        {
+            <p style="padding: 10px; border: 1px solid grey; background: grey; width: 250px">
+                Your Rating
+       
+                <select>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
 
           
-          @if (ViewBag.User != null)
-          {
-              <input type="submit" value="Submit" @Model.Id/>
-          }
-          else
-          {
-              <label>Login required</label>
-          }
-      </p>
-  }
+                @if (ViewBag.User != null)
+                {
+                    <input type="submit" value="Submit"/>
+                }
+                else
+                {
+                    <label>Login required</label>
+                }
+            </p>
+        }
 
-Participants 
+        Participants 
 <table>
     <tr><th>Role</th><th>Name</th></tr>
     @foreach (var participant in Model.Participants)
@@ -63,3 +65,4 @@ Participants
         </tr>
     }
 </table>
+

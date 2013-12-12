@@ -154,22 +154,31 @@ namespace ImdbRestService.Handlers
         /// Check if movie and user are in our database
         /// </summary>
         /// <param name="movieId">Id of the movie</param>
-        /// <param name="userId">Id of the user</param>
+        /// <param name="username">Id of the user</param>
         /// <returns>True if both exist, else false</returns>
         private bool MovieAndProfileExist(int movieId, string username)
         {
-            using (var entities = _imdbEntities ?? new ImdbEntities())
+            try
             {
-                var matchingMovies = (from movie in entities.Movies
-                    where movie.Id == movieId
-                    select movie.Title).ToList();
+                using (var entities = _imdbEntities ?? new ImdbEntities())
+                {
+                    var matchingMovies = (from movie in entities.Movies
+                                          where movie.Id == movieId
+                                          select movie.Title).ToList();
 
-                var matchingProfiles = (from user in entities.User
-                    where user.name == username
-                    select user.name).ToList();
+                    var matchingProfiles = (from user in entities.User
+                                            where user.name == username
+                                            select user.name).ToList();
 
-                return matchingProfiles.Count > 0 && matchingMovies.Count > 0;
+                    return matchingProfiles.Count > 0 && matchingMovies.Count > 0;
+                }
             }
+            catch (Exception)
+            {
+                Console.WriteLine("Local database is not available");
+                return true;
+            }
+            
         }
 
         /// <summary>
@@ -179,28 +188,37 @@ namespace ImdbRestService.Handlers
         /// <returns> a list of MovieDto's containing information on the movies found </returns>
         public List<MovieDto> GetMoviesByTitle(string title) 
         {
-            using (var entities = _imdbEntities ?? new ImdbEntities())
+            try
             {
-                if (String.IsNullOrEmpty(title))
+                using (var entities = _imdbEntities ?? new ImdbEntities())
                 {
+                    if (String.IsNullOrEmpty(title))
+                    {
+                        return (from m in entities.Movies
+                                select new MovieDto
+                                {
+                                    Id = m.Id,
+                                    Title = m.Title,
+                                    Year = m.Year
+                                }).Take(20).ToList();
+                    }
+
                     return (from m in entities.Movies
+                            where m.Title.Contains(title)
                             select new MovieDto
                             {
                                 Id = m.Id,
                                 Title = m.Title,
                                 Year = m.Year
-                            }).Take(20).ToList();
+                            }).ToList();
                 }
-
-                return (from m in entities.Movies
-                        where m.Title.Contains(title)
-                        select new MovieDto
-                        {
-                            Id = m.Id,
-                            Title = m.Title,
-                            Year = m.Year
-                        }).ToList();
             }
+            catch (Exception)
+            {
+                Console.Write("Local database is not available");
+                return GetMoviesFromIMDbAsync(title).Result;
+            }
+           
         }
 
         /// <summary>
@@ -210,27 +228,35 @@ namespace ImdbRestService.Handlers
         /// <returns>List of matching movies</returns>
         private async Task<List<MovieDto>> GetMoviesFromIMDbAsync(string searchString)
         {
-            using (var httpClient = new HttpClient())
+            try
             {
-                var response = await httpClient.GetAsync("http://mymovieapi.com/?title=" + searchString);
-
-                if (response.IsSuccessStatusCode)
+                using (var httpClient = new HttpClient())
                 {
-                    var result = await response.Content.ReadAsStringAsync();
+                    var response = await httpClient.GetAsync("http://mymovieapi.com/?title=" + searchString);
 
-                    if (result.Equals("{\"code\":404, \"error\":\"Film not found\"}"))
+                    if (response.IsSuccessStatusCode)
                     {
-                        return new List<MovieDto>() {};     
-                    }           
+                        var result = await response.Content.ReadAsStringAsync();
 
-                    return JsonConvert.DeserializeObject<List<MovieDto>>(result);
+                        if (result.Equals("{\"code\":404, \"error\":\"Film not found\"}"))
+                        {
+                            return new List<MovieDto>();
+                        }
+
+                        return JsonConvert.DeserializeObject<List<MovieDto>>(result);
+                    }
+
+                    return new List<MovieDto>();
+
+                    //return JsonConvert.DeserializeObject<List<MovieDto>>(
+                    //    await httpClient.GetStringAsync("http://mymovieapi.com/?title=" + searchString)
+                    //);
                 }
-
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("External database not available");
                 return new List<MovieDto>();
-
-                //return JsonConvert.DeserializeObject<List<MovieDto>>(
-                //    await httpClient.GetStringAsync("http://mymovieapi.com/?title=" + searchString)
-                //);
             }
         }
 		
@@ -241,51 +267,60 @@ namespace ImdbRestService.Handlers
         /// <returns> movie we requested </returns>
         public MovieDetailsDto GetMovieById(int id)
         {
-            using (var entities = _imdbEntities ?? new ImdbEntities())
-            {
-                var participants = (from peo in entities.People
-                                    join par in entities.Participates on peo.Id equals par.Person_Id
-                                    join m in entities.Movies on par.Movie_Id equals m.Id
-                                    where m.Id == id
-                                    group peo by new
-                                    {
-                                        peo.Id,
-                                        peo.Name,
-                                        par.CharName
-                                    }
-                                    into grouping
-                                    select new PersonDto
-                                    {
-                                        Id = grouping.Key.Id,
-                                        Name = grouping.Key.Name,
-                                        CharacterName = grouping.Key.CharName
-                                    }).ToList();
+		     try
+		     {
+                 using (var entities = _imdbEntities ?? new ImdbEntities())
+                 {
+                     var participants = (from peo in entities.People
+                                         join par in entities.Participates on peo.Id equals par.Person_Id
+                                         join m in entities.Movies on par.Movie_Id equals m.Id
+                                         where m.Id == id
+                                         group peo by new
+                                         {
+                                             peo.Id,
+                                             peo.Name,
+                                             par.CharName
+                                         }
+                                             into grouping
+                                             select new PersonDto
+                                             {
+                                                 Id = grouping.Key.Id,
+                                                 Name = grouping.Key.Name,
+                                                 CharacterName = grouping.Key.CharName
+                                             }).ToList();
 
-                var movie = (from m in entities.Movies
-                        where m.Id == id
-                        select new MovieDetailsDto
-                        {
-                            Id = m.Id,
-                            Title = m.Title,
-                            Year = m.Year,
-                            Kind = m.Kind,
-                            EpisodeNumber = m.EpisodeNumber,
-                            EpisodeOf_Id = m.EpisodeOf_Id,
-                            SeasonNumber = m.SeasonNumber,
-                            SeriesYear = m.SeriesYear,
-                            Rating = 5
-                        }).ToList();
+                     var movie = (from m in entities.Movies
+                                  where m.Id == id
+                                  select new MovieDetailsDto
+                                  {
+                                      Id = m.Id,
+                                      Title = m.Title,
+                                      Year = m.Year,
+                                      Kind = m.Kind,
+                                      EpisodeNumber = m.EpisodeNumber,
+                                      EpisodeOf_Id = m.EpisodeOf_Id,
+                                      SeasonNumber = m.SeasonNumber,
+                                      SeriesYear = m.SeriesYear,
+                                      Rating = 5
+                                  }).ToList();
 
-                    movie[0].Participants = new List<PersonDto>();
+                     movie[0].Participants = new List<PersonDto>();
 
-                    foreach (var participant in participants)
-                    {
-                        movie[0].Participants.Add(participant);
-                    }
-                
+                     foreach (var participant in participants)
+                     {
+                         movie[0].Participants.Add(participant);
+                     }
 
-                return movie[0];
-            }
+
+                     return movie[0];
+                 }
+		     }
+		     catch (Exception)
+		     {
+                 Console.Write("Local Database is not available");
+                 return new MovieDetailsDto { ErrorMsg = "Local Database not available", Participants = new List<PersonDto>() };
+		     }
+      
         }
 
         /// <summary>
@@ -294,27 +329,33 @@ namespace ImdbRestService.Handlers
         /// <param name="movies">Movies to add to the local database</param>
 		private void AddMoviesToDb(IEnumerable<MovieDto> movies)
 		{
-			//Adding found movies to app server database
-			
-			using (var context = new ImdbEntities())
-			{
-				foreach (var movie in movies)
-				{
-					context.Movies.Add(new Movie
-					{
-						Id = movie.Id,
-						EpisodeNumber = movie.EpisodeNumber,
-						EpisodeOf_Id = movie.EpisodeOf_Id,
-						Kind = movie.Kind,
-						SeasonNumber = movie.SeasonNumber,
-						SeriesYear= movie.SeriesYear,
-						Title = movie.Title,
-						Year = movie.Year
-					});
-				}
-				context.SaveChanges();
-			}
-			
+            try
+            {
+                //Adding found movies to app server database
+
+                using (var context = new ImdbEntities())
+                {
+                    foreach (var movie in movies)
+                    {
+                        context.Movies.Add(new Movie
+                        {
+                            Id = movie.Id,
+                            EpisodeNumber = movie.EpisodeNumber,
+                            EpisodeOf_Id = movie.EpisodeOf_Id,
+                            Kind = movie.Kind,
+                            SeasonNumber = movie.SeasonNumber,
+                            SeriesYear = movie.SeriesYear,
+                            Title = movie.Title,
+                            Year = movie.Year
+                        });
+                    }
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+                Console.Write("Local Database is not available");
+            }
 		}
     }
 }

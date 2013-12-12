@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-using System.Threading.Tasks;
-
-namespace WPF_Client.Exceptions
+namespace ASP_Client.Exceptions
 {
     /// <summary>
     /// Exception for when there is an exception in the REST service strategy.
