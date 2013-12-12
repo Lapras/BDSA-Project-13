@@ -6,30 +6,43 @@
     ViewBag.Executed = "False";
 }
 
-@using (Html.BeginForm())
-{
-    @Html.ValidationSummary(true, "Registration failed. Check your fields")
+@if (Model == null || !Model.ErrorMsg.Equals("Database not available"))
+ {
+     using (Html.BeginForm())
+     {
+         @Html.ValidationSummary(true, "Registration failed. Check your fields")
 
-    <div>
-        <fieldset>
-            <legend>Create new user</legend>
-                <div class="editor-label">
-                    @Html.LabelFor(u=>u.Name)
-                </div>
-                <div class="editor-field">
-                    @Html.TextBoxFor(u=>u.Name)
-                    @Html.ValidationMessageFor(u=>u.Name)
-                </div>
+         <div>
+             <fieldset>
+                 <legend>Create new user</legend>
+                 <div class="editor-label">
+                     @Html.LabelFor(u => u.Name)
+                 </div>
+                 <div class="editor-field">
+                     @Html.TextBoxFor(u => u.Name)
+                     @Html.ValidationMessageFor(u => u.Name)
+                 </div>
                 
-                <div class="editor-label">
-                    @Html.LabelFor(u=>u.Password)
-                </div>
-                <div class="editor-field">
-                    @Html.PasswordFor(u=>u.Password)
-                    @Html.ValidationMessageFor(u=>u.Password)
-                </div>
+                 <div class="editor-label">
+                     @Html.LabelFor(u => u.Password)
+                 </div>
+                 <div class="editor-field">
+                     @Html.PasswordFor(u => u.Password)
+                     @Html.ValidationMessageFor(u => u.Password)
+                 </div>
 
-            <input type="submit" value="Create User" />
-        </fieldset>
-    </div>
-}
+                 <input type="submit" value="Create User" />
+             </fieldset>
+             
+             @if (@Model != null && @Model.ErrorMsg.Equals("Profile already exists"))
+             {
+                 <p style="color: #E10000">@Model.ErrorMsg</p>
+             }
+
+         </div>
+     }
+ }
+ else
+ {
+     @Model.ErrorMsg
+ }

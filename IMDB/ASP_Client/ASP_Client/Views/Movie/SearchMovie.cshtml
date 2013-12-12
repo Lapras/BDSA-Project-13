@@ -11,19 +11,27 @@
          <p> @Html.TextBox("SearchString") <br />   
          <input type="submit" value="Search" /></p> 
      }
-    
-<table>
-    <tr><th>Title:</th><th>Year:</th></tr>
-    @foreach (var movie in Model.FoundMovies)
-    {
-        <tr>
-            <td>
-                @Html.ActionLink(movie.Title, "SearchMovieDetails", new { movie.Id })
-            </td>
-            <td>
-                @movie.Year
-            </td>
-        </tr>
-    }
-</table>
+  
+ @if (Model.ErrorMsg.IsEmpty())
+{   
+      
+    <table>
+        <tr><th>Title:</th><th>Year:</th></tr>
+        @foreach (var movie in Model.FoundMovies)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(movie.Title, "SearchMovieDetails", new { movie.Id })
+                </td>
+                <td>
+                    @movie.Year
+                </td>
+            </tr>
+        }
+    </table>
+     }
+else
+{
+  @Model.ErrorMsg
+}
 </p>
