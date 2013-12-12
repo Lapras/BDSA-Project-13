@@ -45,11 +45,18 @@ namespace ASP_Client.Controllers
 
             var movieOverviewViewModel = new MovieOverviewViewModel();
 
-            if (foundMovies.Count != 0)
+            if (foundMovies.First().ErrorMsg.IsEmpty())
             {
-                movieOverviewViewModel.FoundMovies = foundMovies;
-            }
 
+                if (foundMovies.Count != 0)
+                {
+                    movieOverviewViewModel.FoundMovies = foundMovies;
+                }
+            }
+            else
+            {
+                movieOverviewViewModel.ErrorMsg = foundMovies.First().ErrorMsg;
+            }
 
             return View(movieOverviewViewModel);
         }
@@ -92,14 +99,16 @@ namespace ASP_Client.Controllers
             return View(movieDetailsViewModel);
 
         }
+       
+        
         [HttpPost]
-        public async Task<ActionResult> SearchMovieDetails(int movieId, int rating)
+        public async Task<ActionResult> SearchMovieDetails(MovieDetailsViewModel model)
         {
             var username = UserSession.GetLoggedInUser().Name;
-            var reviewDto = new ReviewDto() {MovieId = movieId, Username = username, Rating = rating};
+            var reviewDto = new ReviewDto() {MovieId = model.Id, Username = username, Rating = model.Rating};
 
             var serverReponse = await Storage.RateMovie(reviewDto);
-            var ratedMovie = await Storage.GetMovieDetailsLocallyAsyncForce(movieId);
+            var ratedMovie = await Storage.GetMovieDetailsLocallyAsyncForce(model.Id);
 
             var movieDetailsViewModel = new MovieDetailsViewModel();
 

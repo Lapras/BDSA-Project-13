@@ -58,7 +58,7 @@ namespace ASP_Client.Controllers
             }
             catch (Exception e)
             {
-                return new List<MovieDto>() {};
+                return new List<MovieDto> {new MovieDto {ErrorMsg = "Database not available"}};
             }
 
         }
@@ -156,7 +156,7 @@ namespace ASP_Client.Controllers
             }
             catch (Exception e)
             {
-                return null;
+                return new PersonDetailsDto() { ErrorMsg = "Database is unavailable"};
             }
         }
 
@@ -192,7 +192,7 @@ namespace ASP_Client.Controllers
             }
             catch (Exception e)
             {
-                return null;
+                return new ReplyDto() { Message = "Database not available" };
             }
 
 
@@ -230,7 +230,7 @@ namespace ASP_Client.Controllers
             }
             catch (Exception e)
             {
-                return null;
+                return new ReplyDto() {Message = "Database not available"};
             }
         }
 

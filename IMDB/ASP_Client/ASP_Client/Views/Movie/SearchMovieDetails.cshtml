@@ -3,6 +3,7 @@
 @using System.Collections.Specialized
 @using System.Diagnostics.Eventing.Reader
 @using System.Reflection.Emit
+@using Microsoft.Ajax.Utilities
 @model ASP_Client.Models.MovieDetailsViewModel
 
 @{
@@ -25,23 +26,21 @@
 
     using (Html.BeginForm())
      {
-         <p style="padding: 10px; border: 1px solid grey; background: grey; width: 250px">
-             Your Rating
-       
-             <select>
-                 <option value="1">1</option>
-                 <option value="2">2</option>
-                 <option value="3">3</option>
-                 <option value="4">4</option>
-                 <option value="5">5</option>
-                 <option value="6">6</option>
-                 <option value="7">7</option>
-                 <option value="8">8</option>
-                 <option value="9">9</option>
-                 <option value="10">10</option>
-             </select>
+        
+        
+        
+         <p style="padding: 10px; border: 1px solid grey; background: grey; width: 300px">
+         
+             Your Rating <select id="Rating" name="Rating">
+                    	 <option value=""></option>
+                     	 <option value="1">1</option>
+                    	 <option value="2">2</option>
+                         <option value="3">3</option>
+                         <option value="4">4</option>
 
-          
+	</select>
+
+
              @if (ViewBag.User != null)
              {
                  <input type="submit" value="Submit"/>

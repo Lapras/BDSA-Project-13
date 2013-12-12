@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Web.WebPages;
 using ASP_Client.ClientRequests;
 using ASP_Client.Models;
 using ASP_Client.Session;
@@ -62,12 +63,9 @@ namespace ASP_Client.Controllers
                 if (response.Executed)
                 {
                     UserSession.Login(user);
-
-                    //var requestAuthentication = Request.IsAuthenticated;
-
                     return RedirectToAction("SearchMovie", "Movie");
                 }
-
+                user.ErrorMsg = response.Message;
             }
             return View(user);
         }
@@ -103,12 +101,14 @@ namespace ASP_Client.Controllers
             if (ModelState.IsValid)
             {
                 var response = await _userRepository.Registration(user);
-
+                
                 if (response.Executed)
                 {
                     await Login(user);
                     return RedirectToAction("SearchMovie", "Movie");
                 }
+               
+                    user.ErrorMsg = response.Message;           
             }
             return View(user);
         }
