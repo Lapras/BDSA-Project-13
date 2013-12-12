@@ -33,5 +33,6 @@ namespace ImdbRestService
         public IDbSet<Person> People { get; set; }
         public IDbSet<PersonInfo> PersonInfoes { get; set; }
         public IDbSet<User> User { get; set; }
+        public IDbSet<Rating> Rating { get; set; }
     }
 }

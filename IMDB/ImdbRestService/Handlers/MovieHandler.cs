@@ -91,7 +91,6 @@ namespace ImdbRestService.Handlers
                     {
                         case "review":
 
-                            Console.WriteLine("REVIWING");
 
                             path[1] = path[1].Replace("k__BackingField", "");
                             path[1] = path[1].Replace("<", "");
@@ -100,12 +99,14 @@ namespace ImdbRestService.Handlers
                             // Parse Json object back to data
                             var data = JsonConvert.DeserializeObject<ReviewDto>(path[1]);
 
-                            Console.WriteLine("Movie: {0}\nUser: {1}\nRating: {2}", data.MovieId, data.Username,
-                                data.Rating);
+                            //Console.WriteLine("Movie: {0}\nUser: {1}\nRating: {2}", data.MovieId, data.Username,
+                            //    data.Rating);
 
-                            if (MovieAndProfileExist(data.MovieId, data.Username))
+
+                            if (MovieAndProfileExist(data.MovieId, data.Username) && !AlreadyRated(data.MovieId, data.Username))
                             {
                                 // acutally push to database
+
                                 AddRatingToDatabase(data);
 
                                 var ratingAddedMsg =
@@ -117,11 +118,26 @@ namespace ImdbRestService.Handlers
                                 return new ResponseData(ratingAddedMsg, HttpStatusCode.OK);
                             }
 
+                            if (MovieAndProfileExist(data.MovieId, data.Username) && AlreadyRated(data.MovieId, data.Username))
+                            {
+                                // acutally push to database
+
+                                UpdateRatingToDatabase(data);
+
+                                var ratingAddedMsg =
+                                    new JavaScriptSerializer().Serialize(new ReplyDto
+                                    {
+                                        Executed = true,
+                                        Message = "Rating was added updated"
+                                    });
+                                return new ResponseData(ratingAddedMsg, HttpStatusCode.OK);
+                            }
+
 
                             var ratingNotAddedMsg =
                                 new JavaScriptSerializer().Serialize(new ReplyDto
                                 {
-                                    Executed = true,
+                                    Executed = false,
                                     Message = "Rating could not be added"
                                 });
                             return new ResponseData(ratingNotAddedMsg, HttpStatusCode.OK);
@@ -134,6 +150,68 @@ namespace ImdbRestService.Handlers
             return responseData;
         }
 
+        private void UpdateRatingToDatabase(ReviewDto data)
+        {
+            using (var entities = _imdbEntities ?? new ImdbEntities())
+            {
+
+                int userId = FindUserIdFromUsername(data.Username);
+
+                var test = entities.Rating.Where(r => r.movie_id == data.MovieId && r.user_Id == userId).SingleOrDefault();
+
+                test.rating1 = data.Rating;
+
+
+                entities.SaveChanges();
+
+                foreach (var rating in entities.Rating)
+                {
+                    Console.WriteLine("-----------");
+                    Console.WriteLine(rating.id);
+                    Console.WriteLine(rating.movie_id);
+                    Console.WriteLine(rating.rating1 + " EDITED RATING");
+                    Console.WriteLine(rating.user_Id);
+                    Console.WriteLine("-----------");
+
+                }
+
+
+
+            }
+        }
+
+        private bool AlreadyRated(int movieId, string username)
+        {
+            using (var entities = _imdbEntities ?? new ImdbEntities())
+            {
+                int userId = FindUserIdFromUsername(username);
+
+                var alreadyRated = (from r in entities.Rating
+                                    where r.movie_id == movieId && r.user_Id == userId
+                                    select r).ToList();
+
+                if (alreadyRated.Count >= 1)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+
+        private int FindUserIdFromUsername(string username)
+        {
+            using (var entities = _imdbEntities ?? new ImdbEntities())
+            {
+                var findProfile = (from u in entities.User
+                    where u.name == username
+                    select u).First();
+
+                return findProfile.Id;
+            }
+        }
+
         /// <summary>
         /// Add Rating to local database
         /// </summary>
@@ -144,10 +222,51 @@ namespace ImdbRestService.Handlers
 
             using (var entities = _imdbEntities ?? new ImdbEntities())
             {
+                //we find the next rating id
+                int id;
+                if (!entities.Rating.Any())
+                {
+                    id = 1;
+                }
+                else
+                {
+
+                    id = entities.Rating.Max(u => u.id) + 1;
+
+                    //Console.WriteLine("RATING ID NO: " + id);
+                }
+
+
+
                 
+
+                entities.Rating.Add(new Rating()
+                {
+                    id = id,
+                    rating1 = data.Rating,
+                    user_Id = FindUserIdFromUsername(data.Username),
+                    movie_id = data.MovieId
+                });
+
+
+                
+                entities.SaveChanges();
+
+                foreach (var rating in entities.Rating)
+                {
+                    Console.WriteLine("-----------");
+                    Console.WriteLine(rating.id);
+                    Console.WriteLine(rating.movie_id);
+                    Console.WriteLine(rating.rating1);
+                    Console.WriteLine(rating.user_Id);
+                    Console.WriteLine("-----------");
+
+                }
+
+
+
             }
 
-        //    throw new NotImplementedException();
         }
 
         /// <summary>

@@ -7,6 +7,7 @@ namespace ImdbRestService
     {
         IDbSet<Movie> Movies { get; }
         IDbSet<User> User { get; }
+        IDbSet<Rating> Rating { get; }
         IDbSet<Person> People { get; }
         IDbSet<Participate> Participates { get; }
         IDbSet<PersonInfo> PersonInfoes { get; } 
