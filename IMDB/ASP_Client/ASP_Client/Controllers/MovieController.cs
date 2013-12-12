@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Web.WebPages;
 using ASP_Client.Models;
 using DtoSubsystem;
 
@@ -68,7 +69,7 @@ namespace ASP_Client.Controllers
 
             var movieDetailsViewModel = new MovieDetailsViewModel();
 
-            if (movieDetails != null)
+            if (movieDetails != null && movieDetails.ErrorMsg.IsEmpty())
             {
                 movieDetailsViewModel.Id = movieDetails.Id;
                 movieDetailsViewModel.Title = movieDetails.Title;

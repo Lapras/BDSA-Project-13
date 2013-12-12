@@ -6,6 +6,8 @@ namespace ASP_Client.Models
     [Serializable]
     public class UserModel
     {
+        public string ErrorMsg { get; set; }
+
         [Required]
         [EmailAddress]
         [StringLength(150)]

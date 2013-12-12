@@ -58,7 +58,7 @@ namespace ASP_Client.Controllers
             }
             catch (Exception e)
             {
-                return null;
+                return new List<MovieDto>() {};
             }
 
         }

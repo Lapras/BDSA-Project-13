@@ -186,16 +186,7 @@ namespace WPF_Client.Storage
             catch (RESTserviceException e)
             {
                 throw new StorageException();
-            }
-
-
-
-
-
-
-
-
-            
+            }            
         }
     }
 }

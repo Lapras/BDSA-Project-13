@@ -14,5 +14,6 @@ namespace DtoSubsystem
 		public int? SeasonNumber { get; set; }
 		public string SeriesYear { get; set; }
 		public int? EpisodeOf_Id { get; set; }
+        public string ErrorMsg { get; set; }
     }
 }
