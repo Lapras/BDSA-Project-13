@@ -93,7 +93,7 @@ namespace ASP_Client.Controllers
             }
             else
             {
-                movieDetailsViewModel.ErrorMsg = movieDetails.ErrorMsg;
+                if (movieDetails != null) movieDetailsViewModel.ErrorMsg = movieDetails.ErrorMsg;
             }
 
             return View(movieDetailsViewModel);
@@ -105,17 +105,18 @@ namespace ASP_Client.Controllers
         public async Task<ActionResult> SearchMovieDetails(MovieDetailsViewModel model)
         {
             var username = UserSession.GetLoggedInUser().Name;
-            var reviewDto = new ReviewDto() {MovieId = model.Id, Username = username, Rating = model.Rating};
+            var reviewDto = new ReviewDto {MovieId = model.Id, Username = username, Rating = model.UserRating};
 
             var serverReponse = await Storage.RateMovie(reviewDto);
             var ratedMovie = await Storage.GetMovieDetailsLocallyAsyncForce(model.Id);
 
-            var movieDetailsViewModel = new MovieDetailsViewModel();
-
-            movieDetailsViewModel.Id = ratedMovie.Id;
-            movieDetailsViewModel.Title = ratedMovie.Title;
-            movieDetailsViewModel.Year = ratedMovie.Year;
-            movieDetailsViewModel.Rating = ratedMovie.Rating; 
+            var movieDetailsViewModel = new MovieDetailsViewModel
+            {
+                Id = ratedMovie.Id,
+                Title = ratedMovie.Title,
+                Year = ratedMovie.Year,
+                Rating = ratedMovie.Rating
+            };
 
             var temp = ratedMovie.Participants.Select(participant => new PersonViewModel
             {
