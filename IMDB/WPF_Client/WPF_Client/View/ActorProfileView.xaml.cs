@@ -26,5 +26,12 @@ namespace WPF_Client.View
             InitializeComponent();
             DataContext = new ActorProfileViewModel();
         }
+
+        
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+        
     }
 }

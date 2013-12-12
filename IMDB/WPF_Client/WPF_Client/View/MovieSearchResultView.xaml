@@ -24,13 +24,47 @@
         <TextBlock Grid.Row="0" Grid.Column="1" FontFamily="Resources/#Charlemagne Std" FontSize="45" FontWeight="Bold" Text="Results" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
 
         <ListBox Name="ListBox1" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding MovieDtos, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedItem}" ScrollViewer.VerticalScrollBarVisibility="Visible" MinWidth="350" MaxWidth="500" MinHeight="250" MaxHeight="350">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+
+                    <Style.Triggers>
+                        <Trigger Property="Control.IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="Blue"/>
+                        </Trigger>
+
+                        <Trigger Property="Control.IsFocused" Value="True">
+                            <Setter Property="Foreground" Value="Red"/>
+                        </Trigger>
+                    </Style.Triggers>
+
+
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListBoxItem">
+                                <StackPanel>
+                                    <Separator x:Name="Separator"/>
+                                    <ContentPresenter/>
+                                </StackPanel>
+                                <ControlTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
+                                        <Setter Property="Visibility" TargetName="Separator" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+
+                </Style>
+            </ListBox.ItemContainerStyle>
+
+
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDoubleClick">
                     <i:InvokeCommandAction Command="{Binding SelectMovieCommand}" CommandParameter="{Binding SelectedItem, ElementName=ListBox1}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
 
-            <ListBox.ItemTemplate>                
+            <ListBox.ItemTemplate> 
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -38,8 +72,8 @@
                             <ColumnDefinition MinWidth="25" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0" Text="{Binding Title}" FontFamily="Resources/#Charlemagne Std" FontSize="20" FontWeight="Bold"/>
-                        <TextBlock Grid.Column="1" Text="{Binding Year, StringFormat='({0})'}" FontFamily="Resources/#Charlemagne Std" FontSize="20" FontWeight="Bold"/>
+                        <TextBlock Grid.Column="0" Text="{Binding Title}" TextWrapping="Wrap" FontFamily="Resources/#Charlemagne Std" FontSize="20" FontWeight="Bold"/>
+                        <TextBlock Grid.Column="1" Text="{Binding Year, StringFormat='({0})'}" TextWrapping="Wrap" FontFamily="Resources/#Charlemagne Std" FontSize="20" FontWeight="Bold"/>
 
                     </Grid>
                 </DataTemplate>

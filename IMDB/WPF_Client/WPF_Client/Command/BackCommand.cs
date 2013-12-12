@@ -11,15 +11,10 @@ using WPF_Client.ViewModel;
 namespace WPF_Client.Commands
 {
     /// <summary>
-    /// Command bound ment for the back button.
+    /// A Command for the back button.
     /// </summary>
     class BackCommand : ICommand
     {
-
-        public BackCommand()
-        {
-
-        }
 
         public bool CanExecute(object parameter)
         {

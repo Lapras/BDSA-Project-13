@@ -18,10 +18,10 @@ namespace WPF_Client.Model
 
         public Model()
         {
-            _storage = new Storage.Storage(new RESTStrategy());
+            _storage = new Storage.Storage(new RESTStrategy("http://localhost:54321"));
         }
 
-
+        
         public ObservableCollection<MovieDto> MovieDtos(string searchString)
         {
             return _storage.MovieDtos(searchString);
@@ -37,9 +37,9 @@ namespace WPF_Client.Model
             return _storage.CreateProfile(name, password);
         }
 
-        public bool LoginInfo(string name, string password)
+        public bool Login(string name, string password)
         {
-            return _storage.LoginInfo(name, password);
+            return _storage.Login(name, password);
         }
 
         public PersonDetailsDto PersonDetailsDto(int id)

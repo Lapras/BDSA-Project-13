@@ -72,12 +72,12 @@ namespace WPF_ClientUnitTest
         {
 
             var modelMock = new Mock<IModel>();
-            modelMock.Setup(m => m.LoginInfo("Simon","password")).Returns(true);
+            modelMock.Setup(m => m.Login("Simon", "password")).Returns(true);
             SessionController._model = modelMock.Object;
 
             // we simulate that a viewmodel wants to log in a user and therefore calls the sessioncontroller
             // with the login information
-            SessionController.LoginInfo("Simon", "password");
+            SessionController.LoginIn("Simon", "password");
 
             Assert.AreEqual("Simon",SessionController._currentUser);
             Assert.AreEqual(true, SessionController._isLoggedIn);

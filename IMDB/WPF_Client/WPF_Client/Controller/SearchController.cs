@@ -11,12 +11,22 @@ using WPF_Client.Storage;
 
 namespace WPF_Client.Controller
 {
+    /// <summary>
+    /// The SearchController is responsible for the control flow of the application whenever
+    /// the client searches for actors or movies.
+    /// </summary>
     public static class SearchController
     {
         public static IModel _model = new Model.Model();
         public static ObservableCollection<MovieDto> MovieDtos { get; set; }
         public static int MoviesFound { get; set; }
 
+        /// <summary>
+        /// Searches for a movie.
+        /// </summary>
+        /// <param name="searchString">The input search string.</param>
+        /// <param name="searchType">The input search type.</param>
+        /// <returns>A boolean value whether the search was successfull.</returns>
         public static bool Search(string searchString, int searchType)
         {
             

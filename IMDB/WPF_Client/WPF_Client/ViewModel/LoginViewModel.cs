@@ -24,7 +24,6 @@ namespace WPF_Client.ViewModel
         public ICommand BackCommand { get; set; }//The command attached to the Back button.
 
 
-
         /// <summary>
         /// Property for the username textbox.
         /// </summary>
@@ -67,7 +66,9 @@ namespace WPF_Client.ViewModel
 
     }
 
-
+    /// <summary>
+    /// A command for the Login button.
+    /// </summary>
     class LoginCommand : ICommand
     {
         private LoginViewModel _vm;
@@ -87,7 +88,7 @@ namespace WPF_Client.ViewModel
         {
             try
             {
-                if (SessionController.LoginInfo(_vm.UsernameTextBox, _vm.PasswordBox))
+                if (SessionController.LoginIn(_vm.UsernameTextBox, _vm.PasswordBox))
                 {
                     MessageBox.Show("Login succes: You are now logged in to the system :).", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
 

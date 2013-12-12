@@ -53,9 +53,6 @@ namespace WPF_Client.ViewModel
                     return;
                 _passwordTextBox = value;
 
-                //Console.WriteLine(value);
-                //Console.WriteLine(ComboBoxSelectedIndex);
-
                 OnPropertyChanged("PasswordTextBox");
             }
         }

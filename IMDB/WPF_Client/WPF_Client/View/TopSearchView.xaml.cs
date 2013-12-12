@@ -24,7 +24,7 @@ namespace WPF_Client.View
         public TopviewSearchView()
         {
             InitializeComponent();
-            DataContext = new TopviewSearchViewModel();
+            DataContext = new TopSearchViewModel();
         }
     }
 }

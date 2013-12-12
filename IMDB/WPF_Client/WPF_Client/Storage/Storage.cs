@@ -42,8 +42,10 @@ namespace WPF_Client.Storage
         }
 
         /// <summary>
-        /// Retrieves the MovieDtos (dtos that a movie search returns)
+        /// Retrieves the MovieDtos of the supplied searchstring. It always looks in its cache first.
         /// </summary>
+        /// <param name="searchString">The search string.</param>
+        /// <returns>The MovieDtos.</returns>
         public ObservableCollection<MovieDto> MovieDtos(string searchString)
         {
 
@@ -79,8 +81,10 @@ namespace WPF_Client.Storage
         }
 
         /// <summary>
-        /// Retrieves a MovieDetailDto (dto used when viewing information on a movie)
+        /// Retrives the MovieDetailsDto of a movie. It always looks in its cache first.
         /// </summary>
+        /// <param name="movieId">The movieId</param>
+        /// <returns>A MovieDetailsDto.</returns>
         public MovieDetailsDto MovieDetailsDto(int movieId)
         {
             try
@@ -111,8 +115,11 @@ namespace WPF_Client.Storage
 
 
         /// <summary>
-        /// Creates a profile in the storage.
+        /// Creates a profile with the supplied name and password.
         /// </summary>
+        /// <param name="name">The requested name.</param>
+        /// <param name="password">The requested password.</param>
+        /// <returns>A boolean value whether the account was created or not.</returns>
         public bool CreateProfile(string name, string password)
         {
             try
@@ -126,12 +133,17 @@ namespace WPF_Client.Storage
 
         }
 
-        
-        public bool LoginInfo(string name, string password)
+        /// <summary>
+        /// Logs in the user with the supplied username and password.
+        /// </summary>
+        /// <param name="name">The input username.</param>
+        /// <param name="password">The input password.</param>
+        /// <returns>A boolean value whether the login was successfull or not.</returns>
+        public bool Login(string name, string password)
         {
             try
             {
-                return _strategy.LoginInfo(name, password);
+                return _strategy.Login(name, password);
             }
             catch (RESTserviceException e)
             {
@@ -140,6 +152,12 @@ namespace WPF_Client.Storage
 
         }
 
+
+        /// <summary>
+        /// Retrieves a PersonDetailsDto with the supplied personId. It always looks in the cache first.
+        /// </summary>
+        /// <param name="id">The input personId.</param>
+        /// <returns>The PersonDetailsDto</returns>
         public PersonDetailsDto PersonDetailsDto(int id)
         {
            try
@@ -168,6 +186,13 @@ namespace WPF_Client.Storage
             }
         }
 
+        /// <summary>
+        /// Rates a movie.
+        /// </summary>
+        /// <param name="id">The movieId.</param>
+        /// <param name="rating">The rating.</param>
+        /// <param name="username">The username that rates the movie.</param>
+        /// <returns></returns>
         public bool RateMovie(int movieId, int rating, string username)
         {
             try

@@ -24,6 +24,23 @@ namespace WPF_Client.Storage
     /// </summary>
     public class RESTStrategy : IStorageStrategy
     {
+        private string _url;
+
+        /// <summary>
+        /// Contructor that takes the url of the REST service an input.
+        /// </summary>
+        /// <param name="url">The input REST service url.</param>
+        public RESTStrategy(string url)
+        {
+            _url = url;
+        }
+
+
+        /// <summary>
+        /// Retrives the MovieDtos.
+        /// </summary>
+        /// <param name="searchString">The input search string.</param>
+        /// <returns>A collection of MovieDtos.</returns>
         public ObservableCollection<MovieDto> MovieDtos(string searchString)
         {
      
@@ -46,7 +63,7 @@ namespace WPF_Client.Storage
                 using (var httpClient = new HttpClient())
                 {
                     Console.WriteLine("Getting reponse from REST server");
-                    var response = httpClient.GetStringAsync("http://localhost:54321/movies/?title=" + searchString);
+                    var response = httpClient.GetStringAsync(_url + "/movies/?title=" + searchString);
 
 
                     Console.WriteLine("JSON string received:" + response.Result);
@@ -79,7 +96,11 @@ namespace WPF_Client.Storage
 
         }
 
-
+        /// <summary>
+        /// Retrives the MovieDetailsDto.
+        /// </summary>
+        /// <param name="movieId">The input movieId</param>
+        /// <returns>A MovieDetailsDto.</returns>
         public MovieDetailsDto MovieDetailsDto(int movieId)
         {
             //GET rest etc. etc.
@@ -120,7 +141,7 @@ namespace WPF_Client.Storage
                 using (var httpClient = new HttpClient())
                 {
                     Console.WriteLine("Getting reponse from REST server");
-                    var response = httpClient.GetStringAsync("http://localhost:54321/movies/?movieId=" + movieId);
+                    var response = httpClient.GetStringAsync(_url + "/movies/?movieId=" + movieId);
 
 
                     Console.WriteLine("JSON string received:" + response.Result);
@@ -159,10 +180,15 @@ namespace WPF_Client.Storage
 
         }
 
+
+        /// <summary>
+        /// Sends a userprofile requests.
+        /// </summary>
+        /// <param name="name">The requested username</param>
+        /// <param name="password">The requested password.</param>
+        /// <returns>A boolean value whether the user was created or not.</returns>
         public bool CreateProfile(string name, string password)
         {
-            //example for now:
-            //return true;
             try
             {
                 var user = new UserModelDto()
@@ -175,7 +201,7 @@ namespace WPF_Client.Storage
                 using (var httpClient = new HttpClient())
                 {
                     Console.WriteLine("Getting reponse from REST server");
-                    var response = httpClient.PostAsJsonAsync("http://localhost:54321/User/Registration", user).Result;
+                    var response = httpClient.PostAsJsonAsync(_url + "/User/Registration", user).Result;
                     var msg = response.Content.ReadAsStringAsync();
 
                     Console.WriteLine("JSON string received:" + response);
@@ -208,7 +234,13 @@ namespace WPF_Client.Storage
 
         }
 
-        public bool LoginInfo(string name, string password)
+        /// <summary>
+        /// Logs in the user with the supplied username and password.
+        /// </summary>
+        /// <param name="name">The input username.</param>
+        /// <param name="password">The input password.</param>
+        /// <returns>A boolean value whether the login was successfull or not.</returns>
+        public bool Login(string name, string password)
         {
             try
             {
@@ -223,7 +255,7 @@ namespace WPF_Client.Storage
                 using (var httpClient = new HttpClient())
                 {
                     Console.WriteLine("Getting reponse from REST server");
-                    var response = httpClient.PostAsJsonAsync("http://localhost:54321/User/Login", user).Result;
+                    var response = httpClient.PostAsJsonAsync(_url + "/User/Login", user).Result;
                     var msg = response.Content.ReadAsStringAsync();
 
                     Console.WriteLine("JSON string received:" + response);
@@ -257,6 +289,13 @@ namespace WPF_Client.Storage
            
 
         }
+
+
+        /// <summary>
+        /// Retrieves a PersonDetailsDto with the supplied personId.
+        /// </summary>
+        /// <param name="id">The input personId.</param>
+        /// <returns>The PersonDetailsDto</returns>
         public PersonDetailsDto PersonDetailsDto(int id)
         {
             
@@ -265,7 +304,7 @@ namespace WPF_Client.Storage
                 using (var httpClient = new HttpClient())
                 {
                     Console.WriteLine("Getting reponse from REST server");
-                    var response = httpClient.GetStringAsync("http://localhost:54321/person/?personId=" + id);
+                    var response = httpClient.GetStringAsync(_url + "/person/?personId=" + id);
 
 
                     Console.WriteLine("JSON string received:" + response.Result);
@@ -307,7 +346,14 @@ namespace WPF_Client.Storage
 
         }
 
-        public bool RateMovie(int id, int rating, string username)
+        /// <summary>
+        /// Rates a movie.
+        /// </summary>
+        /// <param name="id">The movieId.</param>
+        /// <param name="rating">The rating.</param>
+        /// <param name="username">The username that rates the movie.</param>
+        /// <returns></returns>
+        public bool RateMovie(int movieId, int rating, string username)
         {
             Console.WriteLine("Trying to review");
 
@@ -315,7 +361,7 @@ namespace WPF_Client.Storage
             {
                 var user = new ReviewDto()
                 {
-                    MovieId = id,
+                    MovieId = movieId,
                     Rating = rating,
                     Username = username
                 };
@@ -325,7 +371,7 @@ namespace WPF_Client.Storage
                 using (var httpClient = new HttpClient())
                 {
                     Console.WriteLine("Getting reponse from REST server");
-                    var response = httpClient.PostAsJsonAsync("http://localhost:54321/movies/review", user).Result;
+                    var response = httpClient.PostAsJsonAsync(_url +"/movies/review", user).Result;
                     var msg = response.Content.ReadAsStringAsync();
 
                     Console.WriteLine("JSON string received:" + response);

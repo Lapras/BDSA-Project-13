@@ -18,6 +18,9 @@ namespace WPF_Client
 
         private static Stack<ViewModelBase> _previousViewModelsStack = new Stack<ViewModelBase>();
 
+        /// <summary>
+        /// A property for containing a stack of previous viewmodels that the user has viewed. 
+        /// </summary>
         public static Stack<ViewModelBase> PreviousViewModelsStack
         {
             get
@@ -26,7 +29,7 @@ namespace WPF_Client
             }
         }
 
-
+        
         public static MainWindowViewModel Main
         {
             get

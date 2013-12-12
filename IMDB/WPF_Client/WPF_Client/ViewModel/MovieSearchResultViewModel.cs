@@ -103,7 +103,6 @@ namespace WPF_Client.ViewModel
 
         public bool CanExecute(object parameter)
         {
-            //return !string.IsNullOrEmpty(_vm.TextBox);
             return true;
         }
 
@@ -113,8 +112,6 @@ namespace WPF_Client.ViewModel
             MovieDto dto;
             dto = (MovieDto)parameter;
 
-            //Mediator.MovieId = dto.Id;
-            //HollywoodController.MovieId = dto.Id;
             try
             {
                 if (!HollywoodController.GetMovie(dto.Id))

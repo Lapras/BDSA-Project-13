@@ -10,6 +10,10 @@ using WPF_Client.ViewModel;
 
 namespace WPF_Client.Controller
 {
+
+    /// <summary>
+    /// Manages login and logout control flow.
+    /// </summary>
     public class SessionController
     {
         public static IModel _model = new Model.Model();
@@ -17,8 +21,13 @@ namespace WPF_Client.Controller
         public static string _currentUser;
         private static string _username;
 
-
-        public static bool LoginInfo(string name, string password)
+        /// <summary>
+        /// Logs in a user.
+        /// </summary>
+        /// <param name="name">The input username.</param>
+        /// <param name="password">The input password.</param>
+        /// <returns>A boolean value whether the user was successfully logged in.</returns>
+        public static bool LoginIn(string name, string password)
         {
             //handle logic here checking if the user is logged in
 
@@ -30,7 +39,7 @@ namespace WPF_Client.Controller
              */
             string _pw = PasswordHash.CreateHash(password);
 
-            if (_model.LoginInfo(name, password) && PasswordHash.ValidatePassword(password, _pw))
+            if (_model.Login(name, password) && PasswordHash.ValidatePassword(password, _pw))
             {
                 _currentUser = name;
                 _isLoggedIn = true;
@@ -38,7 +47,7 @@ namespace WPF_Client.Controller
 
                 if (!UnitTestDetector.IsInUnitTest)
                 {
-                    ViewModelManager.Main.TopViewModel = new TopviewSearchViewModel();
+                    ViewModelManager.Main.TopViewModel = new TopSearchViewModel();
                 }
 
                 return true;
@@ -53,6 +62,9 @@ namespace WPF_Client.Controller
 
         }
 
+        /// <summary>
+        /// Logs out a user.
+        /// </summary>
         public static void Logout()
         {
             if (!UnitTestDetector.IsInUnitTest)

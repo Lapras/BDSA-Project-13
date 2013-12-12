@@ -15,10 +15,9 @@ namespace WPF_Client.Storage
     public interface IStorageStrategy
     {
         ObservableCollection<MovieDto> MovieDtos(string searchString);
-        //void MovieSearchDtos(string searchString);
         MovieDetailsDto MovieDetailsDto(int movieId);
         bool CreateProfile(string name, string password);
-        bool LoginInfo(string name, string password);
+        bool Login(string name, string password);
         PersonDetailsDto PersonDetailsDto(int id);
         bool RateMovie(int id, int rating, string username);
     }

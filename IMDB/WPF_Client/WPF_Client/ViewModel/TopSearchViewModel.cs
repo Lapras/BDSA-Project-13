@@ -9,7 +9,11 @@ using WPF_Client.Controller;
 
 namespace WPF_Client.ViewModel
 {
-    internal class TopviewSearchViewModel : ViewModelBase
+
+    /// <summary>
+    /// The TopSearchViewModel is a ViewModel for the TopSearchView. Containing the logout function together with search bar.
+    /// </summary>
+    internal class TopSearchViewModel : ViewModelBase
     {
         private string _textBox; //The text input from the user from the textbox.
         private int _comboBoxSelectedIndex; //The selected index from the combobox.
@@ -58,7 +62,7 @@ namespace WPF_Client.ViewModel
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public TopviewSearchViewModel()
+        public TopSearchViewModel()
         {
             
             TopSearchCommand = new TopSearchCommand(this);
@@ -75,10 +79,10 @@ namespace WPF_Client.ViewModel
     /// </summary>
     class TopSearchCommand : ICommand
     {
-        private TopviewSearchViewModel _vm;
+        private TopSearchViewModel _vm;
 
 
-        public TopSearchCommand(TopviewSearchViewModel vm)
+        public TopSearchCommand(TopSearchViewModel vm)
         {
             _vm = vm;
         }
@@ -104,13 +108,15 @@ namespace WPF_Client.ViewModel
 
         }
     }
-
+    /// <summary>
+    /// The command bound to the logout button, to log out the user.
+    /// </summary>
     class LogoutCommand : ICommand
     {
-        private TopviewSearchViewModel _vm;
+        private TopSearchViewModel _vm;
 
 
-        public LogoutCommand(TopviewSearchViewModel vm)
+        public LogoutCommand(TopSearchViewModel vm)
         {
             _vm = vm;
         }

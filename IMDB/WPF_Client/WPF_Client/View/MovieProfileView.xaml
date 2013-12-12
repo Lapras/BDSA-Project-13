@@ -23,8 +23,8 @@
         </Grid.ColumnDefinitions>
         
         <TextBlock Grid.Row="0" Grid.Column="1" FontFamily="Resources/#Charlemagne Std" FontSize="45" FontWeight="Bold" Text="Movie:" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-        
-        <Grid Grid.Row="1" Grid.Column="1">
+         
+        <Grid Grid.Row="1" Grid.Column="1" MaxWidth="400">
             <Grid.RowDefinitions>
                 <RowDefinition MinHeight="10"  MaxHeight="100"/>
                 <RowDefinition Height="Auto"/>
@@ -32,7 +32,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition MaxWidth="200"/>
+                <ColumnDefinition Width="90"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
@@ -41,11 +41,11 @@
             <TextBlock Grid.Row="2" Grid.Column="0" FontFamily="Resources/#Charlemagne Std" FontSize="18" Text="Kind:"></TextBlock>
             <TextBlock Grid.Row="3" Grid.Column="0" FontFamily="Resources/#Charlemagne Std" FontSize="18" Text="Year:"></TextBlock>
 
-            
-            <TextBlock Grid.Row="0" Grid.Column="1" FontFamily="Resources/#Charlemagne Std" FontSize="18" FontWeight="Bold" Text="{Binding MovieDetailsDto.Title, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
-            <TextBlock Grid.Row="1" Grid.Column="1" FontFamily="Resources/#Charlemagne Std" FontSize="18" FontWeight="Bold" Text="{Binding MovieDetailsDto.Year, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
-            <TextBlock Grid.Row="2" Grid.Column="1" FontFamily="Resources/#Charlemagne Std" FontSize="18" FontWeight="Bold" Text="{Binding MovieDetailsDto.Kind, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
-            <TextBlock Grid.Row="3" Grid.Column="1" FontFamily="Resources/#Charlemagne Std" FontSize="18" FontWeight="Bold" Text="{Binding MovieDetailsDto.Year, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+
+            <TextBlock MaxWidth="339" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" FontFamily="Resources/#Charlemagne Std" FontSize="18" FontWeight="Bold" Text="{Binding MovieDetailsDto.Title, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" FontFamily="Resources/#Charlemagne Std" FontSize="18" FontWeight="Bold" Text="{Binding MovieDetailsDto.Year, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Grid.Row="2" Grid.Column="1" TextWrapping="Wrap" FontFamily="Resources/#Charlemagne Std" FontSize="18" FontWeight="Bold" Text="{Binding MovieDetailsDto.Kind, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Grid.Row="3" Grid.Column="1" TextWrapping="Wrap" FontFamily="Resources/#Charlemagne Std" FontSize="18" FontWeight="Bold" Text="{Binding MovieDetailsDto.Year, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
           
     
 

@@ -10,6 +10,11 @@ using System.Globalization;
 
 namespace WPF_Client.ViewModel
 {
+
+    /// <summary>
+    /// The MainWindowViewModel is a ViewModel for the MainWindow containing the 
+    /// CurrentViewModel and the TopViewModel that change and updates UI.
+    /// </summary>
     public class MainWindowViewModel : ViewModelBase
     {
         /// <summary>
@@ -52,6 +57,9 @@ namespace WPF_Client.ViewModel
             }
         }
 
+        /// <summary>
+        /// The TopViewModel property which is the "toolbar" in the UI.
+        /// </summary>
         public ViewModelBase TopViewModel
         {
             get

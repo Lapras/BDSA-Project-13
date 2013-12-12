@@ -18,12 +18,14 @@ using DtoSubsystem;
 
 namespace WPF_Client.ViewModel
 {
+
+    /// <summary>
+    /// A ViewModel for the ActorProfileView.
+    /// </summary>
     class ActorProfileViewModel : ViewModelBase
     {
 
         private PersonDetailsDto _personDetailsDto;
-
-        //public ICommand BackToSearchResultCommand { get; set; }
         public ICommand BackCommand { get; set; }
         
 
@@ -54,7 +56,6 @@ namespace WPF_Client.ViewModel
             PersonDetailsDto = HollywoodController.PersonDetailsDto;
 
             Console.WriteLine(PersonDetailsDto.Name + " " + PersonDetailsDto.Gender);
-            //BackToSearchResultCommand = new BackToSearchResultCommand(this);
             BackCommand = new BackCommand();
             
         }
