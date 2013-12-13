@@ -22,7 +22,7 @@ namespace WPF_Client.ViewModel
     /// <summary>
     /// A ViewModel for the ActorProfileView.
     /// </summary>
-    class ActorProfileViewModel : ViewModelBase
+    public class ActorProfileViewModel : ViewModelBase
     {
 
         private PersonDetailsDto _personDetailsDto;

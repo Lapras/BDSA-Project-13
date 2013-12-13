@@ -37,7 +37,11 @@ namespace WPF_Client.Controller
                 return false;
             }
 
-            ViewModelManager.Main.CurrentViewModel = new MovieProfileViewModel();
+            //unit test doesnt like creating a new viewmodel and assigning it.
+            if (!UnitTestDetector.IsInUnitTest)
+            {
+                ViewModelManager.Main.CurrentViewModel = new MovieProfileViewModel();
+            }
 
             return true;
 
@@ -58,7 +62,11 @@ namespace WPF_Client.Controller
                 return false;
             }
 
-            ViewModelManager.Main.CurrentViewModel = new ActorProfileViewModel();
+            //unit test doesnt like creating a new viewmodel and assigning it.
+            if (!UnitTestDetector.IsInUnitTest)
+            {
+                ViewModelManager.Main.CurrentViewModel = new ActorProfileViewModel();
+            }
 
             return true;
 
@@ -77,7 +85,11 @@ namespace WPF_Client.Controller
             if (result)
             {
                 Console.WriteLine("Should update");
-                GetMovie(movieId);
+                MovieDetailsDto = _model.MovieDetailsDto(movieId);
+                if (MovieDetailsDto == null)
+                {
+                    return false;
+                }
             }
 
             return result;

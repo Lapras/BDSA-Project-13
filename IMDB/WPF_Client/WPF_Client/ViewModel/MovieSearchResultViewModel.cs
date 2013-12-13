@@ -91,7 +91,7 @@ namespace WPF_Client.ViewModel
     /// <summary>
     /// Command bound to selecting a movie.
     /// </summary>
-    class SelectMovieCommand : ICommand
+    public class SelectMovieCommand : ICommand
     {
         private MovieSearchResultViewModel _vm;
 

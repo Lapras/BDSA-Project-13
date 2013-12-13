@@ -54,6 +54,7 @@ namespace WPF_Client.Controller
             }
             else
             {
+                _currentUser = null;
                 _isLoggedIn = false;
                 return false;
             }

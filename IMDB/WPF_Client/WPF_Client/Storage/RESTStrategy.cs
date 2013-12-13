@@ -62,6 +62,9 @@ namespace WPF_Client.Storage
             {
                 using (var httpClient = new HttpClient())
                 {
+
+                    httpClient.Timeout = new TimeSpan(0, 0, 0, 10);
+
                     Console.WriteLine("Getting reponse from REST server");
                     var response = httpClient.GetStringAsync(_url + "/movies/?title=" + searchString);
 
@@ -85,13 +88,17 @@ namespace WPF_Client.Storage
                         throw new UnavailableConnectionException("No connection", e);
                     }
                 }
-                
+
                 throw new RESTserviceException("AggregateException response from DB.", e);
 
             }
             catch (JsonSerializationException e)
             {
                 throw new RESTserviceException("There was an serializaton or deserializaton error", e);
+            }
+            catch (JsonReaderException e)
+            {
+                throw new RESTserviceException("There was an error reading the json", e);
             }
 
         }
@@ -140,6 +147,8 @@ namespace WPF_Client.Storage
             {
                 using (var httpClient = new HttpClient())
                 {
+                    httpClient.Timeout = new TimeSpan(0, 0, 0, 10);
+
                     Console.WriteLine("Getting reponse from REST server");
                     var response = httpClient.GetStringAsync(_url + "/movies/?movieId=" + movieId);
 
@@ -173,7 +182,7 @@ namespace WPF_Client.Storage
             }
             catch (JsonReaderException e)
             {
-                throw new RESTserviceException("there was an serializaton or deserializaton error", e);
+                throw new RESTserviceException("There was an error reading the json", e);
             }
 
 
@@ -200,6 +209,9 @@ namespace WPF_Client.Storage
 
                 using (var httpClient = new HttpClient())
                 {
+
+                    httpClient.Timeout = new TimeSpan(0, 0, 0, 10);
+
                     Console.WriteLine("Getting reponse from REST server");
                     var response = httpClient.PostAsJsonAsync(_url + "/User/Registration", user).Result;
                     var msg = response.Content.ReadAsStringAsync();
@@ -229,6 +241,10 @@ namespace WPF_Client.Storage
             {
                 throw new RESTserviceException("there was an serializaton or deserializaton error", e);
             }
+            catch (JsonReaderException e)
+            {
+                throw new RESTserviceException("There was an error reading the json", e);
+            }
 
 
 
@@ -254,6 +270,10 @@ namespace WPF_Client.Storage
 
                 using (var httpClient = new HttpClient())
                 {
+
+                    httpClient.Timeout = new TimeSpan(0, 0, 0, 10);
+
+
                     Console.WriteLine("Getting reponse from REST server");
                     var response = httpClient.PostAsJsonAsync(_url + "/User/Login", user).Result;
                     var msg = response.Content.ReadAsStringAsync();
@@ -285,6 +305,10 @@ namespace WPF_Client.Storage
             {
                 throw new RESTserviceException("there was an serializaton or deserializaton error", e);
             }
+            catch (JsonReaderException e)
+            {
+                throw new RESTserviceException("There was an error reading the json", e);
+            }
             
            
 
@@ -303,6 +327,9 @@ namespace WPF_Client.Storage
             {
                 using (var httpClient = new HttpClient())
                 {
+
+                    httpClient.Timeout = new TimeSpan(0, 0, 0, 10);
+
                     Console.WriteLine("Getting reponse from REST server");
                     var response = httpClient.GetStringAsync(_url + "/person/?personId=" + id);
 
@@ -339,8 +366,9 @@ namespace WPF_Client.Storage
             }
             catch (JsonReaderException e)
             {
-                throw new RESTserviceException("there was an serializaton or deserializaton error", e);
+                throw new RESTserviceException("There was an error reading the json", e);
             }
+
 
 
 
@@ -370,6 +398,8 @@ namespace WPF_Client.Storage
 
                 using (var httpClient = new HttpClient())
                 {
+                    httpClient.Timeout = new TimeSpan(0, 0, 0, 10);
+
                     Console.WriteLine("Getting reponse from REST server");
                     var response = httpClient.PostAsJsonAsync(_url +"/movies/review", user).Result;
                     var msg = response.Content.ReadAsStringAsync();
@@ -400,6 +430,10 @@ namespace WPF_Client.Storage
             catch (JsonSerializationException e)
             {
                 throw new RESTserviceException("there was an serializaton or deserializaton error", e);
+            }
+            catch (JsonReaderException e)
+            {
+                throw new RESTserviceException("There was an error reading the json", e);
             }
         }
     }

@@ -18,7 +18,7 @@ using DtoSubsystem;
 
 namespace WPF_Client.ViewModel
 {
-    class MovieProfileViewModel : ViewModelBase
+    public class MovieProfileViewModel : ViewModelBase
     {
 
         private MovieDetailsDto _movieDetailsDto;

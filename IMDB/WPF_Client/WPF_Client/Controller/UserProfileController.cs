@@ -17,7 +17,7 @@ namespace WPF_Client.Controller
     public static class UserProfileController
     {
 
-        private static IModel _model = new Model.Model();
+        public static IModel _model = new Model.Model();
 
         /// <summary>
         /// Creates a profile with the supplied username and password.
