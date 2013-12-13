@@ -36,10 +36,7 @@
             <TextBox Grid.Row="0" Grid.Column="1" Height="25" MinWidth="200" Margin="10,0,0,0" Text="{Binding UsernameTextBox, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBox Grid.Row="1" Grid.Column="1" Height="25" MinWidth="200" Margin="10,0,0,0" Text="{Binding PasswordTextBox, UpdateSourceTrigger=PropertyChanged}"/>
 
-
         </Grid>
-
-
 
         <Grid Grid.Row="2" Grid.Column="1">
             <Grid.RowDefinitions>
@@ -53,14 +50,7 @@
             <Button Grid.Row="0" Grid.Column="0" Width="75" Height="25" Margin="20" HorizontalAlignment="Center" VerticalAlignment="Top" Command="{Binding BackCommand}" Content="Back"/>
             <Button Grid.Row="0" Grid.Column="1" Width="75" Height="25" Margin="20" HorizontalAlignment="Center" VerticalAlignment="Top" Command="{Binding CreateCommand}" Content="Create"/>
 
-
-
-
         </Grid>
 
-
-
-
-           
     </Grid>
 </UserControl>

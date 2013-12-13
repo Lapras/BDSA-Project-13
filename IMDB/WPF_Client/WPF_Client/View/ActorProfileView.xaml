@@ -4,7 +4,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              mc:Ignorable="d" 
@@ -31,16 +30,6 @@
                 <RowDefinition MinHeight="10"  MaxHeight="100"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition MaxWidth="125"/>
@@ -55,43 +44,15 @@
             <TextBlock Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" FontFamily="Resources/#Charlemagne Std" FontSize="15" FontWeight="Bold" Text="{Binding PersonDetailsDto.Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
             <TextBlock Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" FontFamily="Resources/#Charlemagne Std" FontSize="15" FontWeight="Bold" Text="{Binding PersonDetailsDto.Gender, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
 
-
-
-            
-
-                
-            
-           
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         </Grid>
 
 
-
         <ListBox VerticalAlignment="Top" MinHeight="50" MaxHeight="200" Width="400" Grid.Row="2" Grid.Column="1" ScrollViewer.CanContentScroll="False"  ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Visible" SelectionChanged="ListBox_SelectionChanged">
-            
-            
-            
-            
             <ListBox.Resources>
                 <CollectionViewSource x:Key="ViewSource" Source="{Binding PersonDetailsDto.Info}">
                     <CollectionViewSource.GroupDescriptions>
                         <PropertyGroupDescription  PropertyName="Name" />
                     </CollectionViewSource.GroupDescriptions>
-
-
                     <CollectionViewSource.SortDescriptions>
                         <componentModel:SortDescription PropertyName="Info" />
                     </CollectionViewSource.SortDescriptions>
@@ -100,65 +61,25 @@
                 <DataTemplate x:Key="categoryTemplate">
                     <TextBlock Text="{Binding Path=Name}" FontWeight="Bold" Foreground="ForestGreen" Margin="0,5,0,0"/>
                 </DataTemplate>
-
-
             </ListBox.Resources>
 
-           
-
             <ItemsControl ItemsSource="{Binding Source={StaticResource ViewSource}}">
-
                 <ItemsControl.ItemTemplate>
-
-
-
                     <DataTemplate>
-
-
-
-
                         <Grid Width="350" Margin="0,5,0,0">
                             <TextBlock Text="{Binding Info, StringFormat='• {0}'}" TextWrapping="Wrap" />
                         </Grid>
-
-
-
-
                     </DataTemplate>
-
-                    
-                    
-                    
-                    
-
                 </ItemsControl.ItemTemplate>
+                
                 <ItemsControl.GroupStyle>
                     <GroupStyle HeaderTemplate="{StaticResource categoryTemplate}" />
                 </ItemsControl.GroupStyle>
-
             </ItemsControl>
-
-            
-
         </ListBox>
 
-
-
-
-
-
-
-
-
-
-
-
+        
         <TextBlock Grid.Row="3" Grid.Column="1" FontFamily="Resources/#Charlemagne Std" FontSize="18" Margin="0,10,0,0" FontWeight="Bold" Text="Involved in:"></TextBlock>
-
-
-
-
-
 
 
         <DataGrid Name="DataGrid1" Grid.Row="4" Grid.Column="1"
@@ -171,7 +92,6 @@
                   IsReadOnly="True"
                   AutoGenerateColumns="False">
                   
-            
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDoubleClick">
                     <i:InvokeCommandAction Command="{Binding SelectActorCommand}" CommandParameter="{Binding SelectedItem, ElementName=DataGrid1}"/>
@@ -179,20 +99,12 @@
             </i:Interaction.Triggers>
 
             <DataGrid.Columns>
-
-
                 <DataGridTextColumn x:Name="Movie" Width="1*" Binding="{Binding CharacterName}" Header="Movie"/>
                 <DataGridTextColumn x:Name="Role" Width="1*" Binding="{Binding CharacterName}" Header="Role"/>
-
             </DataGrid.Columns>
-
         </DataGrid>
 
-
+        
         <Button Grid.Row="5" Grid.Column="1" Width="75" Height="25" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding BackCommand}" Content="Back"/>
-
-
-
-
     </Grid>
 </UserControl>

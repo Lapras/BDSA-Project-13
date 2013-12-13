@@ -42,8 +42,6 @@
                     <Button Name="RegisterButton" Margin="0,0,5,5"  Grid.Row="0" Grid.Column="2" Width="65" Height="20" HorizontalAlignment="Center" VerticalAlignment="Bottom" Command="{Binding RegisterCommand}" Content="Register"/>
 
                 </Grid>
-
-
             </Grid>
         </Grid>
     </Grid>

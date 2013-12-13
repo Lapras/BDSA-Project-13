@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using WPF_Client.Controller;
@@ -17,8 +13,16 @@ namespace WPF_Client.ViewModel
     {
         private string _textBox; //The text input from the user from the textbox.
         private int _comboBoxSelectedIndex; //The selected index from the combobox.
-        public ICommand TopSearchCommand { get; set; } //The command attached to the Search button.
-        public ICommand LogoutCommand { get; set; } // The command attached to the Logout textblock
+
+        /// <summary>
+        /// The command attached to the Search button.
+        /// </summary>
+        public ICommand TopSearchCommand { get; set; }
+
+        /// <summary>
+        /// The command attached to the Logout button.
+        /// </summary>
+        public ICommand LogoutCommand { get; set; }
 
 
         /// <summary>
@@ -32,9 +36,6 @@ namespace WPF_Client.ViewModel
                 if (_textBox == value)
                     return;
                 _textBox = value;
-
-                //Console.WriteLine(value);
-                //Console.WriteLine(ComboBoxSelectedIndex);
 
                 OnPropertyChanged("TextBox");
             }

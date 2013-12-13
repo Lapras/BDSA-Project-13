@@ -4,7 +4,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="500">
@@ -43,12 +42,11 @@
 
 
             <TextBlock MaxWidth="339" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" FontFamily="Resources/#Charlemagne Std" FontSize="18" FontWeight="Bold" Text="{Binding MovieDetailsDto.Title, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
-            <TextBlock Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" FontFamily="Resources/#Charlemagne Std" FontSize="18" FontWeight="Bold" Text="{Binding MovieDetailsDto.Year, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" FontFamily="Resources/#Charlemagne Std" FontSize="18" FontWeight="Bold" Text="{Binding MovieDetailsDto.AvgRating, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
             <TextBlock Grid.Row="2" Grid.Column="1" TextWrapping="Wrap" FontFamily="Resources/#Charlemagne Std" FontSize="18" FontWeight="Bold" Text="{Binding MovieDetailsDto.Kind, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
             <TextBlock Grid.Row="3" Grid.Column="1" TextWrapping="Wrap" FontFamily="Resources/#Charlemagne Std" FontSize="18" FontWeight="Bold" Text="{Binding MovieDetailsDto.Year, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
           
     
-
         </Grid>
 
         <Grid Grid.Row="2" Grid.Column="1">
@@ -57,11 +55,9 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-
 
             <ComboBox Grid.Row="0" Grid.Column="0" Width="150" Height="20" SelectedIndex="{Binding SelectedRating}">
                 <ComboBoxItem Tag="0"></ComboBoxItem>
@@ -110,8 +106,6 @@
         </DataGrid>
 
         <Button Grid.Row="4" Grid.Column="1" Width="75" Height="25" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding BackCommand}" Content="Back"/>
-
-
 
 
     </Grid>

@@ -1,15 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 using WPF_Client.Exceptions;
 using WPF_Client.Controller;
@@ -24,7 +14,12 @@ namespace WPF_Client.ViewModel
     {
         private string _textBox; //The text input from the user from the textbox.
         private int _comboBoxSelectedIndex; //The selected index from the combobox.
-        public ICommand SearchCommand { get; set; } //The command attached to the Search button.
+
+
+        /// <summary>
+        /// The command attached to the Search button.
+        /// </summary>
+        public ICommand SearchCommand { get; set; }
 
         /// <summary>
         /// The TextBox property. Which is the text input from the user from the textbox.
@@ -37,10 +32,6 @@ namespace WPF_Client.ViewModel
                 if (_textBox == value)
                     return;
                 _textBox = value;
-
-                //Console.WriteLine(value);
-                //Console.WriteLine(ComboBoxSelectedIndex);
-
                 OnPropertyChanged("TextBox");
             }
         }

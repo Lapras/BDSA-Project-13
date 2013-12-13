@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using WPF_Client.Commands;
-using WPF_Client.Exceptions;
-using WPF_Client.Model;
 using WPF_Client.Controller;
 using DtoSubsystem;
 
@@ -26,7 +15,12 @@ namespace WPF_Client.ViewModel
     {
 
         private PersonDetailsDto _personDetailsDto;
-        public ICommand BackCommand { get; set; }
+
+
+        /// <summary>
+        /// The command attached to the back button
+        /// </summary>
+        public ICommand BackCommand { get; set; } 
         
 
         /// <summary>
@@ -54,16 +48,11 @@ namespace WPF_Client.ViewModel
         public ActorProfileViewModel()
         {
             PersonDetailsDto = HollywoodController.PersonDetailsDto;
-
-            Console.WriteLine(PersonDetailsDto.Name + " " + PersonDetailsDto.Gender);
             BackCommand = new BackCommand();
             
         }
 
-
-
     }
 
-    
   
 }

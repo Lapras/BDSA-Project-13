@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WPF_Client.Model;
+﻿using WPF_Client.Model;
 using WPF_Client.PwBoxAssistant;
-using WPF_Client.View;
 using WPF_Client.ViewModel;
 
 namespace WPF_Client.Controller
@@ -17,9 +11,17 @@ namespace WPF_Client.Controller
     public class SessionController
     {
         public static IModel _model = new Model.Model();
-        public static bool _isLoggedIn;
+
+        /// <summary>
+        /// A boolean containing whethe the user is currently logged in.
+        /// </summary>
+        public static bool _isLoggedIn; 
+
+        /// <summary>
+        /// The current user that is logged in.
+        /// </summary>
         public static string _currentUser;
-        private static string _username;
+
 
         /// <summary>
         /// Logs in a user.
@@ -27,16 +29,9 @@ namespace WPF_Client.Controller
         /// <param name="name">The input username.</param>
         /// <param name="password">The input password.</param>
         /// <returns>A boolean value whether the user was successfully logged in.</returns>
-        public static bool LoginIn(string name, string password)
+        public static bool Login(string name, string password)
         {
-            //handle logic here checking if the user is logged in
 
-            // maybe only handle the non encryptet PW and check it agains the enrcypted pw which is recived from the DB.
-            /*
-             * so that the encryption happens when the user is created and is validated in the session control
-             * 
-             * 
-             */
             string _pw = PasswordHash.CreateHash(password);
 
             if (_model.Login(name, password) && PasswordHash.ValidatePassword(password, _pw))
@@ -44,7 +39,7 @@ namespace WPF_Client.Controller
                 _currentUser = name;
                 _isLoggedIn = true;
 
-
+                //unit test doesnt like creating a new viewmodel and assigning it.
                 if (!UnitTestDetector.IsInUnitTest)
                 {
                     ViewModelManager.Main.TopViewModel = new TopSearchViewModel();
@@ -52,12 +47,11 @@ namespace WPF_Client.Controller
 
                 return true;
             }
-            else
-            {
-                _currentUser = null;
-                _isLoggedIn = false;
-                return false;
-            }
+
+            _currentUser = null;
+            _isLoggedIn = false;
+            return false;
+            
 
 
 
@@ -72,6 +66,7 @@ namespace WPF_Client.Controller
             {
                 ViewModelManager.Main.TopViewModel = new LoginViewModel();
             }
+
             _currentUser = null;
             _isLoggedIn = false;
         } 
