@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Script.Serialization;
 using DtoSubsystem;
 using ImdbRestService.ImdbRepositories;
@@ -344,10 +345,13 @@ namespace ImdbRestService.Handlers
         /// <summary>
         /// Method recieving movies by title from the local database
         /// </summary>
-        /// <param name="title"> the title to search for </param>
+        /// <param name="searchString"> the title to search for </param>
         /// <returns> a list of MovieDto's containing information on the movies found </returns>
-        public List<MovieDto> GetMoviesByTitle(string title) 
+        public List<MovieDto> GetMoviesByTitle(string searchString) 
         {
+            var title = HttpUtility.UrlDecode(searchString); // removes %20 and adds whitespace instead
+
+
             try
             {
                 using (var entities = _imdbEntities ?? new ImdbEntities())
@@ -364,7 +368,7 @@ namespace ImdbRestService.Handlers
                     }
 
                     return (from m in entities.Movies
-                            where m.Title.Contains(title)
+                            where m.Title.ToLower().Contains(title.ToLower())
                             select new MovieDto
                             {
                                 Id = m.Id,
@@ -373,7 +377,7 @@ namespace ImdbRestService.Handlers
                             }).ToList();
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 Console.Write("Local database is not available");
                 return _externalMovieDatabaseRepository.GetMoviesFromIMDbAsync(title).Result;

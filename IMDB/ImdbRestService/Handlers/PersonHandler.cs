@@ -107,36 +107,50 @@ namespace ImdbRestService.Handlers
         /// <returns> movie we requested </returns>
         public PersonDetailsDto GetPersonById(int id)
         {
-            using (var entities = _imdbEntities ?? new ImdbEntities())
+            try
             {
-                var person = (from people in entities.People join participant in entities.Participates on people.Id equals participant.ParticipateId 
-                              where people.Id == id
-                              select new PersonDetailsDto()
-                              {
-                                  Id = people.Id,
-                                  Name = people.Name, 
-                                  Gender = people.Gender,
-                                  Role = participant.Role,
-                                  CharName = participant.CharName
-                              }).ToList()[0];
 
-                var additionalDetailsOnPerson = (from people in entities.People
-                    join personInfo in entities.PersonInfoes on people.Id equals personInfo.Person_Id
-                    join infoType in entities.InfoTypes on personInfo.Type_Id equals infoType.Id
-                    where person.Id == people.Id
-                    select new InfoDto{ Name = infoType.Name, Info = personInfo.Info}).ToList();
-
-                 //   person.Info = new string[additionalDetailsOnPerson.Length, 2];
-                
-                person.Info = new List<InfoDto>();
-
-                foreach (var detail in additionalDetailsOnPerson)
+                using (var entities = _imdbEntities ?? new ImdbEntities())
                 {
-                    person.Info.Add(detail);
+                    var person = (from people in entities.People
+                        join participant in entities.Participates on people.Id equals participant.ParticipateId
+                        where people.Id == id
+                        select new PersonDetailsDto()
+                        {
+                            Id = people.Id,
+                            Name = people.Name,
+                            Gender = people.Gender,
+                            Role = participant.Role,
+                            CharName = participant.CharName
+                        }).ToList()[0];
+
+                    var additionalDetailsOnPerson = (from people in entities.People
+                        join personInfo in entities.PersonInfoes on people.Id equals personInfo.Person_Id
+                        join infoType in entities.InfoTypes on personInfo.Type_Id equals infoType.Id
+                        where person.Id == people.Id
+                        select new InfoDto {Name = infoType.Name, Info = personInfo.Info}).ToList();
+
+                    //   person.Info = new string[additionalDetailsOnPerson.Length, 2];
+
+                    person.Info = new List<InfoDto>();
+
+                    foreach (var detail in additionalDetailsOnPerson)
+                    {
+                        person.Info.Add(detail);
+                    }
+
+                    return person;
                 }
 
-                return person;
             }
+            catch (ArgumentOutOfRangeException e)
+            {
+                Console.Write("Local database is not available");
+                return new PersonDetailsDto { ErrorMsg = "Local Database not available" };
+            }
+
+
+
         }
     }
 }
