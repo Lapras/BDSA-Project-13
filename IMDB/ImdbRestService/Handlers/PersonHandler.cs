@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Sockets;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
-using System.Web.UI.WebControls.WebParts;
 using DtoSubsystem;
 
 namespace ImdbRestService.Handlers
@@ -54,7 +51,6 @@ namespace ImdbRestService.Handlers
                 {
                     var key = firstSegment.Substring(1).Split(new[] {'='})[0];
                     var value = firstSegment.Split(new[] {'='})[1];
-                    ;
 
                     switch (key)
                     {
@@ -120,7 +116,7 @@ namespace ImdbRestService.Handlers
                     var person = (from people in entities.People
                         join participant in entities.Participates on people.Id equals participant.ParticipateId
                         where people.Id == id
-                        select new PersonDetailsDto()
+                        select new PersonDetailsDto
                         {
                             Id = people.Id,
                             Name = people.Name,
@@ -148,7 +144,7 @@ namespace ImdbRestService.Handlers
                 }
 
             }
-            catch (ArgumentOutOfRangeException e)
+            catch (ArgumentOutOfRangeException)
             {
                 Console.Write("Local database is not available");
                 return new PersonDetailsDto { ErrorMsg = "Local Database not available" };

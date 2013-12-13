@@ -10,7 +10,6 @@ namespace ImdbRestService.Handlers
     /// </summary>
     public interface IHandler
     {
-
         /// <summary>
         /// Method checking if the given path segment matches the one that
         /// this handler can handle
