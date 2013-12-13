@@ -28,6 +28,10 @@ namespace WPF_Client.Controller
         public static bool CreateProfile(string name, string password)
         {
             var result = _model.CreateProfile(name, password);
+            if (!UnitTestDetector.IsInUnitTest)
+            {
+                ViewModelManager.Main.CurrentViewModel = ViewModelManager.PreviousViewModelsStack.Pop();
+            }
 
             return result;
         }
