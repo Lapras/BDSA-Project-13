@@ -92,7 +92,7 @@ namespace ASP_Client.Controllers
                 using (var httpClient = new HttpClient())
                 {
                     var receivedData = JsonConvert.DeserializeObject<MovieDetailsDto>(
-                        await httpClient.GetStringAsync("http://localhost:54321/movies/?movieId=" + movieId)
+                        await httpClient.GetStringAsync("http://localhost:54321/movies/" + movieId)
                         );
 
                     if (receivedData.ErrorMsg.IsEmpty())
@@ -206,7 +206,7 @@ namespace ASP_Client.Controllers
             {
                 using (var httpClient = new HttpClient())
                 {
-                    var result = await httpClient.GetStringAsync("http://localhost:54321/person/?personId=" + personId);
+                    var result = await httpClient.GetStringAsync("http://localhost:54321/person/" + personId);
                     var receivedData = JsonConvert.DeserializeObject<PersonDetailsDto>(result);
 
                     if (receivedData.ErrorMsg.IsEmpty())
@@ -392,7 +392,7 @@ namespace ASP_Client.Controllers
                 using (var httpClient = new HttpClient())
                 {
                     var receivedData = JsonConvert.DeserializeObject<MovieDetailsDto>(
-                        await httpClient.GetStringAsync("http://localhost:54321/movies/?movieId=" + movieId)
+                        await httpClient.GetStringAsync("http://localhost:54321/movies/" + movieId)
                         );
 
                     if (receivedData.ErrorMsg.IsEmpty())

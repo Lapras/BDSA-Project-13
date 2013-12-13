@@ -9,7 +9,6 @@ namespace ASP_Client.Models
         public string ErrorMsg { get; set; }
 
         [Required]
-        [EmailAddress]
         [StringLength(150)]
         [Display(Name = "Name: ")]
         public string Name { get; set; }
