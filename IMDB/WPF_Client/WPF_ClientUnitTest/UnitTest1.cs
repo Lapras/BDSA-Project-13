@@ -81,7 +81,7 @@ namespace WPF_ClientUnitTest
 
             // we simulate that a viewmodel wants to log in a user and therefore calls the sessioncontroller
             // with the login information
-            SessionController.LoginIn("Simon", "password");
+            SessionController.Login("Simon", "password");
 
             Assert.AreEqual("Simon",SessionController._currentUser);
             Assert.AreEqual(true, SessionController._isLoggedIn);
@@ -102,7 +102,7 @@ namespace WPF_ClientUnitTest
 
             // we simulate that a viewmodel wants to log in a user and therefore calls the sessioncontroller
             // with the login information
-            SessionController.LoginIn("Simon1", "password");
+            SessionController.Login("Simon1", "password");
 
             Assert.AreEqual(null, SessionController._currentUser);
             Assert.AreEqual(false, SessionController._isLoggedIn);

@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WPF_Client.Model;
 using WPF_Client.ViewModel;
 using DtoSubsystem;
@@ -13,14 +8,24 @@ namespace WPF_Client.Controller
     /// <summary>
     /// Controller for managing application control flow whenever clients want
     /// to view a movie or actor. Also controls control flow whenever the client
-    /// rates and writes reviews on movies.
+    /// rates movies.
     /// </summary>
     public static class HollywoodController
     {
+
         public static IModel _model = new Model.Model();
 
-        public static PersonDetailsDto PersonDetailsDto { get; set; }
-        public static MovieDetailsDto MovieDetailsDto { get; set; } // The MovieDto that the SearchResultViewModel loads for the MovieDto for.
+        /// <summary>
+        /// The PersonDetailsDto that the ActorProfileViewModel loads.
+        /// </summary>
+        public static PersonDetailsDto PersonDetailsDto { get; set; }// The 
+
+        /// <summary>
+        /// The MovieDto that the SearchResultViewModel loads.
+        /// </summary>
+        public static MovieDetailsDto MovieDetailsDto { get; set; }
+
+
 
         /// <summary>
         /// Gets a movie with the supplied id.

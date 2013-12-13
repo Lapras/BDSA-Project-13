@@ -1,31 +1,38 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using WPF_Client.Commands;
 using WPF_Client.Exceptions;
-using WPF_Client.Model;
 using WPF_Client.Controller;
 using DtoSubsystem;
 
 
 namespace WPF_Client.ViewModel
 {
+    /// <summary>
+    /// ViewModel for the MovieProfileView.
+    /// </summary>
     public class MovieProfileViewModel : ViewModelBase
     {
 
         private MovieDetailsDto _movieDetailsDto;
 
+        /// <summary>
+        /// The command attached to the back button.
+        /// </summary>
         public ICommand BackCommand { get; set; }
+
+        /// <summary>
+        /// The command attached when clicking on an actor.
+        /// </summary>
         public ICommand SelectActorCommand { get; set; }
+
+        /// <summary>
+        /// The command attached to the rate button.
+        /// </summary>
         public ICommand RateCommand { get; set; }
+
+
 
         private int _selectedRating;
 
@@ -44,7 +51,6 @@ namespace WPF_Client.ViewModel
                     return;
                 _selectedRating = value;
 
-                Console.WriteLine(_selectedRating);
                 OnPropertyChanged("SelectedRating");
             }
         }
@@ -76,8 +82,6 @@ namespace WPF_Client.ViewModel
         {
             MovieDetailsDto = HollywoodController.MovieDetailsDto;
 
-            Console.WriteLine(MovieDetailsDto.Kind + " " + MovieDetailsDto.Title);
-            //BackToSearchResultCommand = new BackToSearchResultCommand(this);
             BackCommand = new BackCommand();
             SelectActorCommand = new SelectActorCommand(this);
             RateCommand = new RateCommand(this);
@@ -101,26 +105,21 @@ namespace WPF_Client.ViewModel
 
         public bool CanExecute(object parameter)
         {
-            //return !string.IsNullOrEmpty(_vm.TextBox);
             return true;
         }
 
         public void Execute(object parameter)
         {
-            Console.WriteLine("clicking");
-
-
             PersonDto dto;
             dto = (PersonDto)parameter;
 
-            //Mediator.MovieId = dto.Id;
-            //HollywoodController.MovieId = dto.Id;
             try
             {
                 if (!HollywoodController.GetActor(dto.Id))
                 {
-                    Console.WriteLine("could not find actor");
-                    MessageBox.Show("Could not find actor", "No results", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    MessageBox.Show("Could not find actor", "No results", MessageBoxButton.OK,
+                        MessageBoxImage.Information);
                 }
             }
             catch (StorageException e)
@@ -130,6 +129,10 @@ namespace WPF_Client.ViewModel
             catch (UnavailableConnectionException e)
             {
                 MessageBox.Show("There is no connection.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (NullReferenceException e)
+            {
+                MessageBox.Show("Data error.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
 

@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DtoSubsystem;
 using WPF_Client.Model;
 using WPF_Client.ViewModel;
-using WPF_Client.Storage;
 
 namespace WPF_Client.Controller
 {
@@ -18,7 +13,15 @@ namespace WPF_Client.Controller
     public static class SearchController
     {
         public static IModel _model = new Model.Model();
+
+        /// <summary>
+        /// The MovieDtos that the MovieSearchResultViewModel loads.
+        /// </summary>
         public static ObservableCollection<MovieDto> MovieDtos { get; set; }
+
+        /// <summary>
+        /// The count of the MovieDtos.
+        /// </summary>
         public static int MoviesFound { get; set; }
 
         /// <summary>
@@ -43,18 +46,12 @@ namespace WPF_Client.Controller
                         return false;
                     }
 
-
-
                     //unit test doesnt like creating a new viewmodel and assigning it.
                     if (!UnitTestDetector.IsInUnitTest)
                     {
-
                         ViewModelManager.Main.CurrentViewModel = new MovieSearchResultViewModel();
-
                     }
                     
-
-
 
                     break;
 

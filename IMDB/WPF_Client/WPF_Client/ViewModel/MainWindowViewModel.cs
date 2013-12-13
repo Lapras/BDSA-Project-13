@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
-using System.ComponentModel;
-//using WPF_Client.Annotations;
-using System.Globalization;
+﻿
 
 namespace WPF_Client.ViewModel
 {
@@ -76,14 +68,6 @@ namespace WPF_Client.ViewModel
 
         }
 
-
-
-
-
-
-
-
     }
-
 
 }

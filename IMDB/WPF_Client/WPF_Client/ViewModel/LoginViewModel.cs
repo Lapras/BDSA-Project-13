@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using WPF_Client.Commands;
@@ -17,11 +13,23 @@ namespace WPF_Client.ViewModel
     /// </summary>
     public class LoginViewModel : ViewModelBase
     {
-        private string _usernameTextBox; //The username inputtet by the user
+        private string _usernameTextBox; //The username input by the user
         private string _passwordBox; //The password from the user.
-        public ICommand LoginCommand { get; set; } //The command attached to the Search button.
-        public ICommand RegisterCommand { get; set; } //The command attached to the Search button.
-        public ICommand BackCommand { get; set; }//The command attached to the Back button.
+
+        /// <summary>
+        /// The command attached to the Login button.
+        /// </summary>
+        public ICommand LoginCommand { get; set; }
+
+        /// <summary>
+        /// The command attached to the Register button.
+        /// </summary>
+        public ICommand RegisterCommand { get; set; }
+
+        /// <summary>
+        /// The command attached to the Back button.
+        /// </summary>
+        public ICommand BackCommand { get; set; }
 
 
         /// <summary>
@@ -88,7 +96,7 @@ namespace WPF_Client.ViewModel
         {
             try
             {
-                if (SessionController.LoginIn(_vm.UsernameTextBox, _vm.PasswordBox))
+                if (SessionController.Login(_vm.UsernameTextBox, _vm.PasswordBox))
                 {
                     MessageBox.Show("Login succes: You are now logged in to the system :).", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
 
@@ -117,6 +125,9 @@ namespace WPF_Client.ViewModel
         }
     }
 
+    /// <summary>
+    /// A command for the Register button.
+    /// </summary>
     class RegisterCommand : ICommand
     {
         private LoginViewModel _vm;

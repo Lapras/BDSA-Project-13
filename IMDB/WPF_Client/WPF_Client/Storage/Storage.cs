@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Runtime.Caching;
-using Newtonsoft.Json;
 using WPF_Client.Exceptions;
-using System.Threading.Tasks;
 using DtoSubsystem;
 
 namespace WPF_Client.Storage
@@ -15,16 +9,28 @@ namespace WPF_Client.Storage
 
     /// <summary>
     /// Class responsible for the data in the WPF application. It has a cache which is always searched first.
-    /// It then can have different types of storage by using the Strategy pattern.
+    /// It can have different types of storage by using the Strategy pattern e.g. databases or communicate with
+    /// external databases using REST.
     /// </summary>
     public class Storage
     {
         private IStorageStrategy _strategy;
 
+        /// <summary>
+        /// Cache for MovieDtos.
+        /// </summary>
         private ObjectCache _movieDtocache;
+
+        /// <summary>
+        /// Cache for MovieDetailDtos.
+        /// </summary>
         private ObjectCache _movieDetailDtocache;
 
+        /// <summary>
+        /// Cache for PersonDetailDtos
+        /// </summary>
         private ObjectCache _personDetailDtoCache;
+
 
         /// <summary>
         /// Default constructor.
@@ -32,7 +38,6 @@ namespace WPF_Client.Storage
         public Storage(IStorageStrategy strategy)
         {
             _strategy = strategy;
-            //_cache = new Cache();
 
             _movieDtocache = MemoryCache.Default;
             _movieDetailDtocache = MemoryCache.Default;
@@ -53,7 +58,6 @@ namespace WPF_Client.Storage
             {
                 if (_movieDtocache.Get(searchString) == null)
                 {
-                    Console.WriteLine("did not find in cache");
 
                     var storageMovieDtos = _strategy.MovieDtos(searchString); // now we search in the strategy
 
@@ -67,7 +71,6 @@ namespace WPF_Client.Storage
 
                 }
 
-                Console.WriteLine("found in cache");
                 return (ObservableCollection<MovieDto>) _movieDtocache.Get(searchString);
 
             }
@@ -75,7 +78,6 @@ namespace WPF_Client.Storage
             {
                 throw new StorageException("REST strategy unavailable.", e);
             }
-
 
             
         }
@@ -91,20 +93,19 @@ namespace WPF_Client.Storage
             {
                 if (_movieDetailDtocache.Get(movieId.ToString()) == null)
                 {
-                    Console.WriteLine("did not find in cache");
 
                     var storageMovieDetailDto = _strategy.MovieDetailsDto(movieId); // now we search in the strategy
 
 
                     CacheItemPolicy policy = new CacheItemPolicy();
-                    policy.AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(10.0); //10 sec
+                    policy.AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(5.0); //5 sec
 
                     _movieDetailDtocache.Set(movieId.ToString(), storageMovieDetailDto, policy);
 
                     return storageMovieDetailDto;
 
                 }
-                Console.WriteLine("found in cache");
+
                 return (MovieDetailsDto)_movieDetailDtocache.Get(movieId.ToString());
             }
             catch (RESTserviceException e)
@@ -164,7 +165,6 @@ namespace WPF_Client.Storage
            {
                 if (_personDetailDtoCache.Get(id.ToString()) == null)
                 {
-                    Console.WriteLine("did not find in cache");
 
                     var storagePersonDetailDto = _strategy.PersonDetailsDto(id); // now we search in the strategy
 
@@ -177,7 +177,7 @@ namespace WPF_Client.Storage
                     return storagePersonDetailDto;
 
                 }
-                Console.WriteLine("found in cache");
+
                 return (PersonDetailsDto)_personDetailDtoCache.Get(id.ToString());
             }
             catch (RESTserviceException e)

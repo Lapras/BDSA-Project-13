@@ -1,21 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data;
-using System.Data.Common;
-using System.Linq;
 using System.Net.Http;
-using System.Net.Sockets;
-using System.Web;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using DtoSubsystem;
-using WPF_Client.Controller;
 using WPF_Client.Exceptions;
 using Newtonsoft.Json;
-using WPF_Client.PwBoxAssistant;
-
 
 namespace WPF_Client.Storage
 {
@@ -24,6 +12,10 @@ namespace WPF_Client.Storage
     /// </summary>
     public class RESTStrategy : IStorageStrategy
     {
+
+        /// <summary>
+        /// The url that this RESTstrategy communicates with.
+        /// </summary>
         private string _url;
 
         /// <summary>
@@ -43,21 +35,6 @@ namespace WPF_Client.Storage
         /// <returns>A collection of MovieDtos.</returns>
         public ObservableCollection<MovieDto> MovieDtos(string searchString)
         {
-     
-            //sample example data don't delete
-            /*
-            var collection = new ObservableCollection<MovieDto>() { 
-                new MovieDto() {Id = 0, Title = "predator", Year = 1987},
-                new MovieDto() {Id = 1, Title = "man of steel", Year = 2013},
-                new MovieDto() {Id = 2, Title = "spiderman", Year = 2002},
-            };
-
-            var result = new ObservableCollection<MovieDto>(collection.Where(m => m.Title == searchString.ToLower()).ToList());
-            
-            return result;
-            */
-
-
             try
             {
                 using (var httpClient = new HttpClient())
@@ -110,39 +87,6 @@ namespace WPF_Client.Storage
         /// <returns>A MovieDetailsDto.</returns>
         public MovieDetailsDto MovieDetailsDto(int movieId)
         {
-            //GET rest etc. etc.
-            //return...
-
-
-            
-
-            //example data don't delete:
-
-
-            /*
-            MovieProfileDto result;
-            switch (movieId)
-            {
-                case 0:
-                    result = new MovieProfileDto { Title = "Predator", Year = 1987, Kind = "Sci-fi" };
-                    return result;
-
-                case 1:
-                    result = new MovieProfileDto { Title = "Man of Steel", Year = 2013, Kind = "Action" };
-                    return result;
-
-                case 2:
-                    result = new MovieProfileDto { Title = "Spiderman", Year = 2002, Kind = "Action" };
-                    return result;
-
-                default:
-                    result = new MovieProfileDto { Title = "error", Year = 2013, Kind = "error" };
-                    return result;
-
-
-            }
-            */
-
             try
             {
                 using (var httpClient = new HttpClient())
@@ -150,7 +94,7 @@ namespace WPF_Client.Storage
                     httpClient.Timeout = new TimeSpan(0, 0, 0, 10);
 
                     Console.WriteLine("Getting reponse from REST server");
-                    var response = httpClient.GetStringAsync(_url + "/movies/?movieId=" + movieId);
+                    var response = httpClient.GetStringAsync(_url + "/movies/" + movieId);
 
 
                     Console.WriteLine("JSON string received:" + response.Result);
@@ -331,7 +275,7 @@ namespace WPF_Client.Storage
                     httpClient.Timeout = new TimeSpan(0, 0, 0, 10);
 
                     Console.WriteLine("Getting reponse from REST server");
-                    var response = httpClient.GetStringAsync(_url + "/person/?personId=" + id);
+                    var response = httpClient.GetStringAsync(_url + "/person/" + id);
 
 
                     Console.WriteLine("JSON string received:" + response.Result);

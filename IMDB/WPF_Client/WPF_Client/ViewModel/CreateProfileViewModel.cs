@@ -19,8 +19,16 @@ namespace WPF_Client.ViewModel
     {
         private string _usernameTextBox; //The text input from the user from the username-textbox.
         private string _passwordTextBox; //The text input from the user from the password-textbox.
-        public ICommand CreateCommand { get; set; } //The command attached to the create button.
-        public ICommand BackCommand { get; set; } //The command attached to the create button.
+
+        /// <summary>
+        /// The command attached to the create button.
+        /// </summary>
+        public ICommand CreateCommand { get; set; }
+
+        /// <summary>
+        /// The command attached to the back button
+        /// </summary>
+        public ICommand BackCommand { get; set; }
 
         /// <summary>
         /// The TextBox property. Which is the text input from the user from the textbox.
@@ -33,9 +41,6 @@ namespace WPF_Client.ViewModel
                 if (_usernameTextBox == value)
                     return;
                 _usernameTextBox = value;
-
-                //Console.WriteLine(value);
-                //Console.WriteLine(ComboBoxSelectedIndex);
 
                 OnPropertyChanged("UsernameTextBox");
             }

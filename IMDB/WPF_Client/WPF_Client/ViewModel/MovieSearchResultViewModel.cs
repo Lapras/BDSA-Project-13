@@ -1,19 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using WPF_Client.Commands;
 using WPF_Client.Exceptions;
-using WPF_Client.Model;
 using WPF_Client.Controller;
 
 using DtoSubsystem;
@@ -26,10 +16,18 @@ namespace WPF_Client.ViewModel
     /// </summary>
     public class MovieSearchResultViewModel : ViewModelBase
     {
+
         private ObservableCollection<MovieDto> _movieDtos;
         private int _moviesFound;
         
-        public ICommand SelectMovieCommand { get; set; } //The command attached to clicking on a movie.
+        /// <summary>
+        /// The command attached to clicking on a movie.
+        /// </summary>
+        public ICommand SelectMovieCommand { get; set; }
+
+        /// <summary>
+        /// The command attached to the back button.
+        /// </summary>
         public ICommand BackCommand { get; set; }
         
         /// <summary>
@@ -117,7 +115,8 @@ namespace WPF_Client.ViewModel
                 if (!HollywoodController.GetMovie(dto.Id))
                 {
 
-                    MessageBox.Show("Could not find movie", "No results", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Could not find movie", "No results", MessageBoxButton.OK,
+                        MessageBoxImage.Information);
                 }
             }
             catch (StorageException e)
@@ -127,6 +126,10 @@ namespace WPF_Client.ViewModel
             catch (UnavailableConnectionException e)
             {
                 MessageBox.Show("There is no connection.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (NullReferenceException e)
+            {
+                MessageBox.Show("Data error.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             

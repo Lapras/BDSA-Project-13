@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
-using WPF_Client.Controller;
-using WPF_Client.ViewModel;
 
 namespace WPF_Client.Commands
 {
@@ -15,7 +8,7 @@ namespace WPF_Client.Commands
     /// </summary>
     class BackCommand : ICommand
     {
-
+        
         public bool CanExecute(object parameter)
         {
             return true;

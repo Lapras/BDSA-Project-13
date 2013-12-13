@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WPF_Client.Model;
-using WPF_Client.View;
-using WPF_Client.ViewModel;
+﻿using WPF_Client.Model;
 
 namespace WPF_Client.Controller
 {
@@ -28,6 +21,8 @@ namespace WPF_Client.Controller
         public static bool CreateProfile(string name, string password)
         {
             var result = _model.CreateProfile(name, password);
+
+            //unit test doesnt like creating a new viewmodel and assigning it.
             if (!UnitTestDetector.IsInUnitTest)
             {
                 ViewModelManager.Main.CurrentViewModel = ViewModelManager.PreviousViewModelsStack.Pop();

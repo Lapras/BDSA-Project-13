@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.TextFormatting;
+﻿using System.Collections.Generic;
 using WPF_Client.ViewModel;
 
 namespace WPF_Client
@@ -29,7 +24,9 @@ namespace WPF_Client
             }
         }
 
-        
+        /// <summary>
+        /// Retrives the MainWindowViewModel
+        /// </summary>
         public static MainWindowViewModel Main
         {
             get
