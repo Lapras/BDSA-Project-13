@@ -3,6 +3,9 @@ using System.Web.Mvc;
 
 namespace ASP_Client.Models
 {
+    /// <summary>
+    /// Class representing a movie in a detailed 
+    /// </summary>
     public class MovieDetailsViewModel
     {
         public int Id { get; set; }

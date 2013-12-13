@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.WebPages;
 using ASP_Client.Models;
-using DtoSubsystem;
-using Newtonsoft.Json;
 
 namespace ASP_Client.Controllers
 {
@@ -65,22 +60,18 @@ namespace ASP_Client.Controllers
 
             if (personDetails.ErrorMsg.IsEmpty())
             {
-
-                if (personDetails != null)
-                {
                     personDetailsViewModel.Id = personDetails.Id;
                     personDetailsViewModel.Name = personDetails.Name;
                     personDetailsViewModel.Gender = personDetails.Gender;
                     personDetailsViewModel.Role = personDetails.Role;
 
-                    var temp = personDetails.Info.Select(detail => new InfoModel()
+                    var temp = personDetails.Info.Select(detail => new InfoModel
                     {
                         Name = detail.Name,
                         Info = detail.Info
                     }).ToList();
 
                     personDetailsViewModel.Info = temp;
-                }
             }
             else
             {

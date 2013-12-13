@@ -59,7 +59,6 @@ namespace ASP_Client.Controllers
         /// <returns>Response from the server</returns>
         Task<ReplyDto> Login(UserModel user);
 
-
         /// <summary>
         /// Send a Registration request to the application server
         /// </summary>

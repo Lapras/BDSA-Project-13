@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ASP_Client.Models
 {
+    /// <summary>
+    /// Class representing a model for login/registration
+    /// </summary>
     [Serializable]
     public class UserModel
     {
