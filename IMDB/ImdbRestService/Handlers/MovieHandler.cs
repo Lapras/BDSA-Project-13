@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using DtoSubsystem;
+using ImdbRestService.ImdbRepositories;
 using Newtonsoft.Json;
 
 namespace ImdbRestService.Handlers
@@ -16,11 +16,13 @@ namespace ImdbRestService.Handlers
     public class MovieHandler : IHandler
     {
         private readonly IImdbEntities _imdbEntities;
+        private readonly IExternalMovieDatabaseRepository _externalMovieDatabaseRepository;
         private const string PathSegment = "movies";
 
-        public MovieHandler(IImdbEntities imdbEntities = null)
+        public MovieHandler(IImdbEntities imdbEntities = null, IExternalMovieDatabaseRepository externalMovieDatabaseRepository = null)
         {
             _imdbEntities = imdbEntities;
+            _externalMovieDatabaseRepository = externalMovieDatabaseRepository ?? new ExternalMovieDatabaseRepository();
         }
 
         /// <summary>
@@ -63,7 +65,7 @@ namespace ImdbRestService.Handlers
 
                                 if (movies.Count == 0)
                                 {
-                                    movies = await GetMoviesFromIMDbAsync(value);
+                                    movies = await _externalMovieDatabaseRepository.GetMoviesFromIMDbAsync(value);
                                     AddMoviesToDb(movies);
                                 }
 
@@ -370,51 +372,12 @@ namespace ImdbRestService.Handlers
             catch (Exception)
             {
                 Console.Write("Local database is not available");
-                return GetMoviesFromIMDbAsync(title).Result;
+                return _externalMovieDatabaseRepository.GetMoviesFromIMDbAsync(title).Result;
             }
            
         }
 
-        /// <summary>
-        /// Get a movie vom the MyMovieApi interface
-        /// </summary>
-        /// <param name="searchString">Name of the movie to search for</param>
-        /// <returns>List of matching movies</returns>
-        private async Task<List<MovieDto>> GetMoviesFromIMDbAsync(string searchString)
-        {
-            try
-            {
-                using (var httpClient = new HttpClient())
-                {
-                    var response = await httpClient.GetAsync("http://mymovieapi.com/?title=" + searchString);
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        var result = await response.Content.ReadAsStringAsync();
-
-                        if (result.Equals("{\"code\":404, \"error\":\"Film not found\"}"))
-                        {
-                            return new List<MovieDto>();
-                        }
-
-                        return JsonConvert.DeserializeObject<List<MovieDto>>(result);
-                    }
-
-                    return new List<MovieDto>();
-
-                    //return JsonConvert.DeserializeObject<List<MovieDto>>(
-                    //    await httpClient.GetStringAsync("http://mymovieapi.com/?title=" + searchString)
-                    //);
-                }
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("External database not available");
-                return new List<MovieDto>();
-            }
-        }
-		
-		 /// <summary>
+	    /// <summary>
         /// Method recieving a movie by id from the local database
         /// </summary>
         /// <param name="id"> id of the movie we search for </param>
