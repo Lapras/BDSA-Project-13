@@ -18,6 +18,41 @@ namespace ASP_Client.Controllers
     public class PersonController : BaseController
     {
         /// <summary>
+        /// Method creating a list of movies based on a search string and puts them in a MovieOverviewViewModel which
+        /// is given to the IndexView.
+        /// The method first searches in the local database. If nothing is found, it searches in IMDb's database. If
+        /// movies are found there they are added to the local database.
+        /// </summary>
+        /// <param name="searchString"> search criteria for movies </param>
+        /// <returns> A Task containing an ActionResult to be handled </returns>        
+        public async Task<ActionResult> SearchPerson(string searchString)
+        {
+            //if (Session["User"] == null)
+            //{
+            //    return RedirectToAction("Login", "User");
+            //}
+
+            var foundPeople = await Storage.GetPersonAsync(searchString);
+
+            var personOverviewViewModel = new PersonOverviewViewModel();
+
+            if (foundPeople.First().ErrorMsg.IsEmpty())
+            {
+
+                if (foundPeople.Count != 0)
+                {
+                    personOverviewViewModel.FoundPeople = foundPeople;
+                }
+            }
+            else
+            {
+                personOverviewViewModel.ErrorMsg = foundPeople.First().ErrorMsg;
+            }
+
+            return View(personOverviewViewModel);
+        }
+
+        /// <summary>
         /// Get the information of a person matching the id and return it to a view
         /// </summary>
         /// <param name="id">Id of the person to search for</param>

@@ -39,6 +39,13 @@ namespace ASP_Client.Controllers
         Task<MovieDetailsDto> GetMovieDetailsLocallyAsyncForce(int movieId);
 
         /// <summary>
+        /// Get a list of actors matching the given name
+        /// </summary>
+        /// <param name="personName">Name of the person to look for</param>
+        /// <returns>List of the people matching the given name</returns>
+        Task<List<PersonDto>> GetPersonAsync(string personName);
+
+        /// <summary>
         /// Get the details of a specific person involved in the movie business
         /// </summary>
         /// <param name="personId">Id of the person to get the data of</param>

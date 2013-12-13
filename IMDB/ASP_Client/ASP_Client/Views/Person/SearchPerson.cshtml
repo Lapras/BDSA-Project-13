@@ -1,0 +1,34 @@
+﻿@model ASP_Client.Models.PersonOverviewViewModel
+
+@{ 
+    ViewBag.Title = "Index"; 
+} 
+ 
+<h2>Index</h2> 
+ 
+<p> 
+     @using (Html.BeginForm()){    
+         <p> @Html.TextBox("SearchString") <br />   
+         <input type="submit" value="Search" /></p> 
+     }
+  
+ @if (Model.ErrorMsg.IsEmpty())
+{   
+      
+    <table>
+        <tr><th>Title:</th><th>Year:</th></tr>
+        @foreach (var person in Model.FoundPeople)
+        {
+            <tr>
+                <td>
+                @Html.ActionLink(person.Name, "PersonDetails", "Person", new {person.Id}, null)
+                </td>
+            </tr>
+        }
+    </table>
+     }
+else
+{
+  @Model.ErrorMsg
+}
+</p>

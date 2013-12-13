@@ -67,6 +67,10 @@ namespace ImdbRestService.Handlers
                                 {
                                     movies = await _externalMovieDatabaseRepository.GetMoviesFromIMDbAsync(value);
                                     AddMoviesToDb(movies);
+                                    if (movies.Count < 1)
+                                    {
+                                        movies.Add(new MovieDto {ErrorMsg = "No database is available"});
+                                    }
                                 }
 
                                 msg = new JavaScriptSerializer().Serialize(movies);
