@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using DtoSubsystem;
 using ImdbRestService.Handlers;
 
 namespace ImdbRestService
@@ -170,8 +171,11 @@ namespace ImdbRestService
                 // checks for a handler able to handle that specific path
                 var handler = handlers.FirstOrDefault(x => x.CanHandle(path[0]));
 
+                
+    //            MovieDetailsDto test = (MovieDetailsDto) PersistanceFacade.getInstance().get(movieId, MovieDetailsDto)
+
                 if (handler != null)
-                {
+                {   
                     //updates the responseData
                     ResponseData = await handler.Handle(path.Skip(1).ToList(), ResponseData);
                 }

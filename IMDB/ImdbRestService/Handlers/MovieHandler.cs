@@ -150,65 +150,100 @@ namespace ImdbRestService.Handlers
             return responseData;
         }
 
+        /// <summary>
+        /// Try to either add or update a rating in the database
+        /// </summary>
+        /// <param name="data">Review data needed to modify the database</param>
         private void UpdateRatingToDatabase(ReviewDto data)
         {
-            using (var entities = _imdbEntities ?? new ImdbEntities())
+            try
             {
-
-                int userId = FindUserIdFromUsername(data.Username);
-
-                var test = entities.Rating.Where(r => r.movie_id == data.MovieId && r.user_Id == userId).SingleOrDefault();
-
-                test.rating1 = data.Rating;
-
-
-                entities.SaveChanges();
-
-                foreach (var rating in entities.Rating)
+                using (var entities = _imdbEntities ?? new ImdbEntities())
                 {
-                    Console.WriteLine("-----------");
-                    Console.WriteLine(rating.id);
-                    Console.WriteLine(rating.movie_id);
-                    Console.WriteLine(rating.rating1 + " EDITED RATING");
-                    Console.WriteLine(rating.user_Id);
-                    Console.WriteLine("-----------");
 
+                    int userId = FindUserIdFromUsername(data.Username);
+
+                    var test =
+                        entities.Rating.Where(r => r.movie_id == data.MovieId && r.user_Id == userId).SingleOrDefault();
+
+                    test.rating1 = data.Rating;
+
+
+                    entities.SaveChanges();
+
+                    foreach (var rating in entities.Rating)
+                    {
+                        Console.WriteLine("-----------");
+                        Console.WriteLine(rating.id);
+                        Console.WriteLine(rating.movie_id);
+                        Console.WriteLine(rating.rating1 + " EDITED RATING");
+                        Console.WriteLine(rating.user_Id);
+                        Console.WriteLine("-----------");
+
+                    }
                 }
-
-
-
+            }
+            catch (Exception)
+            {
+                Console.Write("Database is not available");
             }
         }
 
+        /// <summary>
+        /// Check if a movie is already rated by a specific user
+        /// </summary>
+        /// <param name="movieId">Movie to check with</param>
+        /// <param name="username">Name to check with</param>
+        /// <returns>True if already rated</returns>
         private bool AlreadyRated(int movieId, string username)
         {
-            using (var entities = _imdbEntities ?? new ImdbEntities())
+            try
             {
-                int userId = FindUserIdFromUsername(username);
-
-                var alreadyRated = (from r in entities.Rating
-                                    where r.movie_id == movieId && r.user_Id == userId
-                                    select r).ToList();
-
-                if (alreadyRated.Count >= 1)
+                using (var entities = _imdbEntities ?? new ImdbEntities())
                 {
-                    return true;
-                }
+                    int userId = FindUserIdFromUsername(username);
 
-                return false;
+                    var alreadyRated = (from r in entities.Rating
+                        where r.movie_id == movieId && r.user_Id == userId
+                        select r).ToList();
+
+                    if (alreadyRated.Count >= 1)
+                    {
+                        return true;
+                    }
+
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Database is not available");
+                return true;
             }
         }
 
-
+        /// <summary>
+        /// Get the id of a user matching the username
+        /// </summary>
+        /// <param name="username">Name of the user to look for</param>
+        /// <returns>The users id</returns>
         private int FindUserIdFromUsername(string username)
         {
-            using (var entities = _imdbEntities ?? new ImdbEntities())
+            try
             {
-                var findProfile = (from u in entities.User
-                    where u.name == username
-                    select u).First();
+                using (var entities = _imdbEntities ?? new ImdbEntities())
+                {
+                    var findProfile = (from u in entities.User
+                        where u.name == username
+                        select u).First();
 
-                return findProfile.Id;
+                    return findProfile.Id;
+                }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Database is not available");
+                return -1;
             }
         }
 
