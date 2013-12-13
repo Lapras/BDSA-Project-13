@@ -81,6 +81,7 @@
           <Property Name="EpisodeNumber" Type="int" />
           <Property Name="SeriesYear" Type="nvarchar" MaxLength="15" />
           <Property Name="EpisodeOf_Id" Type="int" />
+          <Property Name="Avg_rating" Type="float" />
         </EntityType>
         <EntityType Name="Participate">
           <Key>
@@ -309,6 +310,7 @@
           <NavigationProperty Name="Movies1" Relationship="ImdbModel.FK_dbo_Movies_dbo_Movies_EpisodeOf_Id" FromRole="Movies" ToRole="Movies1" />
           <NavigationProperty Name="Movie1" Relationship="ImdbModel.FK_dbo_Movies_dbo_Movies_EpisodeOf_Id" FromRole="Movies1" ToRole="Movies" />
           <NavigationProperty Name="Participates" Relationship="ImdbModel.FK_dbo_Participate_dbo_Movies_Movie_Id" FromRole="Movies" ToRole="Participate" />
+          <Property Type="Double" Name="Avg_rating" />
         </EntityType>
         <EntityType Name="Participate">
           <Key>
@@ -492,6 +494,7 @@
           <EntitySetMapping Name="Movies">
             <EntityTypeMapping TypeName="ImdbModel.Movie">
               <MappingFragment StoreEntitySet="Movies">
+                <ScalarProperty Name="Avg_rating" ColumnName="Avg_rating" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Kind" ColumnName="Kind" />

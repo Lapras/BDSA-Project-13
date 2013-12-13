@@ -78,5 +78,15 @@ namespace ASP_Client.Controllers
         {
             return await Connect.GetMovieDetailsLocallyAsyncForce(movieId);
         }
+
+        /// <summary>
+        /// Get a list of actors matching the given name
+        /// </summary>
+        /// <param name="personName">Name of the person to look for</param>
+        /// <returns>List of the people matching the given name</returns>
+        public static async Task<List<PersonDto>> GetPersonAsync(string personName)
+        {
+            return await Connect.GetPersonAsync(personName);
+        }
     }
 }

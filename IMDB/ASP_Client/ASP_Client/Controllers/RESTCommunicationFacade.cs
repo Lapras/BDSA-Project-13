@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.WebPages;
 using ASP_Client.Models;
 using DtoSubsystem;
 using Newtonsoft.Json;
@@ -35,10 +36,12 @@ namespace ASP_Client.Controllers
                     var receivedData = JsonConvert.DeserializeObject<List<MovieDto>>(
                         await httpClient.GetStringAsync("http://localhost:54321/movies/?title=" + searchString)
                         );
-
-                    foreach (var movie in receivedData)
+                    if (receivedData.First().ErrorMsg.IsEmpty())
                     {
-                        CacheHelper.AddItem(movie, movie.Title);
+                        foreach (var movie in receivedData)
+                        {
+                            CacheHelper.AddItem(movie, movie.Title);
+                        }
                     }
                     return receivedData;
                 }
@@ -82,10 +85,10 @@ namespace ASP_Client.Controllers
                         await httpClient.GetStringAsync("http://localhost:54321/movies/?movieId=" + movieId)
                         );
 
-
-                    CacheHelper.AddItem(receivedData, "" + receivedData.Id);
-
-
+                    if (receivedData.ErrorMsg.IsEmpty())
+                    {
+                        CacheHelper.AddItem(receivedData, "" + receivedData.Id);
+                    }
                     return receivedData;
                 }
             }
@@ -114,6 +117,54 @@ namespace ASP_Client.Controllers
         }
 
         /// <summary>
+        /// Get a list of actors matching the given name
+        /// </summary>
+        /// <param name="personName">Name of the person to look for</param>
+        /// <returns>List of the people matching the given name</returns>
+        public async Task<List<PersonDto>> GetPersonAsync(string personName)
+        {
+            List<PersonDto> desiredPeople;
+            CacheHelper.GetItem(personName, out desiredPeople);
+
+            if (desiredPeople != null) return desiredPeople;
+
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    var receivedData = JsonConvert.DeserializeObject<List<PersonDto>>(
+                        await httpClient.GetStringAsync("http://localhost:54321/person/?person=" + personName)
+                        );
+                    if (receivedData.First().ErrorMsg.IsEmpty())
+                    {
+                        foreach (var person in receivedData)
+                        {
+                            CacheHelper.AddItem(person, person.Name);
+                        }
+                    }
+                    return receivedData;
+                }
+            }
+            catch (AggregateException e)
+            {
+                if (e.InnerExceptions.Any(ex => ex.GetType() == typeof(HttpRequestException)))
+                {
+                    throw new UnavailableConnectionException("No connection", e);
+                }
+
+                throw new RESTserviceException("AggregateException response from DB.", e);
+            }
+            catch (JsonSerializationException e)
+            {
+                throw new RESTserviceException("There was an serializaton or deserializaton error", e);
+            }
+            catch (Exception e)
+            {
+                return new List<PersonDto> { new PersonDto { ErrorMsg = "Database not available" } };
+            }
+        }
+
+        /// <summary>
         /// Get the details of a specific person involved in the movie business
         /// </summary>
         /// <param name="personId">Id of the person to get the data of</param>
@@ -132,8 +183,10 @@ namespace ASP_Client.Controllers
                     var result = await httpClient.GetStringAsync("http://localhost:54321/person/?personId=" + personId);
                     var receivedData = JsonConvert.DeserializeObject<PersonDetailsDto>(result);
 
-                    CacheHelper.AddItem(receivedData, "" + receivedData.Id);
-
+                    if (receivedData.ErrorMsg.IsEmpty())
+                    {
+                        CacheHelper.AddItem(receivedData, "" + receivedData.Id);
+                    }
                     return receivedData;
                 }
             }
@@ -285,9 +338,11 @@ namespace ASP_Client.Controllers
                         await httpClient.GetStringAsync("http://localhost:54321/movies/?movieId=" + movieId)
                         );
 
-                    CacheHelper.RemoveItem("" + receivedData.Id);
-                    CacheHelper.AddItem(receivedData, "" + receivedData.Id);
-
+                    if (receivedData.ErrorMsg.IsEmpty())
+                    {
+                        CacheHelper.RemoveItem("" + receivedData.Id);
+                        CacheHelper.AddItem(receivedData, "" + receivedData.Id);
+                    }
 
                     return receivedData;
                 }

@@ -44,7 +44,7 @@ namespace ImdbRestService
                     // get next request
                     var context = await _listener.GetContextAsync();
                     // start a task for each request given the context of the request
-                    await Task.Run(() => ProcessRequest(context));
+                    await Task.Run(() => ProcessRequest(new Request(context.Request), new Response(context.Response)));
                 }
                 catch (HttpListenerException)
                 {
@@ -71,7 +71,7 @@ namespace ImdbRestService
         /// </summary>
         /// <param name="context">Received data</param>
         /// <param name="handlers">Handlers to process received data</param>
-        private async void ProcessRequest(HttpListenerContext context, List<IHandler> handlers = null)
+        public async void ProcessRequest(IRequest request, IResponse response, List<IHandler> handlers = null)
         {
             handlers = handlers ?? new List<IHandler>(new IHandler[] { new MovieHandler(), new ProfileHandler(), new PersonHandler() });
    
@@ -81,15 +81,15 @@ namespace ImdbRestService
             {
                 ResponseData = new ResponseData("Error: page not found", HttpStatusCode.NotFound);
 
-                if (context.Request.HttpMethod == "GET")
+                if (request.HttpMethod == "GET")
                 {
-                    await GetResponse(context, handlers);
+                    await GetResponse(request.RawUrl, handlers);
                 }
 
                 // check for POST method
-                else if (context.Request.HttpMethod == "POST")
+                else if (request.HttpMethod == "POST")
                 {
-                    await PostRequest(context, handlers);
+                    await PostRequest(request.RawUrl, request.InputStream, handlers);
                 }
 
                 if (ResponseData == null)
@@ -100,10 +100,10 @@ namespace ImdbRestService
                 // with the std. web encoding iso-8859-1
                 byte[] result = Encoding.GetEncoding("iso-8859-1").GetBytes(ResponseData.Message);
                 // then we must set the length of the response
-                context.Response.ContentLength64 = result.Length;
-                context.Response.StatusCode = (int)ResponseData.HttpStatusCode;
+                response.ContentLength64 = result.Length;
+                response.StatusCode = (int)ResponseData.HttpStatusCode;
                 // and the write the response back to the requester
-                using (var stream = context.Response.OutputStream)
+                using (var stream = response.OutputStream)
                 {
                     await stream.WriteAsync(result, 0, result.Length);
                 }
@@ -120,14 +120,14 @@ namespace ImdbRestService
         /// <param name="context">Received message</param>
         /// <param name="handlers">Number of handlers to pass the received data to</param>
         /// <returns></returns>
-        private async Task PostRequest(HttpListenerContext context, List<IHandler> handlers)
+        private async Task PostRequest(string rawUrl, Stream inputStream, List<IHandler> handlers)
         {
             // split the request URL by '/'
-            var path = SplitUrl(context);
+            var path = SplitUrl(rawUrl);
             // in a post (and put) method we need to fetch the body of the HTTP request
             // read the input stream from the request
-            var inputStream = new StreamReader(context.Request.InputStream);
-            var rawBody = inputStream.ReadToEnd();
+            var stream = new StreamReader(inputStream);
+            var rawBody = stream.ReadToEnd();
 
             // now we can use the ParseQueryString in the HttpUtility
             //NameValueCollection namedValues = HttpUtility.ParseQueryString(bodyDecoded ?? "");
@@ -159,10 +159,10 @@ namespace ImdbRestService
         /// <param name="context">Received message</param>
         /// <param name="handlers">Number of handlers to pass the received data to</param>
         /// <returns></returns>
-        private async Task GetResponse(HttpListenerContext context, List<IHandler> handlers)
+        private async Task GetResponse(string rawUrl, List<IHandler> handlers)
         {
             // split the request URL by '/'
-            var path = SplitUrl(context);
+            var path = SplitUrl(rawUrl);
 
             // if we have anything int the request
             if (path.Count > 0)
@@ -170,8 +170,11 @@ namespace ImdbRestService
                 // checks for a handler able to handle that specific path
                 var handler = handlers.FirstOrDefault(x => x.CanHandle(path[0]));
 
+                
+    //            MovieDetailsDto test = (MovieDetailsDto) PersistanceFacade.getInstance().get(movieId, MovieDetailsDto)
+
                 if (handler != null)
-                {
+                {   
                     //updates the responseData
                     ResponseData = await handler.Handle(path.Skip(1).ToList(), ResponseData);
                 }
@@ -183,11 +186,74 @@ namespace ImdbRestService
         /// </summary>
         /// <param name="context">Context to split</param>
         /// <returns>List of splitted parts</returns>
-        private static List<string> SplitUrl(HttpListenerContext context)
+        private static List<string> SplitUrl(string rawUrl)
         {
-            return context.Request.RawUrl.Split(
+            return rawUrl.Split(
                 new[] { '/' },
                 StringSplitOptions.RemoveEmptyEntries).ToList();
+        }
+        public interface IResponse
+        {
+            int ContentLength64 { set; }
+            int StatusCode { set; }
+            Stream OutputStream { get; }
+        }
+
+        public class Response : IResponse
+        {
+            private readonly HttpListenerResponse _response;
+
+            public Response(HttpListenerResponse response)
+            {
+                _response = response;
+            }
+
+            public int ContentLength64
+            {
+                set { _response.ContentLength64 = value; }
+            }
+
+            public int StatusCode
+            {
+                set { _response.StatusCode = value; }
+            }
+
+            public Stream OutputStream
+            {
+                get { return _response.OutputStream; }
+            }
+        }
+
+        public interface IRequest
+        {
+            string HttpMethod { get; }
+            string RawUrl { get; }
+            Stream InputStream { get; }
+        }
+
+        public class Request : IRequest
+        {
+            private readonly HttpListenerRequest _request;
+
+            public Request(HttpListenerRequest request)
+            {
+                _request = request;
+            }
+
+            public string HttpMethod
+            {
+                get { return _request.HttpMethod; }
+            }
+
+            public string RawUrl
+            {
+                get { return _request.RawUrl; }
+            }
+
+            public Stream InputStream
+            {
+                get { return _request.InputStream; }
+            }
         }
     }
 }

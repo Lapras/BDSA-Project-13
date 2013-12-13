@@ -76,6 +76,8 @@
     <Compile Include="Handlers\PersonHandler.cs" />
     <Compile Include="Handlers\ProfileHandler.cs" />
     <Compile Include="IImdbEntities.cs" />
+    <Compile Include="ImdbRepositories\ExternalMovieDatabaseRepository.cs" />
+    <Compile Include="ImdbRepositories\IExternalMovieDatabaseRepository.cs" />
     <Compile Include="Rating.cs">
       <DependentUpon>Imdb.tt</DependentUpon>
     </Compile>

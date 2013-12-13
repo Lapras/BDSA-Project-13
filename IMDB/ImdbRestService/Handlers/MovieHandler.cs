@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using DtoSubsystem;
+using ImdbRestService.ImdbRepositories;
 using Newtonsoft.Json;
 
 namespace ImdbRestService.Handlers
@@ -16,11 +16,13 @@ namespace ImdbRestService.Handlers
     public class MovieHandler : IHandler
     {
         private readonly IImdbEntities _imdbEntities;
+        private readonly IExternalMovieDatabaseRepository _externalMovieDatabaseRepository;
         private const string PathSegment = "movies";
 
-        public MovieHandler(IImdbEntities imdbEntities = null)
+        public MovieHandler(IImdbEntities imdbEntities = null, IExternalMovieDatabaseRepository externalMovieDatabaseRepository = null)
         {
             _imdbEntities = imdbEntities;
+            _externalMovieDatabaseRepository = externalMovieDatabaseRepository ?? new ExternalMovieDatabaseRepository();
         }
 
         /// <summary>
@@ -63,8 +65,12 @@ namespace ImdbRestService.Handlers
 
                                 if (movies.Count == 0)
                                 {
-                                    movies = await GetMoviesFromIMDbAsync(value);
+                                    movies = await _externalMovieDatabaseRepository.GetMoviesFromIMDbAsync(value);
                                     AddMoviesToDb(movies);
+                                    if (movies.Count < 1)
+                                    {
+                                        movies.Add(new MovieDto {ErrorMsg = "Movie could not be found"});
+                                    }
                                 }
 
                                 msg = new JavaScriptSerializer().Serialize(movies);
@@ -150,65 +156,100 @@ namespace ImdbRestService.Handlers
             return responseData;
         }
 
+        /// <summary>
+        /// Try to either add or update a rating in the database
+        /// </summary>
+        /// <param name="data">Review data needed to modify the database</param>
         private void UpdateRatingToDatabase(ReviewDto data)
         {
-            using (var entities = _imdbEntities ?? new ImdbEntities())
+            try
             {
-
-                int userId = FindUserIdFromUsername(data.Username);
-
-                var test = entities.Rating.Where(r => r.movie_id == data.MovieId && r.user_Id == userId).SingleOrDefault();
-
-                test.rating1 = data.Rating;
-
-
-                entities.SaveChanges();
-
-                foreach (var rating in entities.Rating)
+                using (var entities = _imdbEntities ?? new ImdbEntities())
                 {
-                    Console.WriteLine("-----------");
-                    Console.WriteLine(rating.id);
-                    Console.WriteLine(rating.movie_id);
-                    Console.WriteLine(rating.rating1 + " EDITED RATING");
-                    Console.WriteLine(rating.user_Id);
-                    Console.WriteLine("-----------");
 
+                    int userId = FindUserIdFromUsername(data.Username);
+
+                    var test =
+                        entities.Rating.Where(r => r.movie_id == data.MovieId && r.user_Id == userId).SingleOrDefault();
+
+                    test.rating1 = data.Rating;
+
+
+                    entities.SaveChanges();
+
+                    foreach (var rating in entities.Rating)
+                    {
+                        Console.WriteLine("-----------");
+                        Console.WriteLine(rating.id);
+                        Console.WriteLine(rating.movie_id);
+                        Console.WriteLine(rating.rating1 + " EDITED RATING");
+                        Console.WriteLine(rating.user_Id);
+                        Console.WriteLine("-----------");
+
+                    }
                 }
-
-
-
+            }
+            catch (Exception)
+            {
+                Console.Write("Database is not available");
             }
         }
 
+        /// <summary>
+        /// Check if a movie is already rated by a specific user
+        /// </summary>
+        /// <param name="movieId">Movie to check with</param>
+        /// <param name="username">Name to check with</param>
+        /// <returns>True if already rated</returns>
         private bool AlreadyRated(int movieId, string username)
         {
-            using (var entities = _imdbEntities ?? new ImdbEntities())
+            try
             {
-                int userId = FindUserIdFromUsername(username);
-
-                var alreadyRated = (from r in entities.Rating
-                                    where r.movie_id == movieId && r.user_Id == userId
-                                    select r).ToList();
-
-                if (alreadyRated.Count >= 1)
+                using (var entities = _imdbEntities ?? new ImdbEntities())
                 {
-                    return true;
-                }
+                    int userId = FindUserIdFromUsername(username);
 
-                return false;
+                    var alreadyRated = (from r in entities.Rating
+                        where r.movie_id == movieId && r.user_Id == userId
+                        select r).ToList();
+
+                    if (alreadyRated.Count >= 1)
+                    {
+                        return true;
+                    }
+
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Database is not available");
+                return true;
             }
         }
 
-
+        /// <summary>
+        /// Get the id of a user matching the username
+        /// </summary>
+        /// <param name="username">Name of the user to look for</param>
+        /// <returns>The users id</returns>
         private int FindUserIdFromUsername(string username)
         {
-            using (var entities = _imdbEntities ?? new ImdbEntities())
+            try
             {
-                var findProfile = (from u in entities.User
-                    where u.name == username
-                    select u).First();
+                using (var entities = _imdbEntities ?? new ImdbEntities())
+                {
+                    var findProfile = (from u in entities.User
+                        where u.name == username
+                        select u).First();
 
-                return findProfile.Id;
+                    return findProfile.Id;
+                }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Database is not available");
+                return -1;
             }
         }
 
@@ -335,51 +376,12 @@ namespace ImdbRestService.Handlers
             catch (Exception)
             {
                 Console.Write("Local database is not available");
-                return GetMoviesFromIMDbAsync(title).Result;
+                return _externalMovieDatabaseRepository.GetMoviesFromIMDbAsync(title).Result;
             }
            
         }
 
-        /// <summary>
-        /// Get a movie vom the MyMovieApi interface
-        /// </summary>
-        /// <param name="searchString">Name of the movie to search for</param>
-        /// <returns>List of matching movies</returns>
-        private async Task<List<MovieDto>> GetMoviesFromIMDbAsync(string searchString)
-        {
-            try
-            {
-                using (var httpClient = new HttpClient())
-                {
-                    var response = await httpClient.GetAsync("http://mymovieapi.com/?title=" + searchString);
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        var result = await response.Content.ReadAsStringAsync();
-
-                        if (result.Equals("{\"code\":404, \"error\":\"Film not found\"}"))
-                        {
-                            return new List<MovieDto>();
-                        }
-
-                        return JsonConvert.DeserializeObject<List<MovieDto>>(result);
-                    }
-
-                    return new List<MovieDto>();
-
-                    //return JsonConvert.DeserializeObject<List<MovieDto>>(
-                    //    await httpClient.GetStringAsync("http://mymovieapi.com/?title=" + searchString)
-                    //);
-                }
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("External database not available");
-                return new List<MovieDto>();
-            }
-        }
-		
-		 /// <summary>
+	    /// <summary>
         /// Method recieving a movie by id from the local database
         /// </summary>
         /// <param name="id"> id of the movie we search for </param>
@@ -420,7 +422,7 @@ namespace ImdbRestService.Handlers
                                       EpisodeOf_Id = m.EpisodeOf_Id,
                                       SeasonNumber = m.SeasonNumber,
                                       SeriesYear = m.SeriesYear,
-                                      Rating = 5
+                                      AvgRating = m.Avg_rating
                                   }).ToList();
 
                      movie[0].Participants = new List<PersonDto>();

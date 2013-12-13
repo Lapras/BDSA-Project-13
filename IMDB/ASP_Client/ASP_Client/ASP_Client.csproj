@@ -148,6 +148,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\InfoModel.cs" />
+    <Compile Include="Models\PersonOverviewViewModel.cs" />
     <Compile Include="Models\PersonViewModel.cs" />
     <Compile Include="Models\MovieDetailsViewModel.cs" />
     <Compile Include="Models\MovieOverviewViewModel.cs" />
@@ -248,6 +249,7 @@
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\User\Registration.cshtml" />
     <Content Include="Views\Person\PersonDetails.cshtml" />
+    <Content Include="Views\Person\SearchPerson.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\DtoSubsystem\DtoSubsystem.csproj">

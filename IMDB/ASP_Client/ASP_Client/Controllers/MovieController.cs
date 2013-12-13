@@ -45,9 +45,8 @@ namespace ASP_Client.Controllers
 
             var movieOverviewViewModel = new MovieOverviewViewModel();
 
-            if (foundMovies.First().ErrorMsg.IsEmpty())
+            if (foundMovies != null && foundMovies.First().ErrorMsg.IsEmpty())
             {
-
                 if (foundMovies.Count != 0)
                 {
                     movieOverviewViewModel.FoundMovies = foundMovies;
@@ -55,7 +54,7 @@ namespace ASP_Client.Controllers
             }
             else
             {
-                movieOverviewViewModel.ErrorMsg = foundMovies.First().ErrorMsg;
+                if (foundMovies != null) movieOverviewViewModel.ErrorMsg = foundMovies.First().ErrorMsg;
             }
 
             return View(movieOverviewViewModel);
@@ -115,7 +114,7 @@ namespace ASP_Client.Controllers
                 Id = ratedMovie.Id,
                 Title = ratedMovie.Title,
                 Year = ratedMovie.Year,
-                Rating = ratedMovie.Rating
+                AvgRating = ratedMovie.AvgRating
             };
 
             var temp = ratedMovie.Participants.Select(participant => new PersonViewModel
