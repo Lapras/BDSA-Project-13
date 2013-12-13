@@ -29,6 +29,7 @@ namespace ImdbRestService
         public Nullable<int> EpisodeNumber { get; set; }
         public string SeriesYear { get; set; }
         public Nullable<int> EpisodeOf_Id { get; set; }
+        public Nullable<double> Avg_rating { get; set; }
     
         public virtual ICollection<MovieInfo> MovieInfoes { get; set; }
         public virtual ICollection<Movie> Movies1 { get; set; }

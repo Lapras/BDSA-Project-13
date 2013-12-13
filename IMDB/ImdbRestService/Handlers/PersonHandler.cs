@@ -65,7 +65,6 @@ namespace ImdbRestService.Handlers
 
                             msg = new JavaScriptSerializer().Serialize(people);
                             return new ResponseData(msg, HttpStatusCode.OK);
-                            break;
 
                         case "personId":
 
@@ -73,7 +72,6 @@ namespace ImdbRestService.Handlers
 
                             msg = new JavaScriptSerializer().Serialize(person);
                             return new ResponseData(msg, HttpStatusCode.OK);
-                            break;
                     }
                 }
             }
@@ -93,7 +91,7 @@ namespace ImdbRestService.Handlers
                 return (from person in entities.People
                     join participant in entities.Participates on person.Id equals participant.ParticipateId
                     where person.Name.Contains(name)
-                    select new PersonDto()
+                    select new PersonDto
                     {
                         Id = person.Id,
                         Name = person.Name,

@@ -114,7 +114,7 @@ namespace ASP_Client.Controllers
                 Id = ratedMovie.Id,
                 Title = ratedMovie.Title,
                 Year = ratedMovie.Year,
-                Rating = ratedMovie.Rating
+                AvgRating = ratedMovie.AvgRating
             };
 
             var temp = ratedMovie.Participants.Select(participant => new PersonViewModel

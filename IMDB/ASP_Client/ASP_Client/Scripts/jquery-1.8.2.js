@@ -8077,7 +8077,7 @@ function ajaxConvert( s, response ) {
 		}
 	}
 
-	// Convert to each sequential dataType, tolerating list modification
+	// Convert to each sequential dataType, toleAvgRating list modification
 	for ( ; (current = dataTypes[++i]); ) {
 
 		// There's only work to do if current dataType is non-auto
@@ -8568,7 +8568,7 @@ var fxNow, timerId,
 						start = start / scale;
 						jQuery.style( tween.elem, prop, start + unit );
 
-					// Update scale, tolerating zero or NaN from tween.cur()
+					// Update scale, toleAvgRating zero or NaN from tween.cur()
 					// And breaking the loop if scale is unchanged or perfect, or if we've just had enough
 					} while ( scale !== (scale = tween.cur() / target) && scale !== 1 && --maxIterations );
 				}

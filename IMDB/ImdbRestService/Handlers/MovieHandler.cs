@@ -69,7 +69,7 @@ namespace ImdbRestService.Handlers
                                     AddMoviesToDb(movies);
                                     if (movies.Count < 1)
                                     {
-                                        movies.Add(new MovieDto {ErrorMsg = "No database is available"});
+                                        movies.Add(new MovieDto {ErrorMsg = "Movie could not be found"});
                                     }
                                 }
 
@@ -422,7 +422,7 @@ namespace ImdbRestService.Handlers
                                       EpisodeOf_Id = m.EpisodeOf_Id,
                                       SeasonNumber = m.SeasonNumber,
                                       SeriesYear = m.SeriesYear,
-                                      Rating = 5
+                                      AvgRating = m.Avg_rating
                                   }).ToList();
 
                      movie[0].Participants = new List<PersonDto>();

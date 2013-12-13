@@ -6312,7 +6312,7 @@ $.extend( $.ui.autocomplete, {
  * 
  * This widget isn't yet finished and the API is subject to change. We plan to finish
  * it for the next release. You're welcome to give it a try anyway and give us feedback,
- * as long as you're okay with migrating your code later on. We can help with that, too.
+ * as long as you're okay with migAvgRating your code later on. We can help with that, too.
  *
  * Copyright 2010, AUTHORS.txt (http://jqueryui.com/about)
  * Licensed under the MIT license.
