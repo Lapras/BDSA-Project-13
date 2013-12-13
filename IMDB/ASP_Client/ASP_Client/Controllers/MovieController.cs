@@ -109,25 +109,26 @@ namespace ASP_Client.Controllers
             var serverReponse = await Storage.RateMovie(reviewDto);
             var ratedMovie = await Storage.GetMovieDetailsLocallyAsyncForce(model.Id);
 
-            var movieDetailsViewModel = new MovieDetailsViewModel
-            {
-                Id = ratedMovie.Id,
-                Title = ratedMovie.Title,
-                Year = ratedMovie.Year,
-                AvgRating = ratedMovie.AvgRating
-            };
+                var movieDetailsViewModel = new MovieDetailsViewModel
+                {
+                    Id = ratedMovie.Id,
+                    Title = ratedMovie.Title,
+                    Year = ratedMovie.Year,
+                    AvgRating = ratedMovie.AvgRating
+                };
 
-            var temp = ratedMovie.Participants.Select(participant => new PersonViewModel
-            {
-                Id = participant.Id,
-                Name = participant.Name,
-                CharacterName = participant.CharacterName
-            }).ToList();
+                var temp = ratedMovie.Participants.Select(participant => new PersonViewModel
+                {
+                    Id = participant.Id,
+                    Name = participant.Name,
+                    CharacterName = participant.CharacterName
+                }).ToList();
 
-            movieDetailsViewModel.Participants = temp;
-
+                movieDetailsViewModel.Participants = temp;
+           
             // There is now RateMovie view... but how else to get the rating?
-           return View(movieDetailsViewModel);
+           
+            return View(movieDetailsViewModel);
         }
     }
 }

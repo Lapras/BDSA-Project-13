@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.WebPages;
@@ -59,10 +61,18 @@ namespace ASP_Client.Controllers
             {
                 throw new RESTserviceException("There was an serializaton or deserializaton error", e);
             }
-            catch (Exception e)
+            catch (WebException)
             {
-                return new List<MovieDto> {new MovieDto {ErrorMsg = "Database not available"}};
+                return new List<MovieDto> { new MovieDto {ErrorMsg = "Application server unavailable"}};
             }
+            catch (SocketException)
+            {
+                return new List<MovieDto> { new MovieDto {ErrorMsg = "Application server unavailable" }};
+            }
+            catch (HttpRequestException)
+            {
+                return new List<MovieDto> { new MovieDto {ErrorMsg = "Application server unavailable" }};
+            }   
 
         }
 
@@ -82,7 +92,7 @@ namespace ASP_Client.Controllers
                 using (var httpClient = new HttpClient())
                 {
                     var receivedData = JsonConvert.DeserializeObject<MovieDetailsDto>(
-                        await httpClient.GetStringAsync("http://localhost:54321/movies/?movieId=" + movieId)
+                        await httpClient.GetStringAsync("http://localhost:54321/movies/" + movieId)
                         );
 
                     if (receivedData.ErrorMsg.IsEmpty())
@@ -109,10 +119,18 @@ namespace ASP_Client.Controllers
             {
                 throw new RESTserviceException("there was an serializaton or deserializaton error", e);
             }
-            catch (Exception)
+            catch (WebException)
             {
                 return new MovieDetailsDto {ErrorMsg = "Application server unavailable"};
             }
+            catch(SocketException)
+            {
+                return new MovieDetailsDto { ErrorMsg = "Application server unavailable" };
+            }
+            catch(HttpRequestException)
+            {
+                return new MovieDetailsDto { ErrorMsg = "Application server unavailable" };
+            }   
 
         }
 
@@ -158,10 +176,18 @@ namespace ASP_Client.Controllers
             {
                 throw new RESTserviceException("There was an serializaton or deserializaton error", e);
             }
-            catch (Exception e)
+            catch (WebException)
             {
                 return new List<PersonDto> { new PersonDto { ErrorMsg = "Database not available" } };
             }
+            catch (SocketException)
+            {
+                return new List<PersonDto> { new PersonDto { ErrorMsg = "Database not available" } };
+            }
+            catch (HttpRequestException)
+            {
+                return new List<PersonDto> { new PersonDto { ErrorMsg = "Database not available" } };
+            }   
         }
 
         /// <summary>
@@ -180,7 +206,7 @@ namespace ASP_Client.Controllers
             {
                 using (var httpClient = new HttpClient())
                 {
-                    var result = await httpClient.GetStringAsync("http://localhost:54321/person/?personId=" + personId);
+                    var result = await httpClient.GetStringAsync("http://localhost:54321/person/" + personId);
                     var receivedData = JsonConvert.DeserializeObject<PersonDetailsDto>(result);
 
                     if (receivedData.ErrorMsg.IsEmpty())
@@ -207,10 +233,19 @@ namespace ASP_Client.Controllers
             {
                 throw new RESTserviceException("there was an serializaton or deserializaton error", e);
             }
-            catch (Exception e)
+            catch (WebException)
             {
-                return new PersonDetailsDto() { ErrorMsg = "Database is unavailable"};
+                return new PersonDetailsDto { ErrorMsg = "Database not available" };
             }
+            catch (SocketException)
+            {
+                return new PersonDetailsDto { ErrorMsg = "Database not available" };
+            }
+            catch (HttpRequestException)
+            {
+                return new PersonDetailsDto { ErrorMsg = "Database not available" };
+            } 
+
         }
 
         /// <summary>
@@ -243,12 +278,18 @@ namespace ASP_Client.Controllers
             {
                 throw new RESTserviceException("there was an serializaton or deserializaton error", e);
             }
-            catch (Exception e)
+            catch (WebException)
             {
-                return new ReplyDto() { Message = "Database not available" };
+                return new ReplyDto { Message = "Database not available" };
             }
-
-
+            catch (SocketException)
+            {
+                return new ReplyDto { Message = "Database not available" };
+            }
+            catch (HttpRequestException)
+            {
+                return new ReplyDto { Message = "Database not available" };
+            }
         }
 
         /// <summary>
@@ -281,10 +322,18 @@ namespace ASP_Client.Controllers
             {
                 throw new RESTserviceException("there was an serializaton or deserializaton error", e);
             }
-            catch (Exception e)
+            catch (WebException)
             {
-                return new ReplyDto() {Message = "Database not available"};
+                return new ReplyDto { Message = "Database not available" };
             }
+            catch (SocketException)
+            {
+                return new ReplyDto { Message = "Database not available" };
+            }
+            catch (HttpRequestException)
+            {
+                return new ReplyDto { Message = "Database not available" };
+            } 
         }
 
         /// <summary>
@@ -317,10 +366,18 @@ namespace ASP_Client.Controllers
             {
                 throw new RESTserviceException("there was an serializaton or deserializaton error", e);
             }
-            catch (Exception e)
+            catch (WebException)
             {
-                return null;
+                return new ReplyDto { Message = "Database not available" };
             }
+            catch (SocketException)
+            {
+                return new ReplyDto { Message = "Database not available" };
+            }
+            catch (HttpRequestException)
+            {
+                return new ReplyDto { Message = "Database not available" };
+            } 
         }
 
         /// <summary>
@@ -335,7 +392,7 @@ namespace ASP_Client.Controllers
                 using (var httpClient = new HttpClient())
                 {
                     var receivedData = JsonConvert.DeserializeObject<MovieDetailsDto>(
-                        await httpClient.GetStringAsync("http://localhost:54321/movies/?movieId=" + movieId)
+                        await httpClient.GetStringAsync("http://localhost:54321/movies/" + movieId)
                         );
 
                     if (receivedData.ErrorMsg.IsEmpty())
@@ -364,10 +421,18 @@ namespace ASP_Client.Controllers
             {
                 throw new RESTserviceException("there was an serializaton or deserializaton error", e);
             }
-            catch (Exception e)
+            catch (WebException)
             {
-                return null;
+                return new MovieDetailsDto { ErrorMsg = "Database not available" };
             }
+            catch (SocketException)
+            {
+                return new MovieDetailsDto { ErrorMsg = "Database not available" };
+            }
+            catch (HttpRequestException)
+            {
+                return new MovieDetailsDto { ErrorMsg = "Database not available" };
+            } 
         }
 
 

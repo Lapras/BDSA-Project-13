@@ -49,52 +49,40 @@ namespace ImdbRestService.Handlers
 
             if (path != null || path.Count == 1)
             {
+                string msg;
 
                 var firstSegment = path.First();
                 if (firstSegment.StartsWith("?"))
                 {
-                    var key = firstSegment.Substring(1).Split(new[] { '=' })[0];
-                    var value = firstSegment.Split(new[] { '=' })[1];
-
-                        String msg;
-
-                        switch (key)
-                        {
-                            case "title":
-
-                                var movies = GetMoviesByTitle(value);
-
-                                if (movies.Count == 0)
-                                {
-                                    movies = await _externalMovieDatabaseRepository.GetMoviesFromIMDbAsync(value);
-                                    AddMoviesToDb(movies);
-                                    if (movies.Count < 1)
-                                    {
-                                        movies.Add(new MovieDto {ErrorMsg = "Movie could not be found"});
-                                    }
-                                }
-
-                                msg = new JavaScriptSerializer().Serialize(movies);
-                                return new ResponseData(msg, HttpStatusCode.OK);
-                                break;
-
-                            case "movieId":
-
-                                var movie = GetMovieById(Convert.ToInt32(value));
-
-                                msg = new JavaScriptSerializer().Serialize(movie);
-                                return new ResponseData(msg, HttpStatusCode.OK);
-                                break;
-
-                            
-                        }
-                }
-
-                if (!firstSegment.StartsWith("?"))
-                {
-                    var key = path.First();
+                    var key = firstSegment.Substring(1).Split(new[] {'='})[0];
+                    var value = firstSegment.Split(new[] {'='})[1];
 
                     switch (key)
+                    {
+                        case "title":
+
+                            var movies = GetMoviesByTitle(value);
+
+                            if (movies.Count == 0)
+                            {
+                                movies = await _externalMovieDatabaseRepository.GetMoviesFromIMDbAsync(value);
+                                AddMoviesToDb(movies);
+                                if (movies.Count < 1)
+                                {
+                                    movies.Add(new MovieDto {ErrorMsg = "Movie could not be found"});
+                                }
+                            }
+
+                            msg = new JavaScriptSerializer().Serialize(movies);
+                            return new ResponseData(msg, HttpStatusCode.OK);
+                            break;
+                    }
+                }
+                else
+                {
+                    var identifier = path.First();
+
+                    switch (identifier)
                     {
                         case "review":
 
@@ -106,11 +94,9 @@ namespace ImdbRestService.Handlers
                             // Parse Json object back to data
                             var data = JsonConvert.DeserializeObject<ReviewDto>(path[1]);
 
-                            //Console.WriteLine("Movie: {0}\nUser: {1}\nRating: {2}", data.MovieId, data.Username,
-                            //    data.Rating);
 
-
-                            if (MovieAndProfileExist(data.MovieId, data.Username) && !AlreadyRated(data.MovieId, data.Username))
+                            if (MovieAndProfileExist(data.MovieId, data.Username) &&
+                                !AlreadyRated(data.MovieId, data.Username))
                             {
                                 // acutally push to database
 
@@ -125,7 +111,8 @@ namespace ImdbRestService.Handlers
                                 return new ResponseData(ratingAddedMsg, HttpStatusCode.OK);
                             }
 
-                            if (MovieAndProfileExist(data.MovieId, data.Username) && AlreadyRated(data.MovieId, data.Username))
+                            if (MovieAndProfileExist(data.MovieId, data.Username) &&
+                                AlreadyRated(data.MovieId, data.Username))
                             {
                                 // acutally push to database
 
@@ -149,7 +136,14 @@ namespace ImdbRestService.Handlers
                                 });
                             return new ResponseData(ratingNotAddedMsg, HttpStatusCode.OK);
 
+                            
+                        default: // Request of a specific movie
+                            var movie = GetMovieById(Convert.ToInt32(identifier));
+
+                            msg = new JavaScriptSerializer().Serialize(movie);
+                            return new ResponseData(msg, HttpStatusCode.OK);
                             break;
+
                     }
                 }
             }
@@ -374,7 +368,7 @@ namespace ImdbRestService.Handlers
                                 Id = m.Id,
                                 Title = m.Title,
                                 Year = m.Year
-                            }).ToList();
+                            }).Take(100).ToList();
                 }
             }
             catch (Exception e)

@@ -46,14 +46,15 @@ namespace ImdbRestService.Handlers
         {
             if (path != null && path.Count == 1)
             {
+
+                string msg;
+
                 var firstSegment = path.First();
                 if (firstSegment.StartsWith("?"))
                 {
                     var key = firstSegment.Substring(1).Split(new[] {'='})[0];
                     var value = firstSegment.Split(new[] {'='})[1];
-
-
-                    String msg;
+                    ;
 
                     switch (key)
                     {
@@ -65,17 +66,21 @@ namespace ImdbRestService.Handlers
 
                             msg = new JavaScriptSerializer().Serialize(people);
                             return new ResponseData(msg, HttpStatusCode.OK);
+                    }
+                }
+                else
+                {
+                    switch (firstSegment)
+                    {
+                        default:
 
-                        case "personId":
-
-                           var person = GetPersonById(Convert.ToInt32(value));
+                            var person = GetPersonById(Convert.ToInt32(firstSegment));
 
                             msg = new JavaScriptSerializer().Serialize(person);
                             return new ResponseData(msg, HttpStatusCode.OK);
                     }
                 }
             }
-
             return responseData;
         }
 
@@ -96,7 +101,7 @@ namespace ImdbRestService.Handlers
                         Id = person.Id,
                         Name = person.Name,
                         CharacterName = participant.CharName
-                    }).Take(20).ToList();
+                    }).Take(100).ToList();
             }
         }
 
