@@ -110,11 +110,10 @@ namespace ImdbRestService.Handlers
         {
             try
             {
-
                 using (var entities = _imdbEntities ?? new ImdbEntities())
                 {
                     var person = (from people in entities.People
-                        join participant in entities.Participates on people.Id equals participant.ParticipateId
+                        join participant in entities.Participates on people.Id equals participant.Person_Id
                         where people.Id == id
                         select new PersonDetailsDto
                         {
