@@ -19,12 +19,17 @@ namespace WPF_Client.Storage
         /// <summary>
         /// Cache for MovieDtos.
         /// </summary>
-        private ObjectCache _movieDtocache;
+        private ObjectCache _movieDtoCache;
+
+        /// <summary>
+        /// Cache for PersonDtos.
+        /// </summary>
+        private ObjectCache _personDtoCache;
 
         /// <summary>
         /// Cache for MovieDetailDtos.
         /// </summary>
-        private ObjectCache _movieDetailDtocache;
+        private ObjectCache _movieDetailDtoCache;
 
         /// <summary>
         /// Cache for PersonDetailDtos
@@ -39,11 +44,21 @@ namespace WPF_Client.Storage
         {
             _strategy = strategy;
 
-            _movieDtocache = MemoryCache.Default;
-            _movieDetailDtocache = MemoryCache.Default;
+            _movieDtoCache = new MemoryCache("movieDtoCache");
+            _movieDetailDtoCache = new MemoryCache("movieDetailDtoCache");
 
-            _personDetailDtoCache = MemoryCache.Default;
+            _personDtoCache = new MemoryCache("personDtoCache");
+            _personDetailDtoCache = new MemoryCache("personDetailDtoCache");
 
+        }
+
+        /// <summary>
+        /// Sets a new strategy.
+        /// </summary>
+        /// <param name="strategy">The input strategy.</param>
+        public void SetStrategy(IStorageStrategy strategy)
+        {
+            _strategy = strategy;
         }
 
         /// <summary>
@@ -56,7 +71,7 @@ namespace WPF_Client.Storage
 
             try
             {
-                if (_movieDtocache.Get(searchString) == null)
+                if (_movieDtoCache.Get(searchString) == null)
                 {
 
                     var storageMovieDtos = _strategy.MovieDtos(searchString); // now we search in the strategy
@@ -65,13 +80,13 @@ namespace WPF_Client.Storage
                     CacheItemPolicy policy = new CacheItemPolicy();
                     policy.AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(900.0); //15 min
 
-                    _movieDtocache.Set(searchString, storageMovieDtos, policy);
+                    _movieDtoCache.Set(searchString, storageMovieDtos, policy);
 
                     return storageMovieDtos;
 
                 }
 
-                return (ObservableCollection<MovieDto>) _movieDtocache.Get(searchString);
+                return (ObservableCollection<MovieDto>) _movieDtoCache.Get(searchString);
 
             }
             catch (RESTserviceException e)
@@ -82,6 +97,44 @@ namespace WPF_Client.Storage
             
         }
 
+
+        /// <summary>
+        /// Retrieves the PersonDtos of the supplied searchstring. It always looks in its cache first.
+        /// </summary>
+        /// <param name="searchString">The search string.</param>
+        /// <returns>The PersonDtos.</returns>
+        public ObservableCollection<PersonDto> PersonDtos(string searchString)
+        {
+
+            try
+            {
+                if (_personDtoCache.Get(searchString) == null)
+                {
+
+                    var storagePersonDtos = _strategy.PersonDtos(searchString); // now we search in the strategy
+
+
+                    CacheItemPolicy policy = new CacheItemPolicy();
+                    policy.AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(900.0); //15 min
+
+                    _personDtoCache.Set(searchString, storagePersonDtos, policy);
+
+                    return storagePersonDtos;
+
+                }
+
+                return (ObservableCollection<PersonDto>)_personDtoCache.Get(searchString);
+
+            }
+            catch (RESTserviceException e)
+            {
+                throw new StorageException("REST strategy unavailable.", e);
+            }
+
+
+        }
+
+
         /// <summary>
         /// Retrives the MovieDetailsDto of a movie. It always looks in its cache first.
         /// </summary>
@@ -91,7 +144,7 @@ namespace WPF_Client.Storage
         {
             try
             {
-                if (_movieDetailDtocache.Get(movieId.ToString()) == null)
+                if (_movieDetailDtoCache.Get(movieId.ToString()) == null)
                 {
 
                     var storageMovieDetailDto = _strategy.MovieDetailsDto(movieId); // now we search in the strategy
@@ -100,13 +153,13 @@ namespace WPF_Client.Storage
                     CacheItemPolicy policy = new CacheItemPolicy();
                     policy.AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(5.0); //5 sec
 
-                    _movieDetailDtocache.Set(movieId.ToString(), storageMovieDetailDto, policy);
+                    _movieDetailDtoCache.Set(movieId.ToString(), storageMovieDetailDto, policy);
 
                     return storageMovieDetailDto;
 
                 }
 
-                return (MovieDetailsDto)_movieDetailDtocache.Get(movieId.ToString());
+                return (MovieDetailsDto)_movieDetailDtoCache.Get(movieId.ToString());
             }
             catch (RESTserviceException e)
             {
@@ -203,7 +256,7 @@ namespace WPF_Client.Storage
                 //so that the old avg. rating is updated.
                 if (result)
                 {
-                    _movieDetailDtocache.Remove(movieId.ToString());
+                    _movieDetailDtoCache.Remove(movieId.ToString());
                 }
 
                 return result;

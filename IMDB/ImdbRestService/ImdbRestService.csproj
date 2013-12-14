@@ -73,17 +73,22 @@
       <DependentUpon>Imdb.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Handlers\PersonHandler.cs" />
-    <Compile Include="Handlers\ProfileHandler.cs" />
+    <Compile Include="Mapper\MovieDetailsMapper.cs" />
+    <Compile Include="Mapper\PersonDetailsMapper.cs" />
+    <Compile Include="Mapper\PersonMapper.cs" />
+    <Compile Include="Mapper\LoginMapper.cs" />
     <Compile Include="IImdbEntities.cs" />
     <Compile Include="ImdbRepositories\ExternalMovieDatabaseRepository.cs" />
     <Compile Include="ImdbRepositories\IExternalMovieDatabaseRepository.cs" />
+    <Compile Include="Mapper\RegistrationMapper.cs" />
+    <Compile Include="Mapper\ReviewMapper.cs" />
+    <Compile Include="PersistenceFacade.cs" />
     <Compile Include="Rating.cs">
       <DependentUpon>Imdb.tt</DependentUpon>
     </Compile>
     <Compile Include="ResponseData.cs" />
-    <Compile Include="Handlers\IHandler.cs" />
-    <Compile Include="Handlers\MovieHandler.cs" />
+    <Compile Include="Mapper\IMapper.cs" />
+    <Compile Include="Mapper\MovieMapper.cs" />
     <Compile Include="Imdb.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -102,7 +107,7 @@
       <DependentUpon>Imdb.edmx</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="ImdbRestWebServer.cs" />
+    <Compile Include="ImdbRestWebServerAdapter.cs" />
     <Compile Include="InfoType.cs">
       <DependentUpon>Imdb.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

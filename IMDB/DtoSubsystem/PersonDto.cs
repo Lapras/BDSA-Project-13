@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace DtoSubsystem
 {
     [Serializable]
-    public class PersonDto
+    public class PersonDto : Dto
     {
         public int Id { get; set; }
         public string Name { get; set; }

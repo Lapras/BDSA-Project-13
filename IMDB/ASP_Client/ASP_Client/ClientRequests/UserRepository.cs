@@ -1,5 +1,4 @@
-﻿using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using ASP_Client.Controllers;
 using ASP_Client.Models;
 using DtoSubsystem;

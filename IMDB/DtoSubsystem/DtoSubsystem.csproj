@@ -47,7 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dto.cs" />
     <Compile Include="InfoDto.cs" />
+    <Compile Include="LoginDto.cs" />
     <Compile Include="MovieDetailsDto.cs" />
     <Compile Include="MovieDto.cs" />
     <Compile Include="PersonDetailsDto.cs" />
@@ -55,7 +57,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReplyDto.cs" />
     <Compile Include="ReviewDto.cs" />
-    <Compile Include="UserModelDto.cs" />
+    <Compile Include="RegistrationDto.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

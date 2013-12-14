@@ -132,7 +132,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="ClientRequests\IMovieRepository.cs" />
+    <Compile Include="ClientRequests\IPersonRepository.cs" />
     <Compile Include="ClientRequests\IUserRepository.cs" />
+    <Compile Include="ClientRequests\MovieRepository.cs" />
+    <Compile Include="ClientRequests\PersonRepository.cs" />
     <Compile Include="ClientRequests\UserRepository.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\RestCommunicationFacade.cs" />
@@ -282,7 +286,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>38809</DevelopmentServerPort>
+          <DevelopmentServerPort>7819</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:54321</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

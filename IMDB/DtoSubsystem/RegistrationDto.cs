@@ -5,9 +5,9 @@ using System.Runtime.Serialization;
 namespace DtoSubsystem
 {
     [Serializable]
-    public class ReplyDto : Dto
+    public class RegistrationDto : Dto
     {
-        public string Message { get; set; }
-        public bool Executed { get; set; }
+        public string Name { get; set; }
+        public string Password { get; set; }
     }
 }

@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 namespace DtoSubsystem
 {
     [Serializable]
-    public class UserModelDto
+    public class LoginDto : Dto
     {
         public string Name { get; set; }
         public string Password { get; set; }

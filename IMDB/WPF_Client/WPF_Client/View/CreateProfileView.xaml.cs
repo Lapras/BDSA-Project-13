@@ -17,7 +17,7 @@ using WPF_Client.ViewModel;
 namespace WPF_Client.View
 {
     /// <summary>
-    /// Interaction logic for CreateProfileView.xaml. There should be no code in here other than the basic initialization!
+    /// Code behind for the view. There should be no code in here other than the basic initialization!
     /// </summary>
     public partial class CreateProfileView : UserControl
     {

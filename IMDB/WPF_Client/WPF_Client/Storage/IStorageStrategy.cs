@@ -22,6 +22,13 @@ namespace WPF_Client.Storage
         ObservableCollection<MovieDto> MovieDtos(string searchString);
 
         /// <summary>
+        /// Retrives the PersonDtos.
+        /// </summary>
+        /// <param name="searchString">The input search string.</param>
+        /// <returns>A collection of PersonDtos.</returns>
+        ObservableCollection<PersonDto> PersonDtos(string searchString);
+
+        /// <summary>
         /// Retrives the MovieDetailsDto.
         /// </summary>
         /// <param name="movieId">The input movieId</param>

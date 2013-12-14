@@ -5,28 +5,34 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using ImdbRestService.Handlers;
+using System.Web;
+using DtoSubsystem;
+using Newtonsoft.Json;
 
 namespace ImdbRestService
 {
     /// <summary>
     /// Class handling incoming REST requests
     /// </summary>
-    public class ImdbRestWebServer
+    public class ImdbRestWebServerAdapter
     {
         /// <summary>
         /// Listener for http requests
         /// </summary>
         private readonly HttpListener _listener;
+
+        private readonly PersistenceFacade _logic;
+
         /// <summary>
         /// Message returned to the client
         /// </summary>
         public ResponseData ResponseData { get; private set; }
 
         // give the base address as argument
-        public ImdbRestWebServer()
+        public ImdbRestWebServerAdapter()
         {
             _listener = new HttpListener();
+            _logic = new PersistenceFacade();
         }
 
         /// <summary>
@@ -70,12 +76,9 @@ namespace ImdbRestService
         /// Process a request
         /// </summary>
         /// <param name="response">Response we're sending back to the client</param>
-        /// <param name="handlers">Handlers to process received data</param>
         /// <param name="request">Request we receive from the server</param>
-        public async void ProcessRequest(IRequest request, IResponse response, List<IHandler> handlers = null)
+        public async void ProcessRequest(IRequest request, IResponse response)
         {
-            handlers = handlers ?? new List<IHandler>(new IHandler[] { new MovieHandler(), new ProfileHandler(), new PersonHandler() });
-   
             // you properly need to split this into a number of methods to make a readable
             // solution :-)
             try
@@ -84,13 +87,13 @@ namespace ImdbRestService
 
                 if (request.HttpMethod == "GET")
                 {
-                    await GetResponse(request.RawUrl, handlers);
+                    await GetResponse(request.RawUrl);
                 }
 
                 // check for POST method
                 else if (request.HttpMethod == "POST")
                 {
-                    await PostRequest(request.RawUrl, request.InputStream, handlers);
+                    await PostRequest(request.RawUrl, request.InputStream);
                 }
 
                 if (ResponseData == null)
@@ -119,10 +122,9 @@ namespace ImdbRestService
         /// Method process POST requests and hand the content to proper handlers
         /// </summary>
         /// <param name="rawUrl">Incoming REST request</param>
-        /// <param name="handlers">Handlers to process received data</param>
         /// <param name="inputStream">Incoming data to be posted</param>
         /// <returns></returns>
-        private async Task PostRequest(string rawUrl, Stream inputStream, IEnumerable<IHandler> handlers)
+        private async Task PostRequest(string rawUrl, Stream inputStream)
         {
             // split the request URL by '/'
             var path = SplitUrl(rawUrl);
@@ -137,16 +139,36 @@ namespace ImdbRestService
             if (path.Count > 0)
             {
                 // checks for a handler able to handle that specific path
-                var handler = handlers.FirstOrDefault(x => x.CanHandle(path[0]));
+                //    var handler = handlers.FirstOrDefault(x => x.CanHandle(path[0]));
 
-                var url = path.Skip(1).ToList();
-                url.Add(rawBody);
+                rawBody = rawBody.Replace("k__BackingField", "");
+                rawBody = rawBody.Replace("<", "");
+                rawBody = rawBody.Replace(">", "");
 
-                if (handler != null)
+             //   var url = path.Skip(1).ToList();
+              //  url.Add(rawBody);
+                Dto expected = null;
+                var key = path.First();
+
+                switch (key)
                 {
-                    // handle the request and update the response data
-                    ResponseData = await handler.Handle(url, ResponseData);
+                    case "user":
+                        if (path[1].Equals("registration"))
+                        {
+                            expected = new RegistrationDto();
+                        }
+                        else
+                        {
+                            expected = new LoginDto();
+                        }
+                      
+                        break;
+                    case "movies":
+                        expected = new ReviewDto();
+                        break;
                 }
+
+                ResponseData = await _logic.Post(rawBody, expected);
             }
 
             else
@@ -159,9 +181,8 @@ namespace ImdbRestService
         /// Method process GET requests and hand the content to proper handlers
         /// </summary>
         /// <param name="rawUrl">Incoming REST request</param>
-        /// <param name="handlers">Number of handlers to pass the received data to</param>
         /// <returns></returns>
-        private async Task GetResponse(string rawUrl, IEnumerable<IHandler> handlers)
+        private async Task GetResponse(string rawUrl)
         {
             // split the request URL by '/'
             var path = SplitUrl(rawUrl);
@@ -169,17 +190,41 @@ namespace ImdbRestService
             // if we have anything int the request
             if (path.Count > 0)
             {
-                // checks for a handler able to handle that specific path
-                var handler = handlers.FirstOrDefault(x => x.CanHandle(path[0]));
+                Dto expected = null;
+                var key = path.First();
 
-                
-    //            MovieDetailsDto test = (MovieDetailsDto) PersistanceFacade.getInstance().get(movieId, MovieDetailsDto)
+                switch (key)
+                {
+                    case "movies":
+                        if (path[1].StartsWith("?"))
+                        {
+                            key = path[1].Substring(1).Split(new[] {'='})[1];
+                            key = HttpUtility.UrlDecode(key); // removes %20 and adds whitespace instead
 
-                if (handler != null)
-                {   
-                    //updates the responseData
-                    ResponseData = await handler.Handle(path.Skip(1).ToList(), ResponseData);
+                            expected = new MovieDto();
+                        }
+                        else
+                        {
+                            key = path[1];
+                            expected = new MovieDetailsDto();
+                        }
+                        break;
+                    case "person":
+                        if (path[1].StartsWith("?"))
+                        {
+                            key = path[1].Substring(1).Split(new[] { '=' })[1];
+                            key = HttpUtility.UrlDecode(key); // removes %20 and adds whitespace instead
+                            expected = new PersonDto();
+                        }
+                        else
+                        {
+                            key = path[1];
+                            expected = new PersonDetailsDto();
+                        }
+                        break;
                 }
+
+                ResponseData = await _logic.Get(key, expected);
             }
         }
 
@@ -272,3 +317,22 @@ namespace ImdbRestService
         }
     }
 }
+
+
+
+
+
+
+/*       case "User":
+                        expected = new RegistrationDto();
+                        break;
+                }
+
+                if (expected != null)
+                {
+                    ResponseData = await _logic.Get(path.Skip(1).ToList(), expected);
+                }
+                else
+                {
+                    ResponseData = new ResponseData("No handler found", HttpStatusCode.NotFound);
+                }*/

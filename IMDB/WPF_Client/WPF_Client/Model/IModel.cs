@@ -15,6 +15,12 @@ namespace WPF_Client.Model
         /// <returns>A collection of MovieDtos</returns>
         ObservableCollection<MovieDto> MovieDtos(string searchString);
 
+        /// <summary>
+        /// The collection of PersonDtos from the supplied searchString.
+        /// </summary>
+        /// <param name="searchString">The input searchString</param>
+        /// <returns>A collection of PersonDtos</returns>
+        ObservableCollection<PersonDto> PersonDtos(string searchString);
 
         /// <summary>
         /// The MovieDetailsDto from the supplied movieId.
