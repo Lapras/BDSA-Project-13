@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.WebPages;
+using ASP_Client.ClientRequests;
 using ASP_Client.Models;
 using DtoSubsystem;
 
@@ -15,16 +16,16 @@ namespace ASP_Client.Controllers
     /// </summary>
     public class MovieController : BaseController
     {
-        //private readonly IMoviesRepository _repository;
+        private readonly IMovieRepository _movieRepository;
 
-        //public MovieController() : this(new MoviesRepository())
-        //{            
-        //}
-
-        //public MovieController(IMoviesRepository repository)
-        //{
-        //    _repository = repository;
-        //}
+        public MovieController() : this(new MovieRepository())
+        {            
+        }
+        
+        public MovieController(IMovieRepository movieRepository)
+        {
+            _movieRepository = movieRepository;
+        }
 
         /// <summary>
         /// Method creating a list of movies based on a search string and puts them in a MovieOverviewViewModel which
@@ -41,7 +42,7 @@ namespace ASP_Client.Controllers
             //    return RedirectToAction("Login", "User");
             //}
 
-            var foundMovies = await Storage.GetMoviesAsync(searchString);
+            var foundMovies = await _movieRepository.GetMoviesAsync(searchString);
 
             var movieOverviewViewModel = new MovieOverviewViewModel();
 
@@ -71,7 +72,7 @@ namespace ASP_Client.Controllers
         [HttpGet]
         public async Task<ActionResult> SearchMovieDetails(int id)
         {
-            var movieDetails = await Storage.GetMovieDetailsLocallyAsync(id);
+            var movieDetails = await _movieRepository.GetMovieDetailsLocallyAsync(id);
 
             var movieDetailsViewModel = new MovieDetailsViewModel();
 
@@ -110,11 +111,11 @@ namespace ASP_Client.Controllers
             var username = UserSession.GetLoggedInUser().Name;
             var reviewDto = new ReviewDto {MovieId = model.Id, Username = username, Rating = model.UserRating};
 
-            var serverReponse = await Storage.RateMovie(reviewDto);
+            var serverReponse = await _movieRepository.RateMovie(reviewDto);
 
             if (serverReponse.Executed)
             {
-                var ratedMovie = await Storage.GetMovieDetailsLocallyAsyncForce(model.Id);
+                var ratedMovie = await _movieRepository.GetMovieDetailsLocallyAsyncForce(model.Id);
 
                 if (ratedMovie.ErrorMsg.IsEmpty())
                 {

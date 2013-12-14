@@ -387,24 +387,37 @@ namespace ImdbRestService.Handlers
 		     {
                  using (var entities = _imdbEntities ?? new ImdbEntities())
                  {
-                     var participants = (from peo in entities.People
-                                         join par in entities.Participates on peo.Id equals par.Person_Id
-                                         join m in entities.Movies on par.Movie_Id equals m.Id
-                                         where m.Id == id
-                                         group peo by new
-                                         {
-                                             peo.Id,
-                                             peo.Name,
-                                             par.CharName
-                                         }
-                                             into grouping
-                                             select new PersonDto
-                                             {
-                                                 Id = grouping.Key.Id,
-                                                 Name = grouping.Key.Name,
-                                                 CharacterName = grouping.Key.CharName
-                                             }).ToList();
+                     /*var participants = (from peo in entities.People
+                         join par in entities.Participates on peo.Id equals par.Person_Id
+                         join m in entities.Movies on par.Movie_Id equals m.Id
+                         where m.Id == id
+                         group peo by new
+                         {
+                             peo.Id,
+                             peo.Name,
+                             par.CharName
+                         }
+                         into grouping
+                         select new PersonDto
+                         {
+                             Id = grouping.Key.Id,
+                             Name = grouping.Key.Name,
+                             CharacterName = grouping.Key.CharName
+                         }).ToList();
+                        */
 
+                     var one = (from peo in entities.People
+                         join par in entities.Participates on peo.Id equals par.Person_Id
+                         join m in entities.Movies on par.Movie_Id equals m.Id
+                         where m.Id == id
+                         select new
+                         {
+                             peo.Id,
+                             peo.Name,
+                             par.CharName
+                         }).ToList();
+
+                     Console.Write(one.Count);
                      var movie = (from m in entities.Movies
                                   where m.Id == id
                                   select new MovieDetailsDto
@@ -422,10 +435,10 @@ namespace ImdbRestService.Handlers
 
                      movie[0].Participants = new List<PersonDto>();
 
-                     foreach (var participant in participants)
+               /*      foreach (var participant in participants)
                      {
                          movie[0].Participants.Add(participant);
-                     }
+                     }*/
 
 
                      return movie[0];

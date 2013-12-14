@@ -11,12 +11,14 @@
          <p> @Html.TextBox("SearchString") <br />   
          <input type="submit" value="Search" /></p> 
      }
-  
- @if (Model.ErrorMsg.IsEmpty())
+</p>  
+
+
+@if (Model.ErrorMsg.IsEmpty())
 {   
       
     <table>
-        <tr><th>Title:</th><th>Year:</th></tr>
+        <tr><th>Name</th></tr>
         @foreach (var person in Model.FoundPeople)
         {
             <tr>
@@ -31,4 +33,3 @@ else
 {
   @Model.ErrorMsg
 }
-</p>
