@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.WebPages;
+using ASP_Client.ClientRequests;
 using ASP_Client.Models;
-using DtoSubsystem;
-using Newtonsoft.Json;
 
 namespace ASP_Client.Controllers
 {
@@ -17,6 +13,17 @@ namespace ASP_Client.Controllers
     /// </summary>
     public class PersonController : BaseController
     {
+        private readonly IPersonRepository _personRepository;
+
+        public PersonController() : this(new PersonRepository())
+        {            
+        }
+        
+        public PersonController(IPersonRepository personRepository)
+        {
+            _personRepository = personRepository;
+        }
+
         /// <summary>
         /// Method creating a list of movies based on a search string and puts them in a MovieOverviewViewModel which
         /// is given to the IndexView.
@@ -32,7 +39,7 @@ namespace ASP_Client.Controllers
             //    return RedirectToAction("Login", "User");
             //}
 
-            var foundPeople = await Storage.GetPersonAsync(searchString);
+            var foundPeople = await _personRepository.GetPersonAsync(searchString);
 
             var personOverviewViewModel = new PersonOverviewViewModel();
 
@@ -59,28 +66,24 @@ namespace ASP_Client.Controllers
         /// <returns>The View provided with the new information model</returns>
         public async Task<ActionResult> PersonDetails(int id)
         {
-            var personDetails = await Storage.GetPersonDetailsLocallyAsync(id);
+            var personDetails = await _personRepository.GetPersonDetailsLocallyAsync(id);
 
             var personDetailsViewModel = new PersonDetailsViewModel();
 
             if (personDetails.ErrorMsg.IsEmpty())
             {
-
-                if (personDetails != null)
-                {
                     personDetailsViewModel.Id = personDetails.Id;
                     personDetailsViewModel.Name = personDetails.Name;
                     personDetailsViewModel.Gender = personDetails.Gender;
                     personDetailsViewModel.Role = personDetails.Role;
 
-                    var temp = personDetails.Info.Select(detail => new InfoModel()
+                    var temp = personDetails.Info.Select(detail => new InfoModel
                     {
                         Name = detail.Name,
                         Info = detail.Info
                     }).ToList();
 
                     personDetailsViewModel.Info = temp;
-                }
             }
             else
             {

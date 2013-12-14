@@ -2,6 +2,9 @@
 
 namespace ASP_Client.Models
 {
+    /// <summary>
+    /// Class representing a person with detailed information
+    /// </summary>
     public class PersonDetailsViewModel
     {
         public int Id { get; set; }

@@ -10,7 +10,6 @@ using System.Web.WebPages;
 using ASP_Client.Models;
 using DtoSubsystem;
 using Newtonsoft.Json;
-using ASP_Client.Exceptions;
 
 namespace ASP_Client.Controllers
 {
@@ -48,18 +47,13 @@ namespace ASP_Client.Controllers
                     return receivedData;
                 }
             }
-            catch (AggregateException e)
+            catch (AggregateException)
             {
-                if (e.InnerExceptions.Any(ex => ex.GetType() == typeof(HttpRequestException)))
-                {
-                    throw new UnavailableConnectionException("No connection", e);
-                }
-
-                throw new RESTserviceException("AggregateException response from DB.", e);
+                return new List<MovieDto> { new MovieDto { ErrorMsg = "No connection" } };
             }
-            catch (JsonSerializationException e)
+            catch (JsonSerializationException)
             {
-                throw new RESTserviceException("There was an serializaton or deserializaton error", e);
+                return new List<MovieDto> { new MovieDto { ErrorMsg = "Datatranslation error by db" } };
             }
             catch (WebException)
             {
@@ -102,22 +96,17 @@ namespace ASP_Client.Controllers
                     return receivedData;
                 }
             }
-            catch (AggregateException e)
+            catch (AggregateException)
             {
-                if (e.InnerExceptions.Any(ex => ex.GetType() == typeof(HttpRequestException)))
-                {
-                    throw new UnavailableConnectionException("No connection", e);
-                }
-
-                throw new RESTserviceException("AggregateException response from DB.", e);
+                return new MovieDetailsDto { ErrorMsg = "No connection" };
             }
-            catch (JsonSerializationException e)
+            catch (JsonSerializationException)
             {
-                throw new RESTserviceException("there was an serializaton or deserializaton error", e);
+                return new MovieDetailsDto { ErrorMsg = "Datatranslation error by db" };
             }
-            catch (JsonReaderException e)
+            catch (JsonReaderException)
             {
-                throw new RESTserviceException("there was an serializaton or deserializaton error", e);
+                return new MovieDetailsDto { ErrorMsg = "there was an serializaton or deserializaton error" };
             }
             catch (WebException)
             {
@@ -163,18 +152,13 @@ namespace ASP_Client.Controllers
                     return receivedData;
                 }
             }
-            catch (AggregateException e)
+            catch (AggregateException)
             {
-                if (e.InnerExceptions.Any(ex => ex.GetType() == typeof(HttpRequestException)))
-                {
-                    throw new UnavailableConnectionException("No connection", e);
-                }
-
-                throw new RESTserviceException("AggregateException response from DB.", e);
+                return new List<PersonDto> { new PersonDto { ErrorMsg = "No connection" } };
             }
-            catch (JsonSerializationException e)
+            catch (JsonSerializationException)
             {
-                throw new RESTserviceException("There was an serializaton or deserializaton error", e);
+                return new List<PersonDto> { new PersonDto { ErrorMsg = "Datatranslation error by db" } };
             }
             catch (WebException)
             {
@@ -216,22 +200,17 @@ namespace ASP_Client.Controllers
                     return receivedData;
                 }
             }
-            catch (AggregateException e)
+            catch (AggregateException)
             {
-                if (e.InnerExceptions.Any(ex => ex.GetType() == typeof(HttpRequestException)))
-                {
-                    throw new UnavailableConnectionException("No connection", e);
-                }
-
-                throw new RESTserviceException("AggregateException response from DB.", e);
+                return new PersonDetailsDto { ErrorMsg = "No connection" };
             }
-            catch (JsonSerializationException e)
+            catch (JsonSerializationException)
             {
-                throw new RESTserviceException("there was an serializaton or deserializaton error", e);
+                return new PersonDetailsDto { ErrorMsg = "Datatranslation error by db" };
             }
-            catch (JsonReaderException e)
+            catch (JsonReaderException)
             {
-                throw new RESTserviceException("there was an serializaton or deserializaton error", e);
+                return new PersonDetailsDto { ErrorMsg = "there was an serializaton or deserializaton error" };
             }
             catch (WebException)
             {
@@ -265,18 +244,13 @@ namespace ASP_Client.Controllers
                     return attachedMessage;
                 }
             }
-            catch (AggregateException e)
+            catch (AggregateException)
             {
-                if (e.InnerExceptions.Any(ex => ex.GetType() == typeof(HttpRequestException)))
-                {
-                    throw new UnavailableConnectionException("No connection", e);
-                }
-
-                throw new RESTserviceException("AggregateException response from DB.", e);
+                return new ReplyDto { Executed = false, Message = "No connection" };
             }
-            catch (JsonSerializationException e)
+            catch (JsonSerializationException)
             {
-                throw new RESTserviceException("there was an serializaton or deserializaton error", e);
+                return new ReplyDto { Executed = false, Message = "Datatranslation error by db" };
             }
             catch (WebException)
             {
@@ -309,18 +283,13 @@ namespace ASP_Client.Controllers
                     return attachedMessage;
                 }
             }
-            catch (AggregateException e)
+            catch (AggregateException)
             {
-                if (e.InnerExceptions.Any(ex => ex.GetType() == typeof(HttpRequestException)))
-                {
-                    throw new UnavailableConnectionException("No connection", e);
-                }
-
-                throw new RESTserviceException("AggregateException response from DB.", e);
+                return new ReplyDto { Executed = false, Message = "No connection" };
             }
-            catch (JsonSerializationException e)
+            catch (JsonSerializationException)
             {
-                throw new RESTserviceException("there was an serializaton or deserializaton error", e);
+                return new ReplyDto { Executed = false, Message = "Datatranslation error by db" };
             }
             catch (WebException)
             {
@@ -353,30 +322,25 @@ namespace ASP_Client.Controllers
                     return attachedMessage;
                 }
             }
-            catch (AggregateException e)
+            catch (AggregateException)
             {
-                if (e.InnerExceptions.Any(ex => ex.GetType() == typeof(HttpRequestException)))
-                {
-                    throw new UnavailableConnectionException("No connection", e);
-                }
-
-                throw new RESTserviceException("AggregateException response from DB.", e);
+               return new ReplyDto { Executed = false, Message = "No connection" };                
             }
-            catch (JsonSerializationException e)
+            catch (JsonSerializationException)
             {
-                throw new RESTserviceException("there was an serializaton or deserializaton error", e);
+                return new ReplyDto { Executed = false, Message = "Datatranslation error by db" };
             }
             catch (WebException)
             {
-                return new ReplyDto { Message = "Database not available" };
+                return new ReplyDto { Executed = false, Message = "Database not available" };
             }
             catch (SocketException)
             {
-                return new ReplyDto { Message = "Database not available" };
+                return new ReplyDto { Executed = false, Message = "Database not available" };
             }
             catch (HttpRequestException)
             {
-                return new ReplyDto { Message = "Database not available" };
+                return new ReplyDto { Executed = false, Message = "Database not available" };
             } 
         }
 
@@ -404,22 +368,17 @@ namespace ASP_Client.Controllers
                     return receivedData;
                 }
             }
-            catch (AggregateException e)
+            catch (AggregateException)
             {
-                if (e.InnerExceptions.Any(ex => ex.GetType() == typeof(HttpRequestException)))
-                {
-                    throw new UnavailableConnectionException("No connection", e);
-                }
-
-                throw new RESTserviceException("AggregateException response from DB.", e);
+                return new MovieDetailsDto { ErrorMsg = "No connection" };
             }
-            catch (JsonSerializationException e)
+            catch (JsonSerializationException)
             {
-                throw new RESTserviceException("there was an serializaton or deserializaton error", e);
+                return new MovieDetailsDto { ErrorMsg = "Datatranslation error by db" };
             }
-            catch (JsonReaderException e)
+            catch (JsonReaderException)
             {
-                throw new RESTserviceException("there was an serializaton or deserializaton error", e);
+                return new MovieDetailsDto {ErrorMsg = "there was an serializaton or deserializaton error"};
             }
             catch (WebException)
             {

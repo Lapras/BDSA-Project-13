@@ -3,6 +3,9 @@ using System.Data.Entity;
 
 namespace ImdbRestService
 {
+    /// <summary>
+    /// Interface for every entity class in our database
+    /// </summary>
     public interface IImdbEntities : IDisposable
     {
         IDbSet<Movie> Movies { get; }

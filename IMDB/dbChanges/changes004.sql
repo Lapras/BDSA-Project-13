@@ -1,9 +1,9 @@
 ﻿/*
-	Create a trigger that updates the avg_ranking for a movie upon insert in the rating table.
+	Create a trigger that updates the avg_ranking for a movie upon updating a row in the rating table.
 */
-CREATE TRIGGER update_avg_rank
+CREATE TRIGGER update_avg_rank_on_update
 ON [Rating]
-AFTER INSERT
+AFTER UPDATE
 AS
 DECLARE @MovieId int, @Avg_rating float
 SET @MovieId = (SELECT movie_id FROM inserted)
@@ -18,4 +18,4 @@ SET @Avg_rating = (
 
 UPDATE [Movies]
 SET Avg_rating = @Avg_rating
-WHERE Id = @MovieId;
+WHERE Id = @MovieId ;
