@@ -14,6 +14,9 @@
         <DataTemplate DataType="{x:Type vm:MovieSearchResultViewModel}">
             <view:MovieSearchResultView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ActorSearchResultViewModel}">
+            <view:ActorSearchResultView />
+        </DataTemplate>
         <DataTemplate DataType="{x:Type vm:MovieProfileViewModel}">
             <view:MovieProfileView />
         </DataTemplate>

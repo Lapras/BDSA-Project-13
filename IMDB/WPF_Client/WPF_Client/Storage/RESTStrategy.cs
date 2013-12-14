@@ -80,6 +80,59 @@ namespace WPF_Client.Storage
 
         }
 
+
+        /// <summary>
+        /// Retrives the PersonDtos.
+        /// </summary>
+        /// <param name="searchString">The input search string.</param>
+        /// <returns>A collection of PersonDtos.</returns>
+        public ObservableCollection<PersonDto> PersonDtos(string searchString)
+        {
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+
+                    httpClient.Timeout = new TimeSpan(0, 0, 0, 10);
+
+                    Console.WriteLine("Getting reponse from REST server");
+                    var response = httpClient.GetStringAsync(_url + "/person/?person=" + searchString);
+
+
+                    Console.WriteLine("JSON string received:" + response.Result);
+                    Console.WriteLine("Starting deserializing");
+                    var result = JsonConvert.DeserializeObject<ObservableCollection<PersonDto>>(response.Result);
+                    Console.WriteLine("deserializing done");
+
+                    return result;
+                }
+
+            }
+            catch (AggregateException e)
+            {
+
+                foreach (Exception ex in e.InnerExceptions)
+                {
+                    if (ex.GetType() == typeof(HttpRequestException))
+                    {
+                        throw new UnavailableConnectionException("No connection", e);
+                    }
+                }
+
+                throw new RESTserviceException("AggregateException response from DB.", e);
+
+            }
+            catch (JsonSerializationException e)
+            {
+                throw new RESTserviceException("There was an serializaton or deserializaton error", e);
+            }
+            catch (JsonReaderException e)
+            {
+                throw new RESTserviceException("There was an error reading the json", e);
+            }
+
+        }
+
         /// <summary>
         /// Retrives the MovieDetailsDto.
         /// </summary>

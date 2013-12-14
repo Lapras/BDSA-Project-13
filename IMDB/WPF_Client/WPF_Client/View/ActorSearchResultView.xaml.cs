@@ -10,6 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WPF_Client.ViewModel;
 
@@ -18,12 +19,13 @@ namespace WPF_Client.View
     /// <summary>
     /// Code behind for the view. There should be no code in here other than the basic initialization!
     /// </summary>
-    public partial class SearchView : UserControl
+    public partial class ActorSearchResultView : UserControl
     {
-        public SearchView()
+        public ActorSearchResultView()
         {
             InitializeComponent();
-            DataContext = new SearchViewModel();
+            DataContext = new ActorSearchResultViewModel();
+            
         }
     }
 }

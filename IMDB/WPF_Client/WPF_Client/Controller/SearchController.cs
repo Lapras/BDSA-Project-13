@@ -20,9 +20,19 @@ namespace WPF_Client.Controller
         public static ObservableCollection<MovieDto> MovieDtos { get; set; }
 
         /// <summary>
+        /// The PersonDtos that the ActorSearchResultViewModel loads.
+        /// </summary>
+        public static ObservableCollection<PersonDto> PersonDtos { get; set; }
+
+        /// <summary>
         /// The count of the MovieDtos.
         /// </summary>
         public static int MoviesFound { get; set; }
+
+        /// <summary>
+        /// The count of the PersonDtos.
+        /// </summary>
+        public static int PersonsFound { get; set; }
 
         /// <summary>
         /// Searches for a movie.
@@ -32,12 +42,11 @@ namespace WPF_Client.Controller
         /// <returns>A boolean value whether the search was successfull.</returns>
         public static bool Search(string searchString, int searchType)
         {
-            
             switch (searchType) // We check the search that should be conducted.
             {
+
                 case 0: // Movies
 
-                    Console.WriteLine("Searching for: " + searchString);
                     MovieDtos = _model.MovieDtos(searchString);
                     MoviesFound = MovieDtos.Count;
                     
@@ -56,6 +65,21 @@ namespace WPF_Client.Controller
                     break;
 
                 case 1: // Actors
+
+                    PersonDtos = _model.PersonDtos(searchString);
+                    PersonsFound = PersonDtos.Count;
+
+                    if (PersonDtos.Count == 0)
+                    {
+                        return false;
+                    }
+
+                    //unit test doesnt like creating a new viewmodel and assigning it.
+                    if (!UnitTestDetector.IsInUnitTest)
+                    {
+                        ViewModelManager.Main.CurrentViewModel = new ActorSearchResultViewModel();
+                    }
+                    
 
                     break;
                 default:

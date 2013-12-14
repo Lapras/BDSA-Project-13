@@ -32,6 +32,16 @@ namespace WPF_Client.Model
         }
 
         /// <summary>
+        /// The collection of PersonDtos from the supplied searchString.
+        /// </summary>
+        /// <param name="searchString">The input searchString</param>
+        /// <returns>A collection of PersonDtos</returns>s
+        public ObservableCollection<PersonDto> PersonDtos(string searchString)
+        {
+            return _storage.PersonDtos(searchString);
+        }
+
+        /// <summary>
         /// The MovieDetailsDto from the supplied movieId.
         /// </summary>
         /// <param name="movieId">The input movieId.</param>
