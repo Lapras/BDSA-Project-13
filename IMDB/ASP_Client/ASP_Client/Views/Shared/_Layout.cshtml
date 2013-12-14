@@ -1,4 +1,5 @@
-﻿@using ASP_Client.Models
+﻿@using System.ServiceModel.Web
+@using ASP_Client.Models
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,16 +11,34 @@
 </head>
     <body>
         <div style="width: auto; background-color: #728ea7;">
-            @if (ViewBag.User != null)
-            {
-                <strong>@Html.Encode((ViewBag.User as UserModel).Name)</strong>
-                @Html.ActionLink("Sign Out", "Logout", "User")
-            }
-            else {
-                @Html.ActionLink("Register", "Registration", "User")
-                <span> | </span>
-                @Html.ActionLink("Sign In", "Login", "User")
-            }
+            
+             <table>
+                 <tr><th>
+            
+
+                         @if (ViewBag.Title != "Registration" && ViewBag.Title != "Login")
+                         {
+                             if (ViewBag.User != null)
+                             {
+                                 <strong>@Html.Encode((ViewBag.User as UserModel).Name)</strong>
+                                 @Html.ActionLink("Sign Out", "Logout", "User")
+                             }
+                             else
+                             {
+                                 @Html.ActionLink("Register", "Registration", "User")
+                                 <span> | </span>
+                                 @Html.ActionLink("Sign In", "Login", "User") 
+                             }
+                              <span> | </span> 
+                         }
+                     </th>
+                      <th>                                        
+                            <a href="javascript:window.history.back();">Back</a>
+                            <span> | </span>
+                            @Html.ActionLink("Home", "SearchMovie", "Movie")
+                     </th>
+                     </tr>
+                </table>
         </div>
  
         @RenderBody()

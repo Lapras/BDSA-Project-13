@@ -69,8 +69,9 @@ namespace ImdbRestService
         /// <summary>
         /// Process a request
         /// </summary>
-        /// <param name="context">Received data</param>
+        /// <param name="response">Response we're sending back to the client</param>
         /// <param name="handlers">Handlers to process received data</param>
+        /// <param name="request">Request we receive from the server</param>
         public async void ProcessRequest(IRequest request, IResponse response, List<IHandler> handlers = null)
         {
             handlers = handlers ?? new List<IHandler>(new IHandler[] { new MovieHandler(), new ProfileHandler(), new PersonHandler() });
@@ -117,10 +118,11 @@ namespace ImdbRestService
         /// <summary>
         /// Method process POST requests and hand the content to proper handlers
         /// </summary>
-        /// <param name="context">Received message</param>
-        /// <param name="handlers">Number of handlers to pass the received data to</param>
+        /// <param name="rawUrl">Incoming REST request</param>
+        /// <param name="handlers">Handlers to process received data</param>
+        /// <param name="inputStream">Incoming data to be posted</param>
         /// <returns></returns>
-        private async Task PostRequest(string rawUrl, Stream inputStream, List<IHandler> handlers)
+        private async Task PostRequest(string rawUrl, Stream inputStream, IEnumerable<IHandler> handlers)
         {
             // split the request URL by '/'
             var path = SplitUrl(rawUrl);
@@ -156,10 +158,10 @@ namespace ImdbRestService
         /// <summary>
         /// Method process GET requests and hand the content to proper handlers
         /// </summary>
-        /// <param name="context">Received message</param>
+        /// <param name="rawUrl">Incoming REST request</param>
         /// <param name="handlers">Number of handlers to pass the received data to</param>
         /// <returns></returns>
-        private async Task GetResponse(string rawUrl, List<IHandler> handlers)
+        private async Task GetResponse(string rawUrl, IEnumerable<IHandler> handlers)
         {
             // split the request URL by '/'
             var path = SplitUrl(rawUrl);
@@ -184,7 +186,7 @@ namespace ImdbRestService
         /// <summary>
         /// Method to split urls by '/' characters
         /// </summary>
-        /// <param name="context">Context to split</param>
+        /// <param name="rawUrl">Incoming REST request </param>
         /// <returns>List of splitted parts</returns>
         private static List<string> SplitUrl(string rawUrl)
         {
@@ -192,6 +194,10 @@ namespace ImdbRestService
                 new[] { '/' },
                 StringSplitOptions.RemoveEmptyEntries).ToList();
         }
+        
+        /// <summary>
+        /// Interface for our response data stream
+        /// </summary>
         public interface IResponse
         {
             int ContentLength64 { set; }
@@ -199,6 +205,9 @@ namespace ImdbRestService
             Stream OutputStream { get; }
         }
 
+        /// <summary>
+        /// Class representing the stream we use to send messages to the client
+        /// </summary>
         public class Response : IResponse
         {
             private readonly HttpListenerResponse _response;
@@ -224,6 +233,9 @@ namespace ImdbRestService
             }
         }
 
+        /// <summary>
+        /// Interface for the stream for incoming messages
+        /// </summary>
         public interface IRequest
         {
             string HttpMethod { get; }
@@ -231,6 +243,9 @@ namespace ImdbRestService
             Stream InputStream { get; }
         }
 
+        /// <summary>
+        /// Class representing incoming message stream
+        /// </summary>
         public class Request : IRequest
         {
             private readonly HttpListenerRequest _request;

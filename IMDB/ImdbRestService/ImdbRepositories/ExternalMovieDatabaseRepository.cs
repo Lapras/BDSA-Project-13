@@ -7,6 +7,9 @@ using Newtonsoft.Json;
 
 namespace ImdbRestService.ImdbRepositories
 {
+    /// <summary>
+    /// Class representing a facade to the external MyMovieApi
+    /// </summary>
     public class ExternalMovieDatabaseRepository : IExternalMovieDatabaseRepository
     {
         /// <summary>
@@ -14,7 +17,7 @@ namespace ImdbRestService.ImdbRepositories
         /// </summary>
         /// <param name="searchString">Name of the movie to search for</param>
         /// <returns>List of matching movies</returns>
-        public async Task<List<MovieDto>> GetMoviesFromIMDbAsync(string searchString)
+        public async Task<List<MovieDto>> GetMoviesFromImdbAsync(string searchString)
         {
             try
             {

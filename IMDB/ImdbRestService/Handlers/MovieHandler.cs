@@ -65,7 +65,7 @@ namespace ImdbRestService.Handlers
 
                             if (movies.Count == 0)
                             {
-                                movies = await _externalMovieDatabaseRepository.GetMoviesFromIMDbAsync(value);
+                                movies = await _externalMovieDatabaseRepository.GetMoviesFromImdbAsync(value);
                                 AddMoviesToDb(movies);
                                 if (movies.Count < 1)
                                 {
@@ -75,7 +75,6 @@ namespace ImdbRestService.Handlers
 
                             msg = new JavaScriptSerializer().Serialize(movies);
                             return new ResponseData(msg, HttpStatusCode.OK);
-                            break;
                     }
                 }
                 else
@@ -142,8 +141,6 @@ namespace ImdbRestService.Handlers
 
                             msg = new JavaScriptSerializer().Serialize(movie);
                             return new ResponseData(msg, HttpStatusCode.OK);
-                            break;
-
                     }
                 }
             }
@@ -165,9 +162,9 @@ namespace ImdbRestService.Handlers
                     int userId = FindUserIdFromUsername(data.Username);
 
                     var test =
-                        entities.Rating.Where(r => r.movie_id == data.MovieId && r.user_Id == userId).SingleOrDefault();
+                        entities.Rating.SingleOrDefault(r => r.movie_id == data.MovieId && r.user_Id == userId);
 
-                    test.rating1 = data.Rating;
+                    if (test != null) test.rating1 = data.Rating;
 
 
                     entities.SaveChanges();
@@ -276,7 +273,7 @@ namespace ImdbRestService.Handlers
 
                 
 
-                entities.Rating.Add(new Rating()
+                entities.Rating.Add(new Rating
                 {
                     id = id,
                     rating1 = data.Rating,
@@ -371,10 +368,10 @@ namespace ImdbRestService.Handlers
                             }).Take(100).ToList();
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Console.Write("Local database is not available");
-                return _externalMovieDatabaseRepository.GetMoviesFromIMDbAsync(title).Result;
+                return _externalMovieDatabaseRepository.GetMoviesFromImdbAsync(title).Result;
             }
            
         }
