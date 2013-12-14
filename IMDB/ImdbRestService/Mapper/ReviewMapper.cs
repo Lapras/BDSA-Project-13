@@ -42,15 +42,15 @@ namespace ImdbRestService.Mapper
         /// <param name="path"> the path used to see how to operate the data </param>
         /// <param name="responseData"> the response data to be returned if no operations are available to the path </param>
         /// <returns></returns>
-        public async Task<ResponseData> Post(List<string> path, ResponseData responseData)
+        public async Task<ResponseData> Post(string path, ResponseData responseData)
         {
 
-            path[1] = path[1].Replace("k__BackingField", "");
-            path[1] = path[1].Replace("<", "");
-            path[1] = path[1].Replace(">", "");
+            path = path.Replace("k__BackingField", "");
+            path = path.Replace("<", "");
+            path = path.Replace(">", "");
 
             // Parse Json object back to data
-            var data = JsonConvert.DeserializeObject<ReviewDto>(path[1]);
+            var data = JsonConvert.DeserializeObject<ReviewDto>(path);
 
 
             if (MovieAndProfileExist(data.MovieId, data.Username) &&

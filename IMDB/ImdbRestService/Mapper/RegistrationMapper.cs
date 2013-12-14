@@ -37,13 +37,14 @@ namespace ImdbRestService.Mapper
         /// <param name="path"> the path used to see how to operate the data </param>
         /// <param name="responseData"> the response data to be returned if no operations are available to the path </param>
         /// <returns></returns>
-        public async Task<ResponseData> Post(List<string> path, ResponseData responseData)
+        public async Task<ResponseData> Post(string path, ResponseData responseData)
         {
+            var receivedData = JsonConvert.DeserializeObject<RegistrationDto>(path);
 
-            if (!ProfileAlreadyExist(path[1]))
+            if (!ProfileAlreadyExist(receivedData.Name))
             {
                 // acutally push to database
-                AddProfileToDb(path[1], path[2]);
+                AddProfileToDb(receivedData.Name, receivedData.Password);
 
                 var msg = new JavaScriptSerializer().Serialize(new ReplyDto { Executed = true, Message = "Profile was created" });
                 return new ResponseData(msg, HttpStatusCode.OK);

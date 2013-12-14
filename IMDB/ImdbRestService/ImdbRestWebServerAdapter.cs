@@ -145,7 +145,8 @@ namespace ImdbRestService
                 rawBody = rawBody.Replace("<", "");
                 rawBody = rawBody.Replace(">", "");
 
-                var url = path.Skip(1).ToList();
+             //   var url = path.Skip(1).ToList();
+              //  url.Add(rawBody);
                 Dto expected = null;
                 var key = path.First();
 
@@ -154,27 +155,20 @@ namespace ImdbRestService
                     case "user":
                         if (path[1].Equals("registration"))
                         {
-                            var receivedData = JsonConvert.DeserializeObject<RegistrationDto>(rawBody);
-                            url.Add(receivedData.Name);
-                            url.Add(receivedData.Password);
                             expected = new RegistrationDto();
                         }
                         else
                         {
-                            var receivedData = JsonConvert.DeserializeObject<LoginDto>(rawBody);
-                            url.Add(receivedData.Name);
-                            url.Add(receivedData.Password);
                             expected = new LoginDto();
                         }
                       
                         break;
                     case "movies":
-                        url.Add(rawBody);
                         expected = new ReviewDto();
                         break;
                 }
 
-                ResponseData = await _logic.Post(url, expected);
+                ResponseData = await _logic.Post(rawBody, expected);
             }
 
             else
@@ -204,12 +198,9 @@ namespace ImdbRestService
                     case "movies":
                         if (path[1].StartsWith("?"))
                         {
-                            if (path != null || path.Count == 1)
-                            {
-                                key = path[1].Substring(1).Split(new[] {'='})[1];
-                                key = HttpUtility.UrlDecode(key); // removes %20 and adds whitespace instead
-                            }
-                    
+                            key = path[1].Substring(1).Split(new[] {'='})[1];
+                            key = HttpUtility.UrlDecode(key); // removes %20 and adds whitespace instead
+
                             expected = new MovieDto();
                         }
                         else

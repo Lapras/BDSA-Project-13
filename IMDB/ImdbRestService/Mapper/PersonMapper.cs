@@ -44,7 +44,7 @@ namespace ImdbRestService.Mapper
         /// <param name="path"></param>
         /// <param name="responseData"></param>
         /// <returns></returns>
-        public Task<ResponseData> Post(List<string> path, ResponseData responseData)
+        public Task<ResponseData> Post(string path, ResponseData responseData)
         {
             throw new System.NotImplementedException();
         }

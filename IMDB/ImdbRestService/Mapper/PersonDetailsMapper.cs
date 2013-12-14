@@ -37,7 +37,13 @@ namespace ImdbRestService.Mapper
             return new ResponseData(msg, HttpStatusCode.OK);
         }
 
-        public Task<ResponseData> Post(List<string> path, ResponseData responseData)
+        /// <summary>
+        /// Empty POST call
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="responseData"></param>
+        /// <returns></returns>
+        public Task<ResponseData> Post(string path, ResponseData responseData)
         {
             throw new NotImplementedException();
         }

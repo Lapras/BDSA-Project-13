@@ -33,9 +33,11 @@ namespace ImdbRestService.Handlers
             throw new NotImplementedException();
         }
 
-        public async Task<ResponseData> Post(List<string> path, ResponseData responseData)
+        public async Task<ResponseData> Post(string path, ResponseData responseData)
         {
-                    if (LoginDataIsValid(path[1], path[2]))
+            var receivedData = JsonConvert.DeserializeObject<LoginDto>(path);
+
+                    if (LoginDataIsValid(receivedData.Name, receivedData.Password))
                     {
                         var msg = new JavaScriptSerializer().Serialize(new ReplyDto { Executed = true, Message = "User was logged in"});
                         return new ResponseData(msg, HttpStatusCode.OK);

@@ -10,11 +10,11 @@ namespace ImdbRestService
 {
     public class PersistenceFacade
     {
-        private readonly Dictionary<System.Type, IMapper> _handlers;
+        private readonly Dictionary<System.Type, IMapper> _mappers;
 
         public PersistenceFacade()
         {
-            _handlers = new Dictionary<System.Type, IMapper>
+            _mappers = new Dictionary<System.Type, IMapper>
             {
                 {new MovieDetailsDto().GetType(), new MovieDetailsMapper()},
                 {new MovieDto().GetType(), new MovieMapper()},
@@ -37,14 +37,14 @@ namespace ImdbRestService
         {
             var response = new ResponseData("Database is unavailable", HttpStatusCode.InternalServerError);
             IMapper matchingMapper;
-            _handlers.TryGetValue(requestedDto.GetType(), out matchingMapper);
+            _mappers.TryGetValue(requestedDto.GetType(), out matchingMapper);
 
             if (matchingMapper != null) return await matchingMapper.Get(data, response);
 
             var msg = new JavaScriptSerializer().Serialize(new ReplyDto
             {
                 Executed = false,
-                Message = "No valid handler was found"
+                Message = "No valid mapper was found"
             });
 
             return new ResponseData(msg, HttpStatusCode.OK);
@@ -56,12 +56,12 @@ namespace ImdbRestService
         /// <param name="path">Path send in the post request including the posted data</param>
         /// <param name="requestedDto">Dto format to post for send in</param>
         /// <returns>Result</returns>
-        public async Task<ResponseData> Post(List<string> path, Dto requestedDto)
+        public async Task<ResponseData> Post(string path, Dto requestedDto)
         {
             var response = new ResponseData("Database is unavailable", HttpStatusCode.InternalServerError);
 
             IMapper matchingMapper;
-            _handlers.TryGetValue(requestedDto.GetType(), out matchingMapper);
+            _mappers.TryGetValue(requestedDto.GetType(), out matchingMapper);
 
             if (matchingMapper != null) return await matchingMapper.Post(path, response);
 

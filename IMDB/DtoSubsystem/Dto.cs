@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DtoSubsystem
 {
-    public abstract class Dto
+    public interface Dto
     {
     }
 }

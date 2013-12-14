@@ -24,6 +24,6 @@ namespace ImdbRestService.Mapper
         /// <param name="path"> the path used to see how to operate the data </param>
         /// <param name="responseData"> the response data to be returned if no operations are available to the path </param>
         /// <returns></returns>
-        Task<ResponseData> Post(List<string> path, ResponseData responseData);
+        Task<ResponseData> Post(string path, ResponseData responseData);
     }
 }
