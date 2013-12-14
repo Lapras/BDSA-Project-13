@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace DtoSubsystem
 {
     [Serializable]
-    public class MovieDetailsDto
+    public class MovieDetailsDto : Dto
     {
         public int Id { get; set; }
         public string Title { get; set; }

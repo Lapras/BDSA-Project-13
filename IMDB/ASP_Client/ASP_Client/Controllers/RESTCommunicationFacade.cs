@@ -234,11 +234,17 @@ namespace ASP_Client.Controllers
         /// <returns>Response from the server</returns>
         public async Task<ReplyDto> Login(UserModel user)
         {
+            var newLogin = new LoginDto()
+            {
+                Name = user.Name,
+                Password = user.Password
+            };
+
             try
             {
                 using (var httpClient = new HttpClient())
                 {
-                    var response = await httpClient.PostAsJsonAsync("http://localhost:54321/User/Login", user);
+                    var response = await httpClient.PostAsJsonAsync("http://localhost:54321/User/Login", newLogin);
                     var attachedMessage =
                         JsonConvert.DeserializeObject<ReplyDto>(response.Content.ReadAsStringAsync().Result);
                     return attachedMessage;
@@ -273,11 +279,17 @@ namespace ASP_Client.Controllers
         /// <returns>Response from the server</returns>
         public async Task<ReplyDto> Registration(UserModel user)
         {
+            var newRegistration = new RegistrationDto()
+            {
+                Name = user.Name,
+                Password = user.Password
+            };
+
             try
             {
                 using (var httpClient = new HttpClient())
                 {
-                    var response = await httpClient.PostAsJsonAsync("http://localhost:54321/User/Registration", user);
+                    var response = await httpClient.PostAsJsonAsync("http://localhost:54321/User/Registration", newRegistration);
                     var attachedMessage =
                         JsonConvert.DeserializeObject<ReplyDto>(response.Content.ReadAsStringAsync().Result);
                     return attachedMessage;

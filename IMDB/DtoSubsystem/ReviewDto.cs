@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace DtoSubsystem
 {
     [Serializable]
-    public class ReviewDto
+    public class ReviewDto : Dto
     {
         public string Username { get; set; }
         public int MovieId { get; set; }
