@@ -244,7 +244,7 @@ namespace ASP_Client.Controllers
             {
                 using (var httpClient = new HttpClient())
                 {
-                    var response = await httpClient.PostAsJsonAsync("http://localhost:54321/User/Login", newLogin);
+                    var response = await httpClient.PostAsJsonAsync("http://localhost:54321/user/login", newLogin);
                     var attachedMessage =
                         JsonConvert.DeserializeObject<ReplyDto>(response.Content.ReadAsStringAsync().Result);
                     return attachedMessage;
@@ -289,7 +289,7 @@ namespace ASP_Client.Controllers
             {
                 using (var httpClient = new HttpClient())
                 {
-                    var response = await httpClient.PostAsJsonAsync("http://localhost:54321/User/Registration", newRegistration);
+                    var response = await httpClient.PostAsJsonAsync("http://localhost:54321/user/registration", newRegistration);
                     var attachedMessage =
                         JsonConvert.DeserializeObject<ReplyDto>(response.Content.ReadAsStringAsync().Result);
                     return attachedMessage;
