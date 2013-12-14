@@ -197,7 +197,7 @@ namespace WPF_Client.Storage
         {
             try
             {
-                var user = new UserModelDto()
+                var user = new RegistrationDto()
                 {
                     Name = name,
                     Password = password
@@ -210,7 +210,7 @@ namespace WPF_Client.Storage
                     httpClient.Timeout = new TimeSpan(0, 0, 0, 10);
 
                     Console.WriteLine("Getting reponse from REST server");
-                    var response = httpClient.PostAsJsonAsync(_url + "/User/Registration", user).Result;
+                    var response = httpClient.PostAsJsonAsync(_url + "/user/registration", user).Result;
                     var msg = response.Content.ReadAsStringAsync();
 
                     Console.WriteLine("JSON string received:" + response);
@@ -257,7 +257,7 @@ namespace WPF_Client.Storage
         {
             try
             {
-                var user = new UserModelDto()
+                var user = new LoginDto()
                 {
                     Name = name,
                     Password = password
@@ -272,7 +272,7 @@ namespace WPF_Client.Storage
 
 
                     Console.WriteLine("Getting reponse from REST server");
-                    var response = httpClient.PostAsJsonAsync(_url + "/User/Login", user).Result;
+                    var response = httpClient.PostAsJsonAsync(_url + "/user/login", user).Result;
                     var msg = response.Content.ReadAsStringAsync();
 
                     Console.WriteLine("JSON string received:" + response);

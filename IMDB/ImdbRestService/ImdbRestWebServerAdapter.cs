@@ -151,8 +151,8 @@ namespace ImdbRestService
 
                 switch (key)
                 {
-                    case "User":
-                        if (path[1].Equals("Registration"))
+                    case "user":
+                        if (path[1].Equals("registration"))
                         {
                             var receivedData = JsonConvert.DeserializeObject<RegistrationDto>(rawBody);
                             url.Add(receivedData.Name);
