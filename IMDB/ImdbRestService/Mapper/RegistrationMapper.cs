@@ -91,7 +91,8 @@ namespace ImdbRestService.Mapper
         /// <summary>
         /// Add a profile to the database
         /// </summary>
-        /// <param name="profileData">Profile to add to the database</param>
+        /// <param name="name">Name of the profile to add to the database</param>
+        /// <param name="password">Password of the profile to add to the database</param>
         private void AddProfileToDb(string name, string password)
         {
             // Adding profiles to app server database 
@@ -113,8 +114,6 @@ namespace ImdbRestService.Mapper
                 {
                     Id = id,
                     name = name,
-                    salt = "muh",
-                    email = name,
                     password = password
                 });
 
