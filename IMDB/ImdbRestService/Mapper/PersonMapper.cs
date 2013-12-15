@@ -31,6 +31,12 @@ namespace ImdbRestService.Mapper
         public async Task<ResponseData> Get(string personName, ResponseData responseData)
         {
             var people = GetPeopleByName(personName);
+
+            if (people.Count == 0)
+            {
+                people.Add(new PersonDto() {ErrorMsg = "Person not found"});
+            }
+
             var msg = new JavaScriptSerializer().Serialize(people);
             return new ResponseData(msg, HttpStatusCode.OK);
         }

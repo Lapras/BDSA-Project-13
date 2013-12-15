@@ -19,7 +19,7 @@ namespace ASP_Client.ClientRequests
         /// <returns> Response message from the Communication facade </returns>
         public Task<ReplyDto> Login(UserModel user)
         { 
-            return Storage.Storage.Login(user);         
+            return Storage.StorageContext.Login(user);         
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace ASP_Client.ClientRequests
         /// <returns> Response message from the Communication facade </returns>
         public Task<ReplyDto> Registration(UserModel user)
         {
-            return Storage.Storage.Registration(user);
+            return Storage.StorageContext.Registration(user);
         }
     }
 }

@@ -6,9 +6,9 @@ using DtoSubsystem;
 
 namespace ASP_Client.Storage
 {
-    public static class Storage
+    public static class StorageContext
     {
-        private readonly static ICommunicationFacade Connect = new RestCommunicationFacade();
+        private readonly static ICommunicationStrategy Connect = new RestCommunicationStrategy();
 
         /// <summary>
         /// Get a list of movies maching the search string

@@ -17,7 +17,7 @@ namespace ASP_Client.Storage
     /// <summary>
     /// Reponsible to Communicate with the application server holding the data
     /// </summary>
-    public class RestCommunicationFacade : ICommunicationFacade
+    public class RestCommunicationStrategy : ICommunicationStrategy
     {
         /// <summary>
         /// Get a list of movies maching the search string
