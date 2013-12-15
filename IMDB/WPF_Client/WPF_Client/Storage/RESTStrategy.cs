@@ -51,6 +51,20 @@ namespace WPF_Client.Storage
                     var result = JsonConvert.DeserializeObject<ObservableCollection<MovieDto>>(response.Result);
                     Console.WriteLine("deserializing done");
 
+
+                    if (result != null)
+                    {
+                        if (result[0].ErrorMsg != null)
+                        {
+                            if (result[0].ErrorMsg.Equals("Movie could not be found"))
+                            {
+                                result.Remove(result[0]);
+                            }
+                        }
+
+                        
+                    }
+
                     return result;
                 }
 
@@ -380,8 +394,6 @@ namespace WPF_Client.Storage
         /// <returns></returns>
         public bool RateMovie(int movieId, int rating, string username)
         {
-            Console.WriteLine("Trying to review");
-
             try
             {
                 var user = new RatingDto()

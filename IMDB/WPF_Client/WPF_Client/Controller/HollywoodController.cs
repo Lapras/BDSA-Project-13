@@ -85,11 +85,10 @@ namespace WPF_Client.Controller
         /// <returns>A boolean whether the movie was successfully rated.</returns>
         public static bool RateMovie(int movieId, int rating)
         {
-            var result = _model.RateMovie(movieId, rating, SessionController._currentUser);
+            var result = _model.RateMovie(movieId, rating, SessionController.CurrentUser());
             
             if (result)
             {
-                Console.WriteLine("Should update");
                 MovieDetailsDto = _model.MovieDetailsDto(movieId);
                 if (MovieDetailsDto == null)
                 {

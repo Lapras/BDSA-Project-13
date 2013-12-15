@@ -49,7 +49,7 @@ namespace WPF_Client.Controller
 
                     MovieDtos = _model.MovieDtos(searchString);
                     MoviesFound = MovieDtos.Count;
-                    
+
                     if (MoviesFound == 0)
                     {
                         return false;

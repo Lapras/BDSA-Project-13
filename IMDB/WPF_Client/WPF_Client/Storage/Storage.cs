@@ -86,6 +86,9 @@ namespace WPF_Client.Storage
 
                 }
 
+                
+
+
                 return (ObservableCollection<MovieDto>) _movieDtoCache.Get(searchString);
 
             }

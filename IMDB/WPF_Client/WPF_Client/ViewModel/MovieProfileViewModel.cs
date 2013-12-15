@@ -164,7 +164,7 @@ namespace WPF_Client.ViewModel
 
         public bool CanExecute(object parameter)
         {
-            return SessionController._isLoggedIn && _vm.SelectedRating != 0;
+            return SessionController.IsLoggedIn() && _vm.SelectedRating != 0;
 
         }
 
