@@ -12,7 +12,7 @@ namespace ASP_Client.Controllers
         private IUserSession _userSession;
 
         // Get method for the _userSession. This way we can start a session as soon as we need it.
-        protected IUserSession UserSession
+        public IUserSession UserSession
         {
             get
             {

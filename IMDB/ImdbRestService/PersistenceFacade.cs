@@ -22,7 +22,8 @@ namespace ImdbRestService
                 {new PersonDto().GetType(), new PersonMapper()},
                 {new RatingDto().GetType(), new RatingMapper()},
                 {new LoginDto().GetType(), new LoginMapper()},
-                {new RegistrationDto().GetType(), new RegistrationMapper()}
+                {new RegistrationDto().GetType(), new RegistrationMapper()},
+                {new TestDto().GetType(), new TestMapper()}
             };
         }
 
@@ -39,7 +40,25 @@ namespace ImdbRestService
             IMapper matchingMapper;
             _mappers.TryGetValue(requestedDto.GetType(), out matchingMapper);
 
-            if (matchingMapper != null) return await matchingMapper.Get(data, response);
+            if (matchingMapper != null)
+            {
+                var result = await matchingMapper.Get(data, response);
+
+                // If our database has no data check in the external one and add the new data
+                if ((result.HttpStatusCode == HttpStatusCode.NoContent) && (matchingMapper.GetType() == new MovieMapper().GetType()))
+                {
+                    result = await new MyMovieApiMapper().Get(data, response);
+
+                    if (result.HttpStatusCode == HttpStatusCode.OK)
+                    {
+
+                        await matchingMapper.Post(result.Message, response);
+                    }
+                }
+
+                return result;
+            }
+         
 
             var msg = new JavaScriptSerializer().Serialize(new ReplyDto
             {

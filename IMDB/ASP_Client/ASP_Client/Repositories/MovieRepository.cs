@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using ASP_Client.Controllers;
 using DtoSubsystem;
 
-namespace ASP_Client.ClientRequests
+namespace ASP_Client.Repositories
 {
     /// <summary>
     /// Class in charge of calling the communication facade for movie related actions and

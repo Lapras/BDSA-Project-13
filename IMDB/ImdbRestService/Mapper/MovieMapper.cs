@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using DtoSubsystem;
 using ImdbRestService.ImdbRepositories;
+using Newtonsoft.Json;
 
 namespace ImdbRestService.Mapper
 {
@@ -33,19 +34,17 @@ namespace ImdbRestService.Mapper
         public async Task<ResponseData> Get(string movieTitle, ResponseData responseData)
         {
             var movies = GetMoviesByTitle(movieTitle);
-
-            if (movies.Count == 0)
+            
+            string msg;
+            
+            if (movies.Count != 0)
             {
-                movies = await _externalMovieDatabaseRepository.GetMoviesFromImdbAsync(movieTitle);
-                AddMoviesToDb(movies);
-                if (movies.Count < 1)
-                {
-                    movies.Add(new MovieDto {ErrorMsg = "Movie could not be found"});
-                }
+               msg = new JavaScriptSerializer().Serialize(movies);
+                return new ResponseData(msg, HttpStatusCode.OK);
             }
 
-            var msg = new JavaScriptSerializer().Serialize(movies);
-            return new ResponseData(msg, HttpStatusCode.OK);
+            msg = new JavaScriptSerializer().Serialize(movies);
+            return new ResponseData(msg, HttpStatusCode.NoContent);
         }
 
         /// <summary>
@@ -54,9 +53,26 @@ namespace ImdbRestService.Mapper
         /// <param name="path"></param>
         /// <param name="responseData"></param>
         /// <returns></returns>
-        public Task<ResponseData> Post(string path, ResponseData responseData)
+        public async Task<ResponseData> Post(string path, ResponseData responseData)
         {
-            throw new NotImplementedException();
+            var newData = JsonConvert.DeserializeObject<List<MovieDetailsDto>>(path);
+
+            if (newData.First().ErrorMsg == null)
+            {
+                AddMoviesToDb(newData);
+
+                var msg =
+               new JavaScriptSerializer().Serialize(new ReplyDto { Executed = true, Message = "Movies where added" });
+                return new ResponseData(msg, HttpStatusCode.OK);
+            }
+
+            else
+            {
+                var msg =
+               new JavaScriptSerializer().Serialize(new ReplyDto { Executed = true, Message = "Movie not found" });
+                return new ResponseData(msg, HttpStatusCode.NoContent);
+            }
+           
         }
 
         /// <summary>
@@ -166,7 +182,7 @@ namespace ImdbRestService.Mapper
         /// Add Movie to local database
         /// </summary>
         /// <param name="movies">Movies to add to the local database</param>
-        private void AddMoviesToDb(IEnumerable<MovieDto> movies)
+        private void AddMoviesToDb(IEnumerable<MovieDetailsDto> movies)
         {
             try
             {

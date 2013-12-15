@@ -58,6 +58,7 @@
     <Compile Include="ReplyDto.cs" />
     <Compile Include="RatingDto.cs" />
     <Compile Include="RegistrationDto.cs" />
+    <Compile Include="TestDto.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

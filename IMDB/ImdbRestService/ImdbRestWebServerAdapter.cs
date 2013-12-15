@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using DtoSubsystem;
-using Newtonsoft.Json;
 
 namespace ImdbRestService
 {
@@ -166,6 +165,9 @@ namespace ImdbRestService
                     case "movies":
                         expected = new RatingDto();
                         break;
+                    case "test":
+                        expected = new TestDto();
+                        break;
                 }
 
                 ResponseData = await _logic.Post(rawBody, expected);
@@ -221,6 +223,9 @@ namespace ImdbRestService
                             key = path[1];
                             expected = new PersonDetailsDto();
                         }
+                        break;
+                    case "test":
+                        expected = new TestDto();
                         break;
                 }
 
