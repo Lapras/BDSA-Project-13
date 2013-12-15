@@ -35,7 +35,7 @@ namespace ImdbRestService.Mapper
         {
             var movies = GetMoviesByTitle(movieTitle);
             
-            var msg = "";
+            string msg;
             
             if (movies.Count != 0)
             {
@@ -55,21 +55,21 @@ namespace ImdbRestService.Mapper
         /// <returns></returns>
         public async Task<ResponseData> Post(string path, ResponseData responseData)
         {
-            var newData = JsonConvert.DeserializeObject<List<MovieDto>>(path);
+            var newData = JsonConvert.DeserializeObject<List<MovieDetailsDto>>(path);
 
             if (newData.First().ErrorMsg == null)
             {
                 AddMoviesToDb(newData);
 
                 var msg =
-               new JavaScriptSerializer().Serialize(new ReplyDto() { Executed = true, Message = "Movies where added" });
+               new JavaScriptSerializer().Serialize(new ReplyDto { Executed = true, Message = "Movies where added" });
                 return new ResponseData(msg, HttpStatusCode.OK);
             }
 
             else
             {
                 var msg =
-               new JavaScriptSerializer().Serialize(new ReplyDto() { Executed = true, Message = "Movie not found" });
+               new JavaScriptSerializer().Serialize(new ReplyDto { Executed = true, Message = "Movie not found" });
                 return new ResponseData(msg, HttpStatusCode.NoContent);
             }
            
@@ -182,7 +182,7 @@ namespace ImdbRestService.Mapper
         /// Add Movie to local database
         /// </summary>
         /// <param name="movies">Movies to add to the local database</param>
-        private void AddMoviesToDb(IEnumerable<MovieDto> movies)
+        private void AddMoviesToDb(IEnumerable<MovieDetailsDto> movies)
         {
             try
             {
