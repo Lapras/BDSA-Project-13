@@ -48,7 +48,7 @@
             </Grid.ColumnDefinitions>
 
             <Button Grid.Row="0" Grid.Column="0" Width="75" Height="25" Margin="20" HorizontalAlignment="Center" VerticalAlignment="Top" Command="{Binding BackCommand}" Content="Back"/>
-            <Button Grid.Row="0" Grid.Column="1" Width="75" Height="25" Margin="20" HorizontalAlignment="Center" VerticalAlignment="Top" Command="{Binding CreateCommand}" Content="Create"/>
+            <Button Grid.Row="0" Grid.Column="1" Width="75" Height="25" Margin="20" HorizontalAlignment="Center" VerticalAlignment="Top" Command="{Binding CreateCommand}" Content="Register" />
 
         </Grid>
 
