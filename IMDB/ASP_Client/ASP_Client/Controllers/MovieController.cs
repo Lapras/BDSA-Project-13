@@ -61,8 +61,6 @@ namespace ASP_Client.Controllers
             return View(movieOverviewViewModel);
         }
 
-         // GET: /Search/SearchMovieDetails/5
-
         /// <summary>
         /// Method getting a movie's details based on an id given to the CommunicationFacade and puts
         /// them in a MovieDetailsViewModel which is given to the IndexView.
@@ -72,7 +70,7 @@ namespace ASP_Client.Controllers
         [HttpGet]
         public async Task<ActionResult> SearchMovieDetails(int id)
         {
-            var movieDetails = await _movieRepository.GetMovieDetailsLocallyAsync(id);
+            var movieDetails = await _movieRepository.GetMovieDetailsAsync(id);
 
             var movieDetailsViewModel = new MovieDetailsViewModel();
 
@@ -108,43 +106,48 @@ namespace ASP_Client.Controllers
         [HttpPost]
         public async Task<ActionResult> SearchMovieDetails(MovieDetailsViewModel model)
         {
-            var username = UserSession.GetLoggedInUser().Name;
-            var reviewDto = new RatingDto {MovieId = model.Id, Username = username, Rating = model.UserRating};
-
-            var serverReponse = await _movieRepository.RateMovie(reviewDto);
-
-            if (serverReponse.Executed)
+            if (UserSession.IsLoggedIn())
             {
-                var ratedMovie = await _movieRepository.GetMovieDetailsLocallyAsyncForce(model.Id);
+                var username = UserSession.GetLoggedInUser().Name;
+                var rating = new RatingDto {MovieId = model.Id, Username = username, Rating = model.UserRating};
 
-                if (ratedMovie.ErrorMsg.IsEmpty())
+                var serverReponse = await _movieRepository.RateMovie(rating);
+
+                if (serverReponse.Executed)
                 {
-                    model.AvgRating = ratedMovie.AvgRating;
-                    model.Title = ratedMovie.Title;
-                    model.Id = ratedMovie.Id;
-                    model.Year = ratedMovie.Year;
+                    var ratedMovie = await _movieRepository.GetMovieDetailsAsyncForce(model.Id);
 
-                    var temp = ratedMovie.Participants.Select(participant => new PersonViewModel
+                    if (ratedMovie.ErrorMsg.IsEmpty())
                     {
-                        Id = participant.Id,
-                        Name = participant.Name,
-                        CharacterName = participant.CharacterName
-                    }).ToList();
+                        model.AvgRating = ratedMovie.AvgRating;
+                        model.Title = ratedMovie.Title;
+                        model.Id = ratedMovie.Id;
+                        model.Year = ratedMovie.Year;
 
-                    model.Participants = temp;
+                        var temp = ratedMovie.Participants.Select(participant => new PersonViewModel
+                        {
+                            Id = participant.Id,
+                            Name = participant.Name,
+                            CharacterName = participant.CharacterName
+                        }).ToList();
 
-                    return View(model);
+                        model.Participants = temp;
+
+                        return View(model);
+                    }
+
+                    return View(new MovieDetailsViewModel
+                    {
+                        ErrorMsg = ratedMovie.ErrorMsg
+                    });
                 }
 
-                return View(new MovieDetailsViewModel
-                {
-                    ErrorMsg = ratedMovie.ErrorMsg
-                });
+                model.ErrorMsg = serverReponse.Message;
             }
-
-
-            model.ErrorMsg = serverReponse.Message;
-           
+            else
+            {
+                model.ErrorMsg = "Your session expired, please log back in";
+            }
             return View(model);
         }
     }

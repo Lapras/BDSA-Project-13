@@ -128,8 +128,6 @@
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="50" />
-          <Property Name="email" Type="varchar" MaxLength="20" />
-          <Property Name="salt" Type="varchar" MaxLength="255" />
           <Property Name="password" Type="varchar" MaxLength="255" />
         </EntityType>
         <Association Name="FK_dbo_MovieInfo_dbo_InfoType_Type_Id">
@@ -444,8 +442,6 @@
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" />
           <Property Type="String" Name="name" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="email" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="salt" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="password" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Rating">
@@ -543,8 +539,6 @@
             <EntityTypeMapping TypeName="ImdbModel.User">
               <MappingFragment StoreEntitySet="User">
                 <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="salt" ColumnName="salt" />
-                <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

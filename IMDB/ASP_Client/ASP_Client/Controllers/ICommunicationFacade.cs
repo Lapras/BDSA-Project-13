@@ -22,7 +22,7 @@ namespace ASP_Client.Controllers
         /// </summary>
         /// <param name="movieId">Id of the movie to get the data of</param>
         /// <returns>Detailed data of the movie</returns>
-        Task<MovieDetailsDto> GetMovieDetailsLocallyAsync(int movieId);
+        Task<MovieDetailsDto> GetMovieDetailsAsync(int movieId);
 
         /// <summary>
         /// Send a rating to the server
@@ -50,7 +50,7 @@ namespace ASP_Client.Controllers
         /// </summary>
         /// <param name="personId">Id of the person to get the data of</param>
         /// <returns>Detailed data of the person</returns>
-        Task<PersonDetailsDto> GetPersonDetailsLocallyAsync(int personId);
+        Task<PersonDetailsDto> GetPersonDetailsAsync(int personId);
 
         /// <summary>
         /// Send a Login request to the application server
