@@ -28,7 +28,7 @@ namespace ASP_Client.Session
         public void Login(UserModel user)
         {
             _httpSessionStateBase.Add("User", user);
-            _httpSessionStateBase.Timeout = 1;
+            _httpSessionStateBase.Timeout = 60;
         }
 
         /// <summary>
