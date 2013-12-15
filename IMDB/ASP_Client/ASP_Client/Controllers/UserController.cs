@@ -67,6 +67,10 @@ namespace ASP_Client.Controllers
                 }
                 user.ErrorMsg = response.Message;
             }
+            else
+            {
+                user = null;
+            }
        
             return View(user);
         }
@@ -111,7 +115,12 @@ namespace ASP_Client.Controllers
                
                     user.ErrorMsg = response.Message;           
             }
-            return View();
+            else
+            {
+                user = null;
+            }
+
+            return View(user);
         }
     }
 }
