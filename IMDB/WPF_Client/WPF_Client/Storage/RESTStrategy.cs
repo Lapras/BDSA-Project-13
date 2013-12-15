@@ -118,6 +118,17 @@ namespace WPF_Client.Storage
                     var result = JsonConvert.DeserializeObject<ObservableCollection<PersonDto>>(response.Result);
                     Console.WriteLine("deserializing done");
 
+                    if (result != null)
+                    {
+                        if (result[0].ErrorMsg != null)
+                        {
+                            if (result[0].ErrorMsg.Equals("Movie could not be found"))
+                            {
+                                result.Remove(result[0]);
+                            }
+                        }
+
+                    }
                     return result;
                 }
 
