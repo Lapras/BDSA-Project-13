@@ -81,7 +81,7 @@
     <Compile Include="ImdbRepositories\ExternalMovieDatabaseRepository.cs" />
     <Compile Include="ImdbRepositories\IExternalMovieDatabaseRepository.cs" />
     <Compile Include="Mapper\RegistrationMapper.cs" />
-    <Compile Include="Mapper\ReviewMapper.cs" />
+    <Compile Include="Mapper\RatingMapper.cs" />
     <Compile Include="PersistenceFacade.cs" />
     <Compile Include="Rating.cs">
       <DependentUpon>Imdb.tt</DependentUpon>

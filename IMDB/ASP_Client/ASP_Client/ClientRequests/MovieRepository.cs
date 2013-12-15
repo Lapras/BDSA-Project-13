@@ -37,7 +37,7 @@ namespace ASP_Client.ClientRequests
         /// </summary>
         /// <param name="review">The review of the user</param>
         /// <returns>Reply of the server</returns>
-        public Task<ReplyDto> RateMovie(ReviewDto review)
+        public Task<ReplyDto> RateMovie(RatingDto review)
         {
             return Storage.RateMovie(review);
         }

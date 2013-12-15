@@ -109,7 +109,7 @@ namespace ASP_Client.Controllers
         public async Task<ActionResult> SearchMovieDetails(MovieDetailsViewModel model)
         {
             var username = UserSession.GetLoggedInUser().Name;
-            var reviewDto = new ReviewDto {MovieId = model.Id, Username = username, Rating = model.UserRating};
+            var reviewDto = new RatingDto {MovieId = model.Id, Username = username, Rating = model.UserRating};
 
             var serverReponse = await _movieRepository.RateMovie(reviewDto);
 

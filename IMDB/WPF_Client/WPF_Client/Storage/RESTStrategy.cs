@@ -384,7 +384,7 @@ namespace WPF_Client.Storage
 
             try
             {
-                var user = new ReviewDto()
+                var user = new RatingDto()
                 {
                     MovieId = movieId,
                     Rating = rating,

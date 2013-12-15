@@ -12,12 +12,12 @@ using Newtonsoft.Json;
 
 namespace ImdbRestService.Mapper
 {
-    public class ReviewMapper : IMapper
+    public class RatingMapper : IMapper
     {
         private readonly IImdbEntities _imdbEntities;
         private readonly IExternalMovieDatabaseRepository _externalMovieDatabaseRepository;
 
-        public ReviewMapper(IImdbEntities imdbEntities = null, IExternalMovieDatabaseRepository externalMovieDatabaseRepository = null)
+        public RatingMapper(IImdbEntities imdbEntities = null, IExternalMovieDatabaseRepository externalMovieDatabaseRepository = null)
         {
             _imdbEntities = imdbEntities;
             _externalMovieDatabaseRepository = externalMovieDatabaseRepository ?? new ExternalMovieDatabaseRepository();
@@ -50,7 +50,7 @@ namespace ImdbRestService.Mapper
             path = path.Replace(">", "");
 
             // Parse Json object back to data
-            var data = JsonConvert.DeserializeObject<ReviewDto>(path);
+            var data = JsonConvert.DeserializeObject<RatingDto>(path);
 
 
             if (MovieAndProfileExist(data.MovieId, data.Username) &&
@@ -100,7 +100,7 @@ namespace ImdbRestService.Mapper
         /// Try to either add or update a rating in the database
         /// </summary>
         /// <param name="data">Review data needed to modify the database</param>
-        private void UpdateRatingToDatabase(ReviewDto data)
+        private void UpdateRatingToDatabase(RatingDto data)
         {
             try
             {
@@ -172,7 +172,7 @@ namespace ImdbRestService.Mapper
         /// Add Rating to local database
         /// </summary>
         /// <param name="data">MovieId, Username, Rating</param>
-        private void AddRatingToDatabase(ReviewDto data)
+        private void AddRatingToDatabase(RatingDto data)
         {
             // Add rating to review table & Update rating attribute in movies
 

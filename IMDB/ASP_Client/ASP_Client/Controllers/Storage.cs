@@ -64,7 +64,7 @@ namespace ASP_Client.Controllers
         /// </summary>
         /// <param name="review">The review of the user</param>
         /// <returns>Reply of the server</returns>
-        public static async Task<ReplyDto> RateMovie(ReviewDto review)
+        public static async Task<ReplyDto> RateMovie(RatingDto review)
         {
             return await Connect.RateMovie(review);
         }

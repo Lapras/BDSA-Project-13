@@ -20,7 +20,7 @@ namespace ImdbRestService
                 {new MovieDto().GetType(), new MovieMapper()},
                 {new PersonDetailsDto().GetType(), new PersonDetailsMapper()},
                 {new PersonDto().GetType(), new PersonMapper()},
-                {new ReviewDto().GetType(), new ReviewMapper()},
+                {new RatingDto().GetType(), new RatingMapper()},
                 {new LoginDto().GetType(), new LoginMapper()},
                 {new RegistrationDto().GetType(), new RegistrationMapper()}
             };
