@@ -1,4 +1,5 @@
-﻿@model ASP_Client.Models.UserModel
+﻿@using System.Security.Cryptography
+@model ASP_Client.Models.UserModel
 @{
     ViewBag.Title = "Login";
 }
@@ -8,8 +9,8 @@
 using (Html.BeginForm())
     {
         @Html.ValidationSummary(true, "Login failed. Check your login details.")
-        ;
-        <div>
+
+            <div>
             <fieldset>
                 <legend>Login</legend>
                 <div class="editor-label">
@@ -27,6 +28,8 @@ using (Html.BeginForm())
                     @Html.ValidationMessageFor(u => u.Password)
                 </div>
             
+               
+
                 <input type="submit" value="Log In" />
             </fieldset>
             

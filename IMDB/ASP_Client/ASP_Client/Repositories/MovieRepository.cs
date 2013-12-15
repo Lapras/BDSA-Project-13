@@ -19,7 +19,7 @@ namespace ASP_Client.Repositories
         /// <returns>List of movies matching the search string</returns>
         public Task<List<MovieDto>> GetMoviesAsync(string searchString)
         {
-            return Storage.GetMoviesAsync(searchString);
+            return Storage.StorageContext.GetMoviesAsync(searchString);
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace ASP_Client.Repositories
         /// <returns>Detailed data of the movie</returns>
         public Task<MovieDetailsDto> GetMovieDetailsAsync(int movieId)
         {
-            return Storage.GetMovieDetailsLocallyAsync(movieId);
+            return Storage.StorageContext.GetMovieDetailsLocallyAsync(movieId);
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace ASP_Client.Repositories
         /// <returns>Reply of the server</returns>
         public Task<ReplyDto> RateMovie(RatingDto review)
         {
-            return Storage.RateMovie(review);
+            return Storage.StorageContext.RateMovie(review);
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace ASP_Client.Repositories
         /// <returns>Detailed data of the movie</returns>
         public Task<MovieDetailsDto> GetMovieDetailsAsyncForce(int movieId)
         {
-            return Storage.GetMovieDetailsAsyncForce(movieId);
+            return Storage.StorageContext.GetMovieDetailsAsyncForce(movieId);
         }
     }
 }

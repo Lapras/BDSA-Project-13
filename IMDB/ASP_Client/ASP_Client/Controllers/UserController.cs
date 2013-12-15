@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using ASP_Client.ClientRequests;
 using ASP_Client.Models;
@@ -64,6 +67,7 @@ namespace ASP_Client.Controllers
                 }
                 user.ErrorMsg = response.Message;
             }
+       
             return View(user);
         }
 
@@ -107,7 +111,7 @@ namespace ASP_Client.Controllers
                
                     user.ErrorMsg = response.Message;           
             }
-            return View(user);
+            return View();
         }
     }
 }

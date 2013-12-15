@@ -8,7 +8,7 @@ namespace ASP_Client.Controllers
     /// <summary>
     /// Interface for the persistance layer to 
     /// </summary>
-    public interface ICommunicationFacade
+    public interface ICommunicationStrategy
     {
         /// <summary>
         /// Get a list of movies maching the search string

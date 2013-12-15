@@ -179,7 +179,7 @@ namespace ImdbRestService
 
             else
             {
-                ResponseData = new ResponseData("Error creating Category: no id", HttpStatusCode.BadRequest);
+                ResponseData = new ResponseData("Empty path", HttpStatusCode.BadRequest);
             }
         }
 
