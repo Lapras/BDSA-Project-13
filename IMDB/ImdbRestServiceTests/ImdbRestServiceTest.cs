@@ -1,177 +1,46 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Collections.ObjectModel;
-//using System.Data.Entity;
-//using System.Linq;
-//using System.Net;
-//using ImdbRestService;
-//using ImdbRestService.Handlers;
-//using Microsoft.VisualStudio.TestTools.UnitTesting;
-//using Moq;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Data.Entity;
+using System.Linq;
+using System.Net;
+using ImdbRestService;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 
-//namespace ImdbRestServiceTests
-//{
-//    [TestClass]
-//    public class ImdbRestServiceTest
-//    {
-//        private FakeImdbEntities _entities;
-//        private MovieHandler _handler;
-//        private ImdbRestWebServer _restServer;
+namespace ImdbRestServiceTests
+{
+    [TestClass]
+    public class ImdbRestServiceTest
+    {
+        private ImdbRestWebServerAdapter _imdbRestWebServerAdapter;
+        private Mock<ImdbRestWebServerAdapter.IRequest> _getRequestMock;
+        private Mock<ImdbRestWebServerAdapter.IResponse> _responseMock;
+        private Mock<ImdbRestWebServerAdapter.IRequest> _postRequestMock;
+        private Mock<IPersistenceFacade> _persistenceFacade;
 
-//        [TestInitialize]
-//        public void Init()
-//        {
-            
-//            _entities = new FakeImdbEntities
-//            {
-//                Movies =
-//                {
-//                    new Movie {Id = 0, Title = "Title", Year = 2013}
-//                }
-//            };
-//            _handler = new MovieHandler(_entities);
-//        }
+        [TestInitialize]
+        public void Init()
+        {
+            _getRequestMock = new Mock<ImdbRestWebServerAdapter.IRequest>();
+            _getRequestMock.Setup(x => x.HttpMethod).Returns("GET");
+            _getRequestMock.Setup(x => x.RawUrl).Returns("movies/?title=");
+            _postRequestMock = new Mock<ImdbRestWebServerAdapter.IRequest>();
+            _responseMock = new Mock<ImdbRestWebServerAdapter.IResponse>();
+            _persistenceFacade = new Mock<IPersistenceFacade>();
 
-//        [TestMethod]
-//        public void GettingExistingMovie()
-//        {           
-//            var responseData = new ResponseData("", HttpStatusCode.BadRequest);
-//            responseData = _handler.Handle(new List<string> { "?title=Title" }, responseData).Result;
+            _imdbRestWebServerAdapter = new ImdbRestWebServerAdapter(_persistenceFacade.Object);
+        }
 
-//            Assert.AreEqual(responseData.HttpStatusCode, HttpStatusCode.OK);
-//        }
+        [TestMethod]
+        public void GettingExistingMovie()
+        {
+            _imdbRestWebServerAdapter.ProcessRequest(_getRequestMock.Object, _responseMock.Object);
 
-//        [TestMethod]
-//        public void TryingToGetNonExistingMovie()
-//        {
-//            var responseData = new ResponseData("", HttpStatusCode.OK);
-//            responseData = _handler.Handle(new List<string> { "?title=NoMovie" }, responseData).Result;
+            _getRequestMock.Verify(x => x.HttpMethod, Times.Exactly(1));
+            _getRequestMock.Verify(x => x.RawUrl, Times.Exactly(1));
 
-//            Assert.AreEqual(responseData.HttpStatusCode, HttpStatusCode.BadRequest);
-//        }
-
-//        [TestMethod]
-//        public void CorrectHandlerInvoked()
-//        {
-//            var movieHandlerMock = new Mock<MovieHandler>();
-//            var profileHandlerMock = new Mock<ProfileHandler>();
-//            var handlerList = new List<IHandler>{ movieHandlerMock.Object, profileHandlerMock.Object};
-//            //var context = new HttpListenerContext(new HttpListener(), null);
-//            _restServer = new ImdbRestWebServer();
-//            //_restServer.ProcessRequest();
-//        }
-//    }
-
-
-//    public class FakeDbSet<T> : IDbSet<T>
-//    where T : class
-//    {
-//        ObservableCollection<T> _data;
-//        IQueryable _query;
-
-//        public FakeDbSet()
-//        {
-//            _data = new ObservableCollection<T>();
-//            _query = _data.AsQueryable();
-//        }
-
-//        public virtual T Find(params object[] keyValues)
-//        {
-//            throw new NotImplementedException("Derive from FakeDbSet<T> and override Find");
-//        }
-
-//        public T Add(T item)
-//        {
-//            _data.Add(item);
-//            return item;
-//        }
-
-//        public T Remove(T item)
-//        {
-//            _data.Remove(item);
-//            return item;
-//        }
-
-//        public T Attach(T item)
-//        {
-//            _data.Add(item);
-//            return item;
-//        }
-
-//        public T Detach(T item)
-//        {
-//            _data.Remove(item);
-//            return item;
-//        }
-
-//        public T Create()
-//        {
-//            return Activator.CreateInstance<T>();
-//        }
-
-//        public TDerivedEntity Create<TDerivedEntity>() where TDerivedEntity : class, T
-//        {
-//            return Activator.CreateInstance<TDerivedEntity>();
-//        }
-
-//        public ObservableCollection<T> Local
-//        {
-//            get { return _data; }
-//        }
-
-//        Type IQueryable.ElementType
-//        {
-//            get { return _query.ElementType; }
-//        }
-
-//        System.Linq.Expressions.Expression IQueryable.Expression
-//        {
-//            get { return _query.Expression; }
-//        }
-
-//        IQueryProvider IQueryable.Provider
-//        {
-//            get { return _query.Provider; }
-//        }
-
-//        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-//        {
-//            return _data.GetEnumerator();
-//        }
-
-//        IEnumerator<T> IEnumerable<T>.GetEnumerator()
-//        {
-//            return _data.GetEnumerator();
-//        }
-//    }
-
-//    public class FakeCategorySet : FakeDbSet<Movie>
-//    {
-//        public override Movie Find(params object[] keyValues)
-//        {
-//            return this.SingleOrDefault(d => d.Title == (string)keyValues.Single());
-//        }
-//    }
-
-
-//    public class FakeImdbEntities : IImdbEntities
-//    {
-//        public FakeImdbEntities()
-//        {
-//            Movies = new FakeCategorySet();
-//        }
-
-//        public IDbSet<Movie> Movies { get; private set; }
-        
-//        public void Dispose()
-//        {
-            
-//        }
-//    }
-
-//    //    public int SaveChanges()
-//        //    {
-//        //        return 0;
-//        //    }
-
-//    }
+            Assert.AreEqual("", _imdbRestWebServerAdapter.ResponseData.Message);
+        }
+    }
+}

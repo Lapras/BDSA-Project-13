@@ -20,18 +20,23 @@ namespace ImdbRestService
         /// </summary>
         private readonly HttpListener _listener;
 
-        private readonly PersistenceFacade _logic;
+        private readonly IPersistenceFacade _persistenceFacade;
 
         /// <summary>
         /// Message returned to the client
         /// </summary>
         public ResponseData ResponseData { get; private set; }
 
+        public ImdbRestWebServerAdapter() : this(new PersistenceFacade())
+        {
+            
+        }
+
         // give the base address as argument
-        public ImdbRestWebServerAdapter()
+        public ImdbRestWebServerAdapter(IPersistenceFacade persistenceFacade)
         {
             _listener = new HttpListener();
-            _logic = new PersistenceFacade();
+            _persistenceFacade = persistenceFacade;
         }
 
         /// <summary>
@@ -78,12 +83,11 @@ namespace ImdbRestService
         /// <param name="request">Request we receive from the server</param>
         public async void ProcessRequest(IRequest request, IResponse response)
         {
-            // you properly need to split this into a number of methods to make a readable
-            // solution :-)
             try
             {
                 ResponseData = new ResponseData("Error: page not found", HttpStatusCode.NotFound);
 
+                // check for GET method
                 if (request.HttpMethod == "GET")
                 {
                     await GetResponse(request.RawUrl);
@@ -170,7 +174,7 @@ namespace ImdbRestService
                         break;
                 }
 
-                ResponseData = await _logic.Post(rawBody, expected);
+                ResponseData = await _persistenceFacade.Post(rawBody, expected);
             }
 
             else
@@ -229,7 +233,7 @@ namespace ImdbRestService
                         break;
                 }
 
-                ResponseData = await _logic.Get(key, expected);
+                ResponseData = await _persistenceFacade.Get(key, expected);
             }
         }
 
@@ -322,22 +326,3 @@ namespace ImdbRestService
         }
     }
 }
-
-
-
-
-
-
-/*       case "User":
-                        expected = new RegistrationDto();
-                        break;
-                }
-
-                if (expected != null)
-                {
-                    ResponseData = await _logic.Get(path.Skip(1).ToList(), expected);
-                }
-                else
-                {
-                    ResponseData = new ResponseData("No handler found", HttpStatusCode.NotFound);
-                }*/

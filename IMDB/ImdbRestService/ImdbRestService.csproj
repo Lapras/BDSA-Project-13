@@ -73,6 +73,7 @@
       <DependentUpon>Imdb.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="IPersistenceFacade.cs" />
     <Compile Include="Mapper\MovieDetailsMapper.cs" />
     <Compile Include="Mapper\MyMovieApiMapper.cs" />
     <Compile Include="Mapper\PersonDetailsMapper.cs" />

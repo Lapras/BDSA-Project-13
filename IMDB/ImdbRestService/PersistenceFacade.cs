@@ -8,7 +8,7 @@ using ImdbRestService.Mapper;
 
 namespace ImdbRestService
 {
-    public class PersistenceFacade
+    public class PersistenceFacade : IPersistenceFacade
     {
         private readonly Dictionary<System.Type, IMapper> _mappers;
 
