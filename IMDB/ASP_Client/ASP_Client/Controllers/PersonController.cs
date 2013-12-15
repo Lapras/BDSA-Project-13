@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using System.Web.WebPages;
 using ASP_Client.ClientRequests;
 using ASP_Client.Models;
+using ASP_Client.Session;
 
 namespace ASP_Client.Controllers
 {
@@ -15,11 +16,12 @@ namespace ASP_Client.Controllers
     {
         private readonly IPersonRepository _personRepository;
 
-        public PersonController() : this(new PersonRepository())
+        public PersonController() : this(new PersonRepository(), null)
         {            
         }
-        
-        public PersonController(IPersonRepository personRepository)
+
+        public PersonController(IPersonRepository personRepository, IUserSession userSession)
+            : base(userSession)
         {
             _personRepository = personRepository;
         }

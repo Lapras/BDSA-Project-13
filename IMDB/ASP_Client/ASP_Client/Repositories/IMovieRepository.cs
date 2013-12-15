@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using DtoSubsystem;
 
-namespace ASP_Client.ClientRequests
+namespace ASP_Client.Repositories
 {
     /// <summary>
     /// Interface for the methods concerning movies

@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.WebPages;
 using ASP_Client.ClientRequests;
+using ASP_Client.ModelInitializers;
 using ASP_Client.Models;
+using ASP_Client.Repositories;
+using ASP_Client.Session;
 using DtoSubsystem;
 
 namespace ASP_Client.Controllers
@@ -17,14 +18,19 @@ namespace ASP_Client.Controllers
     public class MovieController : BaseController
     {
         private readonly IMovieRepository _movieRepository;
+        private readonly IModelInitializer _modelInitializer;
+        public MovieDetailsViewModel MovieDetailsViewModel { get; set; }
+        public MovieOverviewViewModel MovieOverviewViewModel { get; set; }
 
-        public MovieController() : this(new MovieRepository())
+        public MovieController() : this(new MovieRepository(), new ModelInitializer(), null)
         {            
         }
-        
-        public MovieController(IMovieRepository movieRepository)
+
+        public MovieController(IMovieRepository movieRepository, IModelInitializer modelInitializer, IUserSession userSession)
+            : base(userSession)
         {
             _movieRepository = movieRepository;
+            _modelInitializer = modelInitializer;
         }
 
         /// <summary>
@@ -44,21 +50,21 @@ namespace ASP_Client.Controllers
 
             var foundMovies = await _movieRepository.GetMoviesAsync(searchString);
 
-            var movieOverviewViewModel = new MovieOverviewViewModel();
+            MovieOverviewViewModel = new MovieOverviewViewModel();
 
             if (foundMovies != null && foundMovies.First().ErrorMsg.IsEmpty())
             {
                 if (foundMovies.Count != 0)
                 {
-                    movieOverviewViewModel.FoundMovies = foundMovies;
+                    MovieOverviewViewModel.FoundMovies = foundMovies;
                 }
             }
             else
             {
-                if (foundMovies != null) movieOverviewViewModel.ErrorMsg = foundMovies.First().ErrorMsg;
+                if (foundMovies != null) MovieOverviewViewModel.ErrorMsg = foundMovies.First().ErrorMsg;
             }
 
-            return View(movieOverviewViewModel);
+            return View(MovieOverviewViewModel);
         }
 
         /// <summary>
@@ -72,83 +78,60 @@ namespace ASP_Client.Controllers
         {
             var movieDetails = await _movieRepository.GetMovieDetailsAsync(id);
 
-            var movieDetailsViewModel = new MovieDetailsViewModel();
+            MovieDetailsViewModel = new MovieDetailsViewModel();
 
             if (movieDetails != null && movieDetails.ErrorMsg.IsEmpty())
             {
-                movieDetailsViewModel.Id = movieDetails.Id;
-                movieDetailsViewModel.Title = movieDetails.Title;
-                movieDetailsViewModel.Year = movieDetails.Year;
-
-                var temp = movieDetails.Participants.Select(participant => new PersonViewModel
-                {
-                    Id = participant.Id,
-                    Name = participant.Name,
-                    CharacterName = participant.CharacterName
-                }).ToList();
-
-                movieDetailsViewModel.Participants = temp;
+                MovieDetailsViewModel = _modelInitializer.InitializeMovieDetailsViewModelSearchDetails(movieDetails);
             }
             else
             {
-                if (movieDetails != null) movieDetailsViewModel.ErrorMsg = movieDetails.ErrorMsg;
+                if (movieDetails != null) MovieDetailsViewModel.ErrorMsg = movieDetails.ErrorMsg;
             }
 
-            return View(movieDetailsViewModel);
+            return View(MovieDetailsViewModel);
 
         }
        
         /// <summary>
         /// Same as the one with just the id, but used after the user rated a movie
         /// </summary>
-        /// <param name="model">With the rating updated model</param>
+        /// <param name="movieDetailsViewModel">With the rating updated model</param>
         /// <returns>Desired movie in the view</returns>
         [HttpPost]
-        public async Task<ActionResult> SearchMovieDetails(MovieDetailsViewModel model)
+        public async Task<ActionResult> SearchMovieDetails(MovieDetailsViewModel movieDetailsViewModel)
         {
+            MovieDetailsViewModel = movieDetailsViewModel;
+
             if (UserSession.IsLoggedIn())
             {
-                var username = UserSession.GetLoggedInUser().Name;
-                var rating = new RatingDto {MovieId = model.Id, Username = username, Rating = model.UserRating};
+                var user = UserSession.GetLoggedInUser();
+                var rating = new RatingDto {MovieId = MovieDetailsViewModel.Id, Username = user.Name, Rating = MovieDetailsViewModel.UserRating};
 
                 var serverReponse = await _movieRepository.RateMovie(rating);
 
                 if (serverReponse.Executed)
                 {
-                    var ratedMovie = await _movieRepository.GetMovieDetailsAsyncForce(model.Id);
+                    var ratedMovie = await _movieRepository.GetMovieDetailsAsyncForce(MovieDetailsViewModel.Id);
 
                     if (ratedMovie.ErrorMsg.IsEmpty())
                     {
-                        model.AvgRating = ratedMovie.AvgRating;
-                        model.Title = ratedMovie.Title;
-                        model.Id = ratedMovie.Id;
-                        model.Year = ratedMovie.Year;
+                        MovieDetailsViewModel = _modelInitializer.InitializeMovieDetailsViewModelRating(ratedMovie);
 
-                        var temp = ratedMovie.Participants.Select(participant => new PersonViewModel
-                        {
-                            Id = participant.Id,
-                            Name = participant.Name,
-                            CharacterName = participant.CharacterName
-                        }).ToList();
-
-                        model.Participants = temp;
-
-                        return View(model);
+                        return View(MovieDetailsViewModel);
                     }
 
-                    return View(new MovieDetailsViewModel
-                    {
-                        ErrorMsg = ratedMovie.ErrorMsg
-                    });
+                    MovieDetailsViewModel.ErrorMsg = ratedMovie.ErrorMsg;
+                    return View(MovieDetailsViewModel);
                 }
 
-                model.ErrorMsg = serverReponse.Message;
+                MovieDetailsViewModel.ErrorMsg = serverReponse.Message;
             }
             else
             {
-                model.ErrorMsg = "Your session expired, please log back in";
+                MovieDetailsViewModel.ErrorMsg = "Your session expired, please log back in";
             }
-            return View(model);
+            return View(MovieDetailsViewModel);
         }
     }
 }
