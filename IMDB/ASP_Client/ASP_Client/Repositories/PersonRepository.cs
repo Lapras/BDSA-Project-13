@@ -19,7 +19,7 @@ namespace ASP_Client.ClientRequests
         /// <returns>List of the people matching the given name</returns>
         public Task<List<PersonDto>> GetPersonAsync(string personName)
         {
-            return Storage.GetPersonAsync(personName);
+            return Storage.Storage.GetPersonAsync(personName);
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace ASP_Client.ClientRequests
         /// <returns>Detailed data of the person</returns>
         public Task<PersonDetailsDto> GetPersonDetailsLocallyAsync(int personId)
         {
-            return Storage.GetPersonDetailsAsync(personId);
+            return Storage.Storage.GetPersonDetailsAsync(personId);
         }
     }
 }

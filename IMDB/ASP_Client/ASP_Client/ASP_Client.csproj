@@ -143,11 +143,11 @@
     <Compile Include="Repositories\PersonRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\RestCommunicationFacade.cs" />
-    <Compile Include="Controllers\ICommunicationFacade.cs" />
+    <Compile Include="Storage\RestCommunicationFacade.cs" />
+    <Compile Include="Storage\ICommunicationFacade.cs" />
     <Compile Include="Controllers\MovieController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
-    <Compile Include="Controllers\Storage.cs" />
+    <Compile Include="Storage\Storage.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Exceptions\RESTserviceException.cs" />
     <Compile Include="Exceptions\StorageException.cs" />

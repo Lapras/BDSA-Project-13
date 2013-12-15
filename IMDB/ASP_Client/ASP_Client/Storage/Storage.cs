@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using ASP_Client.Controllers;
 using ASP_Client.Models;
 using DtoSubsystem;
 
-namespace ASP_Client.Controllers
+namespace ASP_Client.Storage
 {
     public static class Storage
     {

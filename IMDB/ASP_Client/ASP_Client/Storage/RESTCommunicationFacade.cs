@@ -7,11 +7,12 @@ using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.WebPages;
+using ASP_Client.Controllers;
 using ASP_Client.Models;
 using DtoSubsystem;
 using Newtonsoft.Json;
 
-namespace ASP_Client.Controllers
+namespace ASP_Client.Storage
 {
     /// <summary>
     /// Reponsible to Communicate with the application server holding the data
