@@ -74,6 +74,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Mapper\MovieDetailsMapper.cs" />
+    <Compile Include="Mapper\MyMovieApiMapper.cs" />
     <Compile Include="Mapper\PersonDetailsMapper.cs" />
     <Compile Include="Mapper\PersonMapper.cs" />
     <Compile Include="Mapper\LoginMapper.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="ImdbRepositories\IExternalMovieDatabaseRepository.cs" />
     <Compile Include="Mapper\RegistrationMapper.cs" />
     <Compile Include="Mapper\RatingMapper.cs" />
+    <Compile Include="Mapper\TestMapper.cs" />
     <Compile Include="PersistenceFacade.cs" />
     <Compile Include="Rating.cs">
       <DependentUpon>Imdb.tt</DependentUpon>
