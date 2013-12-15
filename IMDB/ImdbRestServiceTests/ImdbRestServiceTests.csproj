@@ -62,6 +62,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DtoSubsystem\DtoSubsystem.csproj">
+      <Project>{A8E297BE-081E-4B61-85E8-7DBCC98CAF0B}</Project>
+      <Name>DtoSubsystem</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ImdbRestService\ImdbRestService.csproj">
       <Project>{d038b1db-a875-46c5-ae46-0849cd2c9158}</Project>
       <Name>ImdbRestService</Name>
