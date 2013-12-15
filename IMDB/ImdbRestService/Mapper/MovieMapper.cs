@@ -26,9 +26,9 @@ namespace ImdbRestService.Mapper
 
         /// <summary>
         /// Method handling the response data by checking the path, get the movies,
-        /// serialize them and returning them in the message in a new ResponseData objec
+        /// serialize them and returning them in the message in a new ResponseData object
         /// </summary>
-        /// <param name="movieTitle"> the title of the movie so search for</param>
+        /// <param name="movieTitle"> the title of the movie to search for</param>
         /// <param name="responseData"> the response data to be returned if no operations are available to the path </param>
         /// <returns></returns>
         public async Task<ResponseData> Get(string movieTitle, ResponseData responseData)
@@ -186,8 +186,6 @@ namespace ImdbRestService.Mapper
         {
             try
             {
-                //Adding found movies to app server database
-
                 using (var context = new ImdbEntities())
                 {
                     foreach (var movie in movies)

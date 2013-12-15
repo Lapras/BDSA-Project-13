@@ -122,7 +122,7 @@ namespace ImdbRestService
         }
 
         /// <summary>
-        /// Method process POST requests and hand the content to proper handlers
+        /// Method process POST requests and hand the content to proper mappers
         /// </summary>
         /// <param name="rawUrl">Incoming REST request</param>
         /// <param name="inputStream">Incoming data to be posted</param>
@@ -184,7 +184,7 @@ namespace ImdbRestService
         }
 
         /// <summary>
-        /// Method process GET requests and hand the content to proper handlers
+        /// Method process GET requests and hand the content to proper mappers
         /// </summary>
         /// <param name="rawUrl">Incoming REST request</param>
         /// <returns></returns>

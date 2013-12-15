@@ -9,7 +9,7 @@ namespace ImdbRestService.Mapper
     public interface IMapper
     {
         /// <summary>
-        /// Method handling the response data for a GET reqest by checking the path, 
+        /// Method handling the response data for a GET request by checking the path, 
         /// processing the data and replying with an appropriate reply
         /// </summary>
         /// <param name="data"> the data used to operate</param>

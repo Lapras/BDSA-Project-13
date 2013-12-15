@@ -22,7 +22,7 @@ namespace ImdbRestService.Mapper
         }
 
         /// <summary>
-        /// Method handling the response data for a GET reqest by checking the path, 
+        /// Method handling the response data for a GET request by checking the path, 
         /// processing the data and replying with an appropriate reply
         /// </summary>
         /// <param name="identifier"> the id used to get the data</param>
@@ -37,7 +37,7 @@ namespace ImdbRestService.Mapper
         }
 
         /// <summary>
-        /// Method handling the response data for a GET reqest by checking the path, 
+        /// Method handling the response data for a GET request by checking the path, 
         /// processing the data and replying with an appropriate reply
         /// </summary>
         /// <param name="path"> the path used to see how to operate the data </param>

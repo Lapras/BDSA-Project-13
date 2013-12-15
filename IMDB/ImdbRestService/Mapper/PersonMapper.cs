@@ -31,9 +31,6 @@ namespace ImdbRestService.Mapper
         public async Task<ResponseData> Get(string personName, ResponseData responseData)
         {
             var people = GetPeopleByName(personName);
-
-            // Maybe search in external database when not found like in movies?
-
             var msg = new JavaScriptSerializer().Serialize(people);
             return new ResponseData(msg, HttpStatusCode.OK);
         }
@@ -53,7 +50,7 @@ namespace ImdbRestService.Mapper
         /// Method recieving people by name from the local database
         /// </summary>
         /// <param name="name"> the name to search for </param>
-        /// <returns> a list of MoviesDto's containing information on the movies found </returns>
+        /// <returns> a list of PersonDto's containing information on the persons found </returns>
         private List<PersonDto> GetPeopleByName(string name)
         {
             using (var entities = _imdbEntities ?? new ImdbEntities())

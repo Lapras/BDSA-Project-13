@@ -23,8 +23,8 @@ namespace ImdbRestService.Mapper
 
 
         /// <summary>
-        /// Method handling the response data by checking the path, get the movies,
-        /// serialize them and returning them in the message in a new ResponseData objec
+        /// Method handling the response data by checking the path, get the persons,
+        /// serialize them and returning them in the message in a new ResponseData object
         /// </summary>
         /// <param name="personId">Id of the person to search for</param>
         /// <param name="responseData"> the response data to be returned if no operations are available to the path </param>
@@ -51,8 +51,8 @@ namespace ImdbRestService.Mapper
         /// <summary>
         /// Method recieving a person by id from the local database
         /// </summary>
-        /// <param name="id"> id of the movie we search for </param>
-        /// <returns> movie we requested </returns>
+        /// <param name="id"> id of the person we search for </param>
+        /// <returns> person we requested </returns>
         public PersonDetailsDto GetPersonById(int id)
         {
             try
@@ -77,7 +77,7 @@ namespace ImdbRestService.Mapper
                         where person.Id == people.Id
                         select new InfoDto {Name = infoType.Name, Info = personInfo.Info}).ToList();
 
-                    //   person.Info = new string[additionalDetailsOnPerson.Length, 2];
+
 
                     person.Info = new List<InfoDto>();
 

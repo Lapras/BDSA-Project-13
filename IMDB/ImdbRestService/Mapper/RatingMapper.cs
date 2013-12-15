@@ -57,7 +57,6 @@ namespace ImdbRestService.Mapper
                 !AlreadyRated(data.MovieId, data.Username))
             {
                 // acutally push to database
-
                 AddRatingToDatabase(data);
 
                 var ratingAddedMsg =
@@ -73,7 +72,6 @@ namespace ImdbRestService.Mapper
                 AlreadyRated(data.MovieId, data.Username))
             {
                 // acutally push to database
-
                 UpdateRatingToDatabase(data);
 
                 var ratingAddedMsg =
@@ -186,14 +184,8 @@ namespace ImdbRestService.Mapper
                 }
                 else
                 {
-
                     id = entities.Rating.Max(u => u.id) + 1;
-
-                    //Console.WriteLine("RATING ID NO: " + id);
                 }
-
-
-
 
 
                 entities.Rating.Add(new Rating

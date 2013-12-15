@@ -50,7 +50,7 @@ namespace ImdbRestService.Handlers
         }
 
         /// <summary>
-        /// Checks if the provides name and password match in out database
+        /// Checks if the provided name and password match in our database
         /// </summary>
         /// <param name="name">Name provided by the user</param>
         /// <param name="password">Password provided by the user</param>
