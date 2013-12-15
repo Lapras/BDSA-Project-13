@@ -80,7 +80,7 @@
             
         </ListBox>
 
-        <TextBlock Grid.Row="2" Grid.Column="1" FontFamily="Resources/#Charlemagne Std" FontSize="18" FontWeight="Bold" Text="{Binding MoviesFound, StringFormat='Found: {0}', Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top"></TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="1" FontFamily="Resources/#Charlemagne Std" FontSize="18" FontWeight="Bold" Text="{Binding PersonsFound, StringFormat='Found: {0}', Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top"></TextBlock>
         <Button Grid.Row="2" Grid.Column="1" Width="75" Height="25" Margin="10" HorizontalAlignment="Left" Command="{Binding BackCommand}" Content="Back"/>
 
     </Grid>
