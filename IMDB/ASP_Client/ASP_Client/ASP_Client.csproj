@@ -132,8 +132,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="ModelInitializers\IModelInitializer.cs" />
     <Compile Include="ModelInitializers\ModelInitializer.cs" />
+    <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Repositories\IMovieRepository.cs" />
     <Compile Include="Repositories\IPersonRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
@@ -256,6 +258,7 @@
     <Content Include="Views\User\Registration.cshtml" />
     <Content Include="Views\Person\PersonDetails.cshtml" />
     <Content Include="Views\Person\SearchPerson.cshtml" />
+    <Content Include="Views\Home\Home.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\DtoSubsystem\DtoSubsystem.csproj">

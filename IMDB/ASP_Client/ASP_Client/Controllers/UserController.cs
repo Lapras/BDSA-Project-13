@@ -60,7 +60,7 @@ namespace ASP_Client.Controllers
                 if (response.Executed)
                 {
                     UserSession.Login(user);
-                    return RedirectToAction("SearchMovie", "Movie");
+                    return RedirectToAction("Home", "Home");
                 }
                 user.ErrorMsg = response.Message;
             }
@@ -74,7 +74,7 @@ namespace ASP_Client.Controllers
         public ActionResult LogOut()
         {
             UserSession.Logout();
-            return RedirectToAction("SearchMovie", "Movie");
+            return RedirectToAction("Home", "Home");
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace ASP_Client.Controllers
                 if (response.Executed)
                 {
                     await Login(user);
-                    return RedirectToAction("SearchMovie", "Movie");
+                    return RedirectToAction("Home", "Home");
                 }
                
                     user.ErrorMsg = response.Message;           

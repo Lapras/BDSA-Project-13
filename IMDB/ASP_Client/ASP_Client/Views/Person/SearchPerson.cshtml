@@ -1,17 +1,11 @@
 ﻿@model ASP_Client.Models.PersonOverviewViewModel
 
 @{ 
-    ViewBag.Title = "Index"; 
+    ViewBag.Title = "SearchPerson"; 
 } 
  
-<h2>Index</h2> 
+<h2>Search Results</h2> 
  
-<p> 
-     @using (Html.BeginForm()){    
-         <p> @Html.TextBox("SearchString") <br />   
-         <input type="submit" value="Search" /></p> 
-     }
-</p>  
 
 
 @if (Model.ErrorMsg.IsEmpty())

@@ -1,16 +1,11 @@
 ﻿@model ASP_Client.Models.MovieOverviewViewModel
 
 @{ 
-    ViewBag.Title = "Index"; 
+    ViewBag.Title = "SearchMovie"; 
 } 
  
-<h2>Index</h2> 
+<h2>Search Results</h2> 
  
-<p> 
-     @using (Html.BeginForm()){    
-         <p> @Html.TextBox("SearchString") <br />   
-         <input type="submit" value="Search" /></p> 
-     }
   
  @if (Model.ErrorMsg.IsEmpty())
 {   
@@ -34,4 +29,3 @@ else
 {
   @Model.ErrorMsg
 }
-</p>

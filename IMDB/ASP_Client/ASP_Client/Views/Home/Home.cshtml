@@ -1,0 +1,24 @@
+﻿@model ASP_Client.Models.HomeViewModel
+
+@{
+    ViewBag.Title = "Home";
+}
+
+<h2>Home</h2>
+
+
+ @using (Html.BeginForm())
+     {
+         <p style="padding: 10px; border: 1px solid grey; background: grey; width: 300px">
+         
+             <select id="Choice" name="Choice">
+                 <option value="Movie">Movie</option>
+                 <option value="Person">Person</option>
+             </select>
+             
+
+             @Html.TextBoxFor(u => u.SearchString)                     
+        
+             <input type="submit" value="Search"/>
+         </p>
+     }

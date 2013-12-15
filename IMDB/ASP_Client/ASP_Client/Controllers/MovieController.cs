@@ -43,11 +43,6 @@ namespace ASP_Client.Controllers
         /// <returns> A Task containing an ActionResult to be handled </returns>        
         public async Task<ActionResult> SearchMovie(string searchString)
         {
-            //if (Session["User"] == null)
-            //{
-            //    return RedirectToAction("Login", "User");
-            //}
-
             var foundMovies = await _movieRepository.GetMoviesAsync(searchString);
 
             MovieOverviewViewModel = new MovieOverviewViewModel();
@@ -133,5 +128,8 @@ namespace ASP_Client.Controllers
             }
             return View(MovieDetailsViewModel);
         }
+
+
+   
     }
 }

@@ -12,7 +12,7 @@ namespace ASP_Client.App_Start
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Movie", action = "SearchMovie", id = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "Home", id = UrlParameter.Optional }
             );
         }
     }
