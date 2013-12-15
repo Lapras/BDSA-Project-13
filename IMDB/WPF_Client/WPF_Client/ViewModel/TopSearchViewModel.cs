@@ -124,12 +124,12 @@ namespace WPF_Client.ViewModel
 
         public bool CanExecute(object parameter)
         {
-            return (SessionController._isLoggedIn);
+            return (SessionController.IsLoggedIn());
         }
 
         public void Execute(object parameter)
         {
-            if (SessionController._isLoggedIn)
+            if (SessionController.IsLoggedIn())
             {
                 SessionController.Logout();
                 MessageBox.Show("You have been logged out","Logged out");

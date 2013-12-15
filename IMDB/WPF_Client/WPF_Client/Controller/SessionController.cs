@@ -52,10 +52,26 @@ namespace WPF_Client.Controller
             _isLoggedIn = false;
             return false;
             
-
-
-
         }
+
+        /// <summary>
+        /// Returns the name of the current user that is logged in.
+        /// </summary>
+        /// <returns>The name of the current user</returns>
+        public static string CurrentUser()
+        {
+            return _currentUser;
+        }
+
+        /// <summary>
+        /// Returns whether the user is logged in.
+        /// </summary>
+        /// <returns>A boolean value whether the user is logged in or not</returns>
+        public static bool IsLoggedIn()
+        {
+            return _isLoggedIn;
+        }
+
 
         /// <summary>
         /// Logs out a user.

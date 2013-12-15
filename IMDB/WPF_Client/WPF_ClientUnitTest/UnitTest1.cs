@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -83,7 +84,7 @@ namespace WPF_ClientUnitTest
             // with the login information
             SessionController.Login("Simon", "password");
 
-            Assert.AreEqual("Simon",SessionController._currentUser);
+            Assert.AreEqual("Simon",SessionController.CurrentUser());
             Assert.AreEqual(true, SessionController._isLoggedIn);
 
         }
@@ -104,8 +105,8 @@ namespace WPF_ClientUnitTest
             // with the login information
             SessionController.Login("Simon1", "password");
 
-            Assert.AreEqual(null, SessionController._currentUser);
-            Assert.AreEqual(false, SessionController._isLoggedIn);
+            Assert.AreEqual(null, SessionController.CurrentUser());
+            Assert.AreEqual(false, SessionController.IsLoggedIn());
 
         }
         
@@ -124,8 +125,8 @@ namespace WPF_ClientUnitTest
             // we simulate that a viewmodel wants to log out a user and therefore calls the sessioncontroller
             SessionController.Logout();
 
-            Assert.AreEqual(null, SessionController._currentUser);
-            Assert.AreEqual(false, SessionController._isLoggedIn);
+            Assert.AreEqual(null, SessionController.CurrentUser());
+            Assert.AreEqual(false, SessionController.IsLoggedIn());
 
         }
 
@@ -217,7 +218,37 @@ namespace WPF_ClientUnitTest
 
         }
 
+        /// <summary>
+        ///  Tests whether the correct persondetails are showed.
+        /// </summary>
+        [TestMethod]
+        public void Actor_CorrectPersonDetailsDisplayed()
+        {
+            PersonDetailsDto testPersonDetail = new PersonDetailsDto()
+            {
+                Id = 10,
+                Name = "Mark Wahlberg",
+                Gender = "male",
+                Info = new List<InfoDto>() { new InfoDto() { Name = "trivia", Info = "He's from Boston" } }
+            };
 
+
+            var modelMock = new Mock<IModel>();
+            modelMock.Setup(m => m.PersonDetailsDto(10)).Returns(testPersonDetail);
+            HollywoodController._model = modelMock.Object;
+
+
+            //simluate that the MovieSearchResultViewModel selects a movie with the id 10.
+            HollywoodController.GetActor(10);
+
+
+            ActorProfileViewModel actorProfileViewModel = new ActorProfileViewModel();
+
+
+            Assert.AreEqual(testPersonDetail, actorProfileViewModel.PersonDetailsDto);
+
+
+        }
 
 
         /// <summary>
