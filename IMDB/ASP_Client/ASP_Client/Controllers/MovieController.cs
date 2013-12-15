@@ -70,7 +70,7 @@ namespace ASP_Client.Controllers
         [HttpGet]
         public async Task<ActionResult> SearchMovieDetails(int id)
         {
-            var movieDetails = await _movieRepository.GetMovieDetailsLocallyAsync(id);
+            var movieDetails = await _movieRepository.GetMovieDetailsAsync(id);
 
             var movieDetailsViewModel = new MovieDetailsViewModel();
 
@@ -115,7 +115,7 @@ namespace ASP_Client.Controllers
 
                 if (serverReponse.Executed)
                 {
-                    var ratedMovie = await _movieRepository.GetMovieDetailsLocallyAsyncForce(model.Id);
+                    var ratedMovie = await _movieRepository.GetMovieDetailsAsyncForce(model.Id);
 
                     if (ratedMovie.ErrorMsg.IsEmpty())
                     {

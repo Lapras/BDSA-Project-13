@@ -29,7 +29,7 @@ namespace ASP_Client.ClientRequests
         /// <returns>Detailed data of the person</returns>
         public Task<PersonDetailsDto> GetPersonDetailsLocallyAsync(int personId)
         {
-            return Storage.GetPersonDetailsLocallyAsync(personId);
+            return Storage.GetPersonDetailsAsync(personId);
         }
     }
 }

@@ -75,7 +75,7 @@ namespace ASP_Client.Controllers
         /// </summary>
         /// <param name="movieId">Id of the movie to get the data of</param>
         /// <returns>Detailed data of the movie</returns>
-        public async Task<MovieDetailsDto> GetMovieDetailsLocallyAsync(int movieId)
+        public async Task<MovieDetailsDto> GetMovieDetailsAsync(int movieId)
         {
             MovieDetailsDto desiredMovie;
             CacheHelper.GetItem("" + movieId, out desiredMovie);
@@ -179,7 +179,7 @@ namespace ASP_Client.Controllers
         /// </summary>
         /// <param name="personId">Id of the person to get the data of</param>
         /// <returns>Detailed data of the person</returns>
-        public async Task<PersonDetailsDto> GetPersonDetailsLocallyAsync(int personId)
+        public async Task<PersonDetailsDto> GetPersonDetailsAsync(int personId)
         {
             PersonDetailsDto desiredPerson;
             CacheHelper.GetItem("" + personId, out desiredPerson);

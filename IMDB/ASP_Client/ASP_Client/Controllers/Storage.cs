@@ -26,7 +26,7 @@ namespace ASP_Client.Controllers
         /// <returns>Detailed data of the movie</returns>
         public static async Task<MovieDetailsDto> GetMovieDetailsLocallyAsync(int movieId)
         {
-            return await Connect.GetMovieDetailsLocallyAsync(movieId);
+            return await Connect.GetMovieDetailsAsync(movieId);
         }
 
         /// <summary>
@@ -34,9 +34,9 @@ namespace ASP_Client.Controllers
         /// </summary>
         /// <param name="personId">Id of the person to get the data of</param>
         /// <returns>Detailed data of the person</returns>
-        public static async Task<PersonDetailsDto> GetPersonDetailsLocallyAsync(int personId)
+        public static async Task<PersonDetailsDto> GetPersonDetailsAsync(int personId)
         {
-            return await Connect.GetPersonDetailsLocallyAsync(personId);
+            return await Connect.GetPersonDetailsAsync(personId);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace ASP_Client.Controllers
         /// </summary>
         /// <param name="movieId">Id of the movie to get the data of</param>
         /// <returns>Detailed data of the movie</returns>
-        public static async Task<MovieDetailsDto> GetMovieDetailsLocallyAsyncForce(int movieId)
+        public static async Task<MovieDetailsDto> GetMovieDetailsAsyncForce(int movieId)
         {
             return await Connect.GetMovieDetailsLocallyAsyncForce(movieId);
         }

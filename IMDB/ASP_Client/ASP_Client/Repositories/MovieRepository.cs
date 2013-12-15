@@ -27,7 +27,7 @@ namespace ASP_Client.ClientRequests
         /// </summary>
         /// <param name="movieId">Id of the movie to get the data of</param>
         /// <returns>Detailed data of the movie</returns>
-        public Task<MovieDetailsDto> GetMovieDetailsLocallyAsync(int movieId)
+        public Task<MovieDetailsDto> GetMovieDetailsAsync(int movieId)
         {
             return Storage.GetMovieDetailsLocallyAsync(movieId);
         }
@@ -47,9 +47,9 @@ namespace ASP_Client.ClientRequests
         /// </summary>
         /// <param name="movieId">Id of the movie to get the data of</param>
         /// <returns>Detailed data of the movie</returns>
-        public Task<MovieDetailsDto> GetMovieDetailsLocallyAsyncForce(int movieId)
+        public Task<MovieDetailsDto> GetMovieDetailsAsyncForce(int movieId)
         {
-            return Storage.GetMovieDetailsLocallyAsyncForce(movieId);
+            return Storage.GetMovieDetailsAsyncForce(movieId);
         }
     }
 }

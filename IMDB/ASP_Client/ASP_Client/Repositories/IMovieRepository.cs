@@ -21,7 +21,7 @@ namespace ASP_Client.ClientRequests
         /// </summary>
         /// <param name="movieId">Id of the movie to get the data of</param>
         /// <returns>Detailed data of the movie</returns>
-        Task<MovieDetailsDto> GetMovieDetailsLocallyAsync(int movieId);
+        Task<MovieDetailsDto> GetMovieDetailsAsync(int movieId);
 
         /// <summary>
         /// Send a rating to the server
@@ -35,6 +35,6 @@ namespace ASP_Client.ClientRequests
         /// </summary>
         /// <param name="movieId">Id of the movie to get the data of</param>
         /// <returns>Detailed data of the movie</returns>
-        Task<MovieDetailsDto> GetMovieDetailsLocallyAsyncForce(int movieId);
+        Task<MovieDetailsDto> GetMovieDetailsAsyncForce(int movieId);
     }
 }
