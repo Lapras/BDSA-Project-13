@@ -322,7 +322,7 @@ namespace ASP_Client.Controllers
         /// </summary>
         /// <param name="review">The review of the user</param>
         /// <returns>Reply of the server</returns>
-        public async Task<ReplyDto> RateMovie(ReviewDto review)
+        public async Task<ReplyDto> RateMovie(RatingDto review)
         {
             try
             {

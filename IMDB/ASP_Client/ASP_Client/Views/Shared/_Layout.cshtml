@@ -21,13 +21,13 @@
                              if (ViewBag.User != null)
                              {
                                  <strong>@Html.Encode((ViewBag.User as UserModel).Name)</strong>
-                                 @Html.ActionLink("Sign Out", "Logout", "User")
+                                 @Html.ActionLink("Logout", "Logout", "User")
                              }
                              else
                              {
                                  @Html.ActionLink("Register", "Registration", "User")
                                  <span> | </span>
-                                 @Html.ActionLink("Sign In", "Login", "User") 
+                                 @Html.ActionLink("Login", "Login", "User") 
                              }
                               <span> | </span> 
                          }

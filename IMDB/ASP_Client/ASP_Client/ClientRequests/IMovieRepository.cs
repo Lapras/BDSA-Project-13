@@ -28,7 +28,7 @@ namespace ASP_Client.ClientRequests
         /// </summary>
         /// <param name="review">The review of the user</param>
         /// <returns>Reply of the server</returns>
-        Task<ReplyDto> RateMovie(ReviewDto review);
+        Task<ReplyDto> RateMovie(RatingDto review);
 
         /// <summary>
         /// Get a movie without using the cache

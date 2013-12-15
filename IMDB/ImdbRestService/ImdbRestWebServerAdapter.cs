@@ -164,7 +164,7 @@ namespace ImdbRestService
                       
                         break;
                     case "movies":
-                        expected = new ReviewDto();
+                        expected = new RatingDto();
                         break;
                 }
 
