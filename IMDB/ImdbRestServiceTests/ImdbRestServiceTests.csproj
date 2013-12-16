@@ -59,6 +59,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ImdbRestServiceTest.cs" />
+    <Compile Include="MovieMapperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

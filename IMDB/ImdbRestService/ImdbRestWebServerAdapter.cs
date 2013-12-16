@@ -260,7 +260,8 @@ namespace ImdbRestService
         }
 
         /// <summary>
-        /// Class representing the stream we use to send messages to the client
+        /// Class representing and wrapping an HttpListenerResponse.
+        /// Makes it able to be testet.
         /// </summary>
         public class Response : IResponse
         {
@@ -298,7 +299,8 @@ namespace ImdbRestService
         }
 
         /// <summary>
-        /// Class representing incoming message stream
+        /// Class representing and wrapping an HttpListenerRequest.
+        /// Makes it able to be testet.
         /// </summary>
         public class Request : IRequest
         {

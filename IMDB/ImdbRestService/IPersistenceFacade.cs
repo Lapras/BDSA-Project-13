@@ -3,6 +3,10 @@ using DtoSubsystem;
 
 namespace ImdbRestService
 {
+    /// <summary>
+    /// Interface making sure classes implementing it is able to get and post data by use
+    /// of a string and a Dto class
+    /// </summary>
     public interface IPersistenceFacade
     {
         /// <summary>
